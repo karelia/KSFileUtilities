@@ -1,8 +1,8 @@
 //
-//  NSURL+KSFileUtilities.m
+//  KSURLUtilities.m
 //  Sandvox
 //
-//  Created by Mike on 09/09/2010.
+//  Created by Mike Abdullah on 09/09/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
@@ -436,7 +436,7 @@
                                          legalURLCharactersToBeEscaped:@"&+%="];
     
     
-    // If the user requested it, replace sapces with + signs
+    // If the user requested it, replace spaces with + signs
     if (encodeSpacesAsPlusCharacters)
     {
         NSMutableString *mutableResult = [result mutableCopy];
