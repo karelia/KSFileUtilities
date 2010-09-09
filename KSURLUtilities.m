@@ -185,29 +185,34 @@
 
 #pragma mark Query Dictionary
 
-+ (NSURL *)ks_URLWithBaseURL:(NSURL *)baseURL parameters:(NSDictionary *)parameters
-{
-	return [[[self alloc] ks_initWithBaseURL:baseURL parameters:parameters] autorelease];
-}
-
-- (id)ks_initWithBaseURL:(NSURL *)baseURL parameters:(NSDictionary *)parameters
-{	
-	NSString *parametersString = [NSURL ks_queryWithDictionary:parameters];
-	if (![parametersString isEqualToString:@""])
-	{
-		NSString *existingQuery = [baseURL query];	// check if we already have a query -- if so we need & not ?
-		NSString *firstSeparator = (nil == existingQuery || [existingQuery isEqualToString:@""]) ? @"?" : @"&";
-		parametersString = [firstSeparator stringByAppendingString:parametersString];
-	}
-	// Create the URL from the parameters string
-	[self initWithString: parametersString relativeToURL: baseURL];
-	
-	return self;
-}
-
 - (NSDictionary *)ks_queryDictionary;
 {
 	NSDictionary *result = [[self class] ks_dictionaryFromQuery:[self query]];
+    return result;
+}
+
+- (NSURL *)ks_URLWithQueryDictionary:(NSDictionary *)parameters;
+{
+	NSString *query = [NSURL ks_queryWithDictionary:parameters];
+	if (![query isEqualToString:@""])
+	{
+		NSString *existingQuery = [self query];	// check if we already have a query -- if so we need & not ?
+		NSString *firstSeparator = (nil == existingQuery || [existingQuery isEqualToString:@""]) ? @"?" : @"&";
+		query = [firstSeparator stringByAppendingString:query];
+	}
+	
+    // Create the URL from the query string
+	return [NSURL URLWithString:query relativeToURL:self];
+}
+
++ (NSURL *)ks_URLWithScheme:(NSString *)scheme
+                       host:(NSString *)host
+                       path:(NSString *)path
+            queryDictionary:(NSDictionary *)parameters;
+{
+    NSURL *baseURL = [[NSURL alloc] initWithScheme:scheme host:host path:path];
+    NSURL *result = [baseURL ks_URLWithQueryDictionary:parameters];
+    [baseURL release];
     return result;
 }
 
@@ -273,12 +278,10 @@
 	return result;
 }
 
-#pragma mark -
 #pragma mark RFC 1808
 
 - (BOOL)ks_canBeDecomposed { return CFURLCanBeDecomposed((CFURLRef)self); }
 
-#pragma mark -
 #pragma mark Relative URLs
 
 - (NSString *)ks_stringRelativeToURL:(NSURL *)URL
