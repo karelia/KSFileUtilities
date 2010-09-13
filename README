@@ -1,0 +1,20 @@
+Query Parameters
+===
+
+It's common for URLs to split their query string up into a dictionary-like series of parameters. e.g.
+
+    http://en.wikipedia.org/w/index.php?title=Main_page&action=raw
+
+`KSURLUtilities` has an easy solution for getting that into a more Cocoa-friendly form:
+
+    - (NSDictionary *)ks_queryParameters;
+
+There are also APIs for creating/deriving new URLs from a dictionary:
+
+    - (NSURL *)ks_URLWithQueryParameters:(NSDictionary *)parameters;
+    
+	+ (NSURL *)ks_URLWithScheme:(NSString *)scheme
+	                       host:(NSString *)host
+	                       path:(NSString *)path
+	            queryParameters:(NSDictionary *)parameters;
+	
