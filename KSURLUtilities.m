@@ -185,15 +185,15 @@
 
 #pragma mark Query Dictionary
 
-- (NSDictionary *)ks_queryDictionary;
+- (NSDictionary *)ks_queryParameters;
 {
-	NSDictionary *result = [[self class] ks_dictionaryFromQuery:[self query]];
+	NSDictionary *result = [[self class] ks_parametersOfQuery:[self query]];
     return result;
 }
 
-- (NSURL *)ks_URLWithQueryDictionary:(NSDictionary *)parameters;
+- (NSURL *)ks_URLWithQueryParameters:(NSDictionary *)parameters;
 {
-	NSString *query = [NSURL ks_queryWithDictionary:parameters];
+	NSString *query = [NSURL ks_queryWithParameters:parameters];
 	if (![query isEqualToString:@""])
 	{
 		NSString *existingQuery = [self query];	// check if we already have a query -- if so we need & not ?
@@ -208,10 +208,10 @@
 + (NSURL *)ks_URLWithScheme:(NSString *)scheme
                        host:(NSString *)host
                        path:(NSString *)path
-            queryDictionary:(NSDictionary *)parameters;
+            queryParameters:(NSDictionary *)parameters;
 {
     NSURL *baseURL = [[NSURL alloc] initWithScheme:scheme host:host path:path];
-    NSURL *result = [baseURL ks_URLWithQueryDictionary:parameters];
+    NSURL *result = [baseURL ks_URLWithQueryParameters:parameters];
     [baseURL release];
     return result;
 }
@@ -219,7 +219,7 @@
 /*  These 2 methods form the main backbone for URL query operations
  */
 
-+ (NSString *)ks_queryWithDictionary:(NSDictionary *)parameters;
++ (NSString *)ks_queryWithParameters:(NSDictionary *)parameters;
 {
 	// Build the list of parameters as a string
 	NSMutableString *parametersString = [NSMutableString string];
@@ -258,7 +258,7 @@
 	return parametersString;
 }
 
-+ (NSDictionary *)ks_dictionaryFromQuery:(NSString *)queryString;
++ (NSDictionary *)ks_parametersOfQuery:(NSString *)queryString;
 {
 	NSMutableDictionary *result = [NSMutableDictionary dictionary];
 	NSArray *keyValues = [queryString componentsSeparatedByString:@"&"];

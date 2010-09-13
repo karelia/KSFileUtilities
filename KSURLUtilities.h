@@ -41,18 +41,18 @@
 #pragma mark Queries
 
 // It's common to use the query part of a URL for a dictionary-like series of parameters. This method will decode that for you, including handling strings which were escaped to fit the scheme
-- (NSDictionary *)ks_queryDictionary;
+- (NSDictionary *)ks_queryParameters;
 
 // To do the reverse, construct a dictonary for the query and pass into either of these methods. You can base the result off of an existing URL, or specify all the components.
-- (NSURL *)ks_URLWithQueryDictionary:(NSDictionary *)parameters;
+- (NSURL *)ks_URLWithQueryParameters:(NSDictionary *)parameters;
 + (NSURL *)ks_URLWithScheme:(NSString *)scheme
                        host:(NSString *)host
                        path:(NSString *)path
-            queryDictionary:(NSDictionary *)parameters;
+            queryParameters:(NSDictionary *)parameters;
 
 // Primitive methods for if you need tighter control over handling query dictionaries
-+ (NSString *)ks_queryWithDictionary:(NSDictionary *)parameters;
-+ (NSDictionary *)ks_dictionaryFromQuery:(NSString *)queryString;
++ (NSString *)ks_queryWithParameters:(NSDictionary *)parameters;
++ (NSDictionary *)ks_parametersOfQuery:(NSString *)queryString;
 
 
 #pragma mark RFC 1808
