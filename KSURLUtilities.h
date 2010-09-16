@@ -18,6 +18,7 @@
 
 
 #pragma mark Paths
+
 + (NSURL *)ks_URLWithPath:(NSString *)path relativeToURL:(NSURL *)baseURL isDirectory:(BOOL)isDirectory;
 - (id)ks_initWithPath:(NSString *)path relativeToURL:(NSURL *)baseURL isDirectory:(BOOL)isDirectory;
 
