@@ -1,3 +1,16 @@
+URL Path
+========
+
+Mac OS X 10.6 gave us a bunch of new URL methods like `-URLByDeletingLastPathComponent`. If you wanted access to this behaviour before, it necessitated much tedious mucking about with `NSString` path methods, or using `CFURL` functions. KSURLUtilities gives simple Cocoa APIs for all these tasks on 10.5 and earlier:
+
+	- (NSString *)ks_lastPathComponent;
+	- (NSString *)ks_pathExtension;
+	- (NSURL *)ks_URLByAppendingPathExtension:(NSString *)pathExtension;
+	- (NSURL *)ks_URLByDeletingLastPathComponent;
+	- (NSURL *)ks_URLByDeletingPathExtension;
+	- (BOOL)ks_hasDirectoryPath;
+	- (NSURL *)ks_URLByAppendingPathComponent:(NSString *)pathComponent isDirectory:(BOOL)isDirectory;
+
 Query Parameters
 ===
 
@@ -17,4 +30,3 @@ There are also APIs for creating/deriving new URLs from a dictionary:
 	                       host:(NSString *)host
 	                       path:(NSString *)path
 	            queryParameters:(NSDictionary *)parameters;
-	
