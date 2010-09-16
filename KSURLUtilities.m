@@ -261,7 +261,10 @@
 + (NSDictionary *)ks_parametersOfQuery:(NSString *)queryString;
 {
 	NSMutableDictionary *result = [NSMutableDictionary dictionary];
-	NSArray *keyValues = [queryString componentsSeparatedByString:@"&"];
+    
+    // Handle & or ; as separators, as per W3C recommendation
+    NSCharacterSet *seperatorChars = [NSCharacterSet characterSetWithCharactersInString:@"&;"];
+	NSArray *keyValues = [queryString componentsSeparatedByCharactersInSet:seperatorChars];
 	NSEnumerator *theEnum = [keyValues objectEnumerator];
 	NSString *keyValuePair;
 	
