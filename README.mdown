@@ -1,3 +1,22 @@
+Relative Strings
+================
+
+`NSURL` is fully equipped to resolve relative strings against another URL, but sadly there's no API to go in the opposite direction. KSURLUtilities to the rescue!
+
+	- (NSString *)ks_stringRelativeToURL:(NSURL *)URL;
+	- (NSURL *)ks_URLRelativeToURL:(NSURL *)URL;
+
+How's this work? Well, everyone loves examples right?
+
+<table>
+	<tr><th>Receiver</th><th>relativeToURL:</th><th>Return Value</th></tr>
+	<tr><td>http://karelia.com/foo/bar/</td><td>http://karelia.com/</td><td>foo/bar/</td></tr>
+	<tr><td>http://karelia.com/foo/example.png</td><td>http://karelia.com/</td><td>foo/example.png</td></tr>
+	<tr><td>http://karelia.com/foo/bar/</td><td>http://example.com/</td><td>http://karelia.com/foo/bar/</td></tr>
+	<tr><td>http://karelia.com/</td><td>http://karelia.com/foo/bar/</td><td>../../</td></tr>
+	<tr><td>http://karelia.com/baz/index.xml</td><td>http://karelia.com/foo/bar/</td><td>../../baz/index.xml</td></tr>
+</table>
+
 URL Path
 ========
 
