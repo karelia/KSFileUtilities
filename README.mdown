@@ -49,3 +49,16 @@ Mac OS X 10.6 gave us a bunch of new URL methods like `-URLByDeletingLastPathCom
 	- (NSURL *)ks_URLByDeletingPathExtension;
 	- (BOOL)ks_hasDirectoryPath;
 	- (NSURL *)ks_URLByAppendingPathComponent:(NSString *)pathComponent isDirectory:(BOOL)isDirectory;
+
+Host
+====
+
+Nothing fancy here, just a few additions to the built-in `-host` method.
+
+	- (NSURL *)ks_hostURL;
+	
+Strips a URL down to nothing but its scheme and host. e.g. `http://karelia.com/foo/bar/` becomes `http://karelia.com/`
+
+	- (NSArray *)ks_domains;
+	
+Splits the host up into its domains. e.g. `http://www.karelia.com` gives `(www, karelia, com)`
