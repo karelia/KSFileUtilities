@@ -17,21 +17,8 @@ How's this work? Well, everyone loves examples right?
 	<tr><td>http://karelia.com/baz/index.xml</td><td>http://karelia.com/foo/bar/</td><td>../../baz/index.xml</td></tr>
 </table>
 
-URL Path
-========
-
-Mac OS X 10.6 gave us a bunch of new URL methods like `-URLByDeletingLastPathComponent`. If you wanted access to this behaviour before, it necessitated much tedious mucking about with `NSString` path methods, or using `CFURL` functions. KSURLUtilities gives simple Cocoa APIs for all these tasks on 10.5 and earlier:
-
-	- (NSString *)ks_lastPathComponent;
-	- (NSString *)ks_pathExtension;
-	- (NSURL *)ks_URLByAppendingPathExtension:(NSString *)pathExtension;
-	- (NSURL *)ks_URLByDeletingLastPathComponent;
-	- (NSURL *)ks_URLByDeletingPathExtension;
-	- (BOOL)ks_hasDirectoryPath;
-	- (NSURL *)ks_URLByAppendingPathComponent:(NSString *)pathComponent isDirectory:(BOOL)isDirectory;
-
 Query Parameters
-===
+================
 
 It's common for URLs to split their query string up into a dictionary-like series of parameters. e.g.
 
@@ -49,3 +36,29 @@ There are also APIs for creating/deriving new URLs from a dictionary:
 	                       host:(NSString *)host
 	                       path:(NSString *)path
 	            queryParameters:(NSDictionary *)parameters;
+
+URL Paths
+=========
+
+Mac OS X 10.6 gave us a bunch of new URL methods like `-URLByDeletingLastPathComponent`. If you wanted access to this behaviour before, it necessitated much tedious mucking about with `NSString` path methods, or using `CFURL` functions. KSURLUtilities gives simple Cocoa APIs for all these tasks on 10.5 and earlier:
+
+	- (NSString *)ks_lastPathComponent;
+	- (NSString *)ks_pathExtension;
+	- (NSURL *)ks_URLByAppendingPathExtension:(NSString *)pathExtension;
+	- (NSURL *)ks_URLByDeletingLastPathComponent;
+	- (NSURL *)ks_URLByDeletingPathExtension;
+	- (BOOL)ks_hasDirectoryPath;
+	- (NSURL *)ks_URLByAppendingPathComponent:(NSString *)pathComponent isDirectory:(BOOL)isDirectory;
+
+Host
+====
+
+Nothing fancy here, just a few additions to the built-in `-host` method.
+
+	- (NSURL *)ks_hostURL;
+	
+Strips a URL down to nothing but its scheme and host. e.g. `http://karelia.com/foo/bar/` becomes `http://karelia.com/`
+
+	- (NSArray *)ks_domains;
+	
+Splits the host up into its domains. e.g. `http://www.karelia.com` gives `(www, karelia, com)`
