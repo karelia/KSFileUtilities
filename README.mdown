@@ -62,3 +62,13 @@ Strips a URL down to nothing but its scheme and host. e.g. `http://karelia.com/f
 	- (NSArray *)ks_domains;
 	
 Splits the host up into its domains. e.g. `http://www.karelia.com` gives `(www, karelia, com)`
+
+KSWebLocation
+=============
+
+A simple class that represents a URL, optionally with a title attached. Features:
+
+- Reading from pasteboard
+- Handles Web Location files (e.g. those created by dragging a URL from Safari)
+- NSCoding
+- NSCopying
