@@ -218,6 +218,51 @@
     return self;
 }
 
++ (KSWebLocation *)webLocationFromPasteboard:(NSPasteboard *)pasteboard type:(NSString *)type;
+{
+    KSWebLocation *result = nil;
+    
+    if ([type isEqualToString:(NSString *)kUTTypeURL])
+    {
+        result = [KSWebLocation webLocationWithURL:[WebView URLFromPasteboard:pasteboard]
+                                             title:[WebView URLTitleFromPasteboard:pasteboard]];
+    }
+    else if ([type isEqualToString:NSURLPboardType])
+    {
+        result = [[KSWebLocation _basicURLsFromPasteboard:pasteboard] lastObject];
+    }
+    else	// the fallback option is string parsing
+    {
+#if (defined MAC_OS_X_VERSION_10_6) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6
+        NSPasteboardReadingOptions readingOptions =
+        [self readingOptionsForType:type pasteboard:pasteboard];
+        
+        id propertyList;
+        if (readingOptions & NSPasteboardReadingAsPropertyList)
+        {
+            propertyList = [pasteboard propertyListForType:type];
+        }
+        else if (readingOptions & NSPasteboardReadingAsString)
+        {
+            propertyList = [pasteboard stringForType:type];
+        }
+        else
+        {
+            propertyList = [pasteboard dataForType:type];
+        }
+        
+        KSWebLocation *webLocation = [[KSWebLocation alloc]
+                                      initWithPasteboardPropertyList:propertyList
+                                      ofType:type];
+        
+        result = [NSArray arrayWithObject:webLocation];
+        [webLocation release];
+#endif
+    }
+    
+    return result;
+}
+
 #pragma mark Support
 
 + (NSURL *)URLWithString:(NSString *)string;
@@ -311,6 +356,7 @@
     return [NSArray arrayWithObjects:
 			@"WebURLsWithTitlesPboardType",
 			@"BookmarkDictionaryListPboardType",
+            kUTTypeURL,                             // contains the target URL when dragging webloc
             NSFilenamesPboardType,
 			NSURLPboardType,
 			NSStringPboardType,
@@ -479,58 +525,30 @@
 	NSArray *result = nil;
 	
 	// Get the URLs and titles from the best type available on the pasteboard
-	NSString *bestPboardType = [self availableTypeFromArray:
-                                [KSWebLocation webLocationPasteboardTypes]];
+	NSString *type = [self availableTypeFromArray:[KSWebLocation webLocationPasteboardTypes]];
     
-	if (bestPboardType)
+	if (type)
 	{
-		if ([bestPboardType isEqualToString:@"BookmarkDictionaryListPboardType"])
+		if ([type isEqualToString:@"BookmarkDictionaryListPboardType"])
         {
 			result = [KSWebLocation webLocationsWithBookmarkDictionariesPasteboardPropertyList:
-                      [self propertyListForType:bestPboardType]];
+                      [self propertyListForType:type]];
 		}
-		else if ([bestPboardType isEqualToString:@"WebURLsWithTitlesPboardType"])
+		else if ([type isEqualToString:@"WebURLsWithTitlesPboardType"])
         {
             result = [KSWebLocation webLocationsWithWebURLsWithTitlesPasteboardPropertyList:
-                      [self propertyListForType:bestPboardType]];
+                      [self propertyListForType:type]];
 		}
-        else if ([bestPboardType isEqualToString:NSFilenamesPboardType])
+        else if ([type isEqualToString:NSFilenamesPboardType])
         {
             result = [KSWebLocation webLocationsWithFilenamesPasteboardPropertyList:
-                      [self propertyListForType:bestPboardType]];
+                      [self propertyListForType:type]];
         }
-        else if ([bestPboardType isEqualToString:NSURLPboardType])
+        else
         {
-            result = [KSWebLocation _basicURLsFromPasteboard:self];
+            KSWebLocation *webloc = [KSWebLocation webLocationFromPasteboard:self type:type];
+            if (webloc) result = [NSArray arrayWithObject:webloc];
         }
-		else	// the fallback option is string parsing
-        {
-#if (defined MAC_OS_X_VERSION_10_6) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6
-            NSPasteboardReadingOptions readingOptions =
-            [self readingOptionsForType:bestPboardType pasteboard:self];
-            
-            id propertyList;
-            if (readingOptions & NSPasteboardReadingAsPropertyList)
-            {
-                propertyList = [self propertyListForType:bestPboardType];
-            }
-            else if (readingOptions & NSPasteboardReadingAsString)
-            {
-                propertyList = [self stringForType:bestPboardType];
-            }
-            else
-            {
-                propertyList = [self dataForType:bestPboardType];
-            }
-            
-			KSWebLocation *webLocation = [[KSWebLocation alloc]
-                                          initWithPasteboardPropertyList:propertyList
-                                          ofType:bestPboardType];
-            
-            result = [NSArray arrayWithObject:webLocation];
-            [webLocation release];
-#endif
-		}
 	}
 	
 	return result;
