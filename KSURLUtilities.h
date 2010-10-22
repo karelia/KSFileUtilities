@@ -49,6 +49,12 @@
 - (NSURL *)ks_URLByAppendingPathExtension:(NSString *)pathExtension;
 - (NSURL *)ks_URLByDeletingLastPathComponent;
 - (NSURL *)ks_URLByDeletingPathExtension;
+#else
+#define ks_lastPathComponent lastPathComponent
+#define ks_pathExtension pathExtension
+#define ks_URLByAppendingPathExtension URLByAppendingPathExtension
+#define ks_URLByDeletingLastPathComponent URLByDeletingLastPathComponent
+#define ks_URLByDeletingPathExtension URLByDeletingPathExtension
 #endif
 
 - (BOOL)ks_hasDirectoryPath;
