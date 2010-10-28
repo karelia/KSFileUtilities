@@ -116,6 +116,12 @@
             else
             {
                 result = [URL absoluteString];
+                
+                // Append trailing slash if needed
+                if ([URL ks_hasNetworkLocation] && [[URL path] isEqualToString:@""])
+                {
+                    result = [result stringByAppendingString:@"/"];
+                }
             }
         }
         else
