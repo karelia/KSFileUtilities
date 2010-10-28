@@ -27,7 +27,6 @@
 
 #import "KSURLFormatter.h"
 
-#import "NSString+Karelia.h"
 #import "KSURLUtilities.h"
 
 
@@ -55,6 +54,27 @@
     }
     
     return result;
+}
+
++ (BOOL)isValidEmailAddress:(NSString *)address;
+{
+    // for now, just validate that syntactically it it at least _@_.__
+	// though we are not checking actual other characters.
+    // we can refine this over time
+    NSRange whereAt = [address rangeOfString:@"@"];
+    BOOL OK = (whereAt.location != NSNotFound && whereAt.location >= 1);	// make sure there is an @ and it's not the first character
+	if (OK)
+	{
+		NSInteger len = [address length] - whereAt.location;
+		NSRange whereDot = [address rangeOfString:@"." options:0 range:NSMakeRange(whereAt.location, len)];
+		OK = (whereDot.location != NSNotFound);
+		if (OK)
+		{
+			// make sure there is room between the @ and the .
+			OK = (whereDot.location - whereAt.location >= 2) && ([address length] - whereDot.location >= 3);
+		}
+	}
+	return OK;
 }
 
 #pragma mark Init & Dealloc
@@ -120,7 +140,7 @@
 	if (![result scheme] && ![string hasPrefix:@"/"])
 	{
         // if it looks like an email address, use mailto:
-        if ([string isValidEmailAddress])
+        if ([self isValidEmailAddress:string])
         {
             result = [NSURL URLWithString:[NSString stringWithFormat:@"mailto:%@", string]];
         }

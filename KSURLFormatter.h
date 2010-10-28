@@ -45,6 +45,8 @@
  "*/
 + (NSURL *)URLFromString:(NSString *)string;
 
++ (BOOL)isValidEmailAddress:(NSString *)address;
+
 
 #pragma mark Managing Behavior
 
