@@ -1,5 +1,5 @@
 //
-//  KSWebLocation.h
+//  KSWebLocationPasteboardUtilities.h
 //
 //  Copyright (c) 2008-2010, Mike Abdullah and Karelia Software
 //  All rights reserved.
@@ -25,34 +25,27 @@
 //
 
 
-#import <Foundation/Foundation.h>
+#import "KSWebLocation.h"
+#import <WebKit/WebKit.h>
 
 
 /* The NSPasteboardReading protocol enables instances of a class to be created from pasteboard data by using the -readObjectsForClasses:options: method of NSPasteboard.  The Cocoa framework classes NSString, NSAttributedString, NSURL, NSColor, NSSound, NSImage, and NSPasteboardItem implement this protocol.  The protocol can also be implemented by custom application classes for use with -readObjectsForClasses:options:
  */ 
 
 
-@interface KSWebLocation : NSObject <NSCopying, NSCoding>
-{
-  @private
-	NSURL		*_URL;
-	NSString	*_title;
-}
+#if (defined MAC_OS_X_VERSION_10_6) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6
+@interface KSWebLocation (Pasteboard) <NSPasteboardReading>
+#else
+@interface KSWebLocation (Pasteboard)
+#endif
 
-#pragma mark Init
-+ (id)webLocationWithURL:(NSURL *)URL;
-+ (id)webLocationWithURL:(NSURL *)URL title:(NSString *)title;
-- (id)initWithURL:(NSURL *)URL title:(NSString *)title;	// Designated initializer
+#pragma mark Pasteboard Reading
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
+- (id)initWithPasteboardPropertyList:(id)propertyList ofType:(NSString *)type;
 
 
-#pragma mark Accessors
-@property(nonatomic, copy, readonly) NSURL *URL;
-@property(nonatomic, copy, readonly) NSString *title;
-
-
-#pragma mark Equality
-- (BOOL)isEqualToWebLocation:(KSWebLocation *)aWebLocation;
-
+#pragma mark 10.5 Pasteboard Support
++ (NSArray *)webLocationPasteboardTypes;
 
 @end
 
@@ -60,7 +53,8 @@
 #pragma mark -
 
 
-@interface KSWebLocation (WeblocFiles)
-+ (id)webLocationWithContentsOfWeblocFile:(NSURL *)weblocURL;
-- (id)initWithContentsOfWeblocFile:(NSURL *)weblocURL;
+@interface NSPasteboard (KSWebLocation)
+- (NSArray *)readWebLocations;
+- (NSArray *)readWebLocationsConvertingWeblocFiles:(BOOL)convertWeblocs
+                                    ignoreFileURLs:(BOOL)ignoreFileURLs;
 @end
