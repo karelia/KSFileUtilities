@@ -152,6 +152,13 @@
                                                    string]];
         }
 	}
+    
+    
+    // Append a trailing slash if needed
+    if ([result ks_hasNetworkLocation] && [[result path] isEqualToString:@""])
+    {
+        result = [[NSURL URLWithString:@"/" relativeToURL:result] absoluteURL];
+    }
 	
     return result;
 }
