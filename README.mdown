@@ -63,6 +63,15 @@ Strips a URL down to nothing but its scheme and host. e.g. `http://karelia.com/f
 	
 Splits the host up into its domains. e.g. `http://www.karelia.com` gives `(www, karelia, com)`
 
+KSURLFormatter
+==============
+
+A basic `NSFormatter` subclass for handling URLs.
+
+- Non-complete URLs like `example` and `example.com` generate full `http://example.com/` URL
+- Host URLs have a slash appended to them. e.g. `http://example.com` is displayed/interpreted as `http://example.com/`
+- Convenience `+URLFromString` method that takes care of unescaped characters
+
 KSWebLocation
 =============
 
