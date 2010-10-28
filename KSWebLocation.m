@@ -27,6 +27,8 @@
 
 #import "KSWebLocation.h"
 
+#import "KSURLFormatter.h"
+
 
 @implementation KSWebLocation
 
@@ -133,28 +135,6 @@
 
 #pragma mark Support
 
-+ (NSURL *)URLWithString:(NSString *)string;
-{
-    // Encode the URL string
-    CFStringEncoding encoding = CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding);
-    CFStringRef escapedString = CFURLCreateStringByAddingPercentEscapes(NULL,
-                                                                        (CFStringRef)string,
-                                                                        (CFStringRef)@"%+#",
-                                                                        NULL,
-                                                                        encoding);
-    
-    
-    // If we're still left with a valid string, turn it into a URL
-    NSURL *result = nil;
-    if (escapedString)
-    {
-        result = [NSURL URLWithString:string];
-        CFRelease(escapedString);
-    }
-    
-    return result;
-}
-
 // Pass in nil for aName if we want to use ID
 + (NSData *)readFromResourceFileAtPath:(NSString *)aPath type:(ResType) aType named:(NSString *)aName id:(NSInteger)anID
 {
@@ -242,7 +222,7 @@
                                                             id:256];
 	
 	NSString *URLString = [[NSString alloc] initWithData:urlData encoding:NSASCIIStringEncoding];
-	NSURL *URL = [[self class] URLWithString:URLString];
+	NSURL *URL = [KSURLFormatter URLFromString:URLString];
     [URLString release];
 	
 	

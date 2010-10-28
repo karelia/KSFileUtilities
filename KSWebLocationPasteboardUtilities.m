@@ -27,6 +27,7 @@
 
 #import "KSWebLocationPasteboardUtilities.h"
 
+#import "KSURLFormatter.h"
 #import "KSURLUtilities.h"
 
 
@@ -98,7 +99,7 @@
         NSString *string = [propertyList description];
         if ([string length] <= 2048)	// No point processing particularly long strings
         {
-            NSURL *URL = [[self class] URLWithString:string];	/// encodeLegally to handle accented characters
+            NSURL *URL = [KSURLFormatter URLFromString:string];	/// encodeLegally to handle accented characters
             if (URL && [URL ks_hasNetworkLocation])
             {
                 self = [self initWithURL:URL title:nil];
@@ -186,7 +187,7 @@
 		if ([objectInfo isKindOfClass:[NSDictionary class]])
 		{
 			NSString *URLString = [objectInfo objectForKey:@"URLString"];
-			NSURL *URL = [[self class] URLWithString:URLString];	/// encodeLegally to handle accented characters
+			NSURL *URL = [KSURLFormatter URLFromString:URLString];	/// encodeLegally to handle accented characters
 			
 			if (URL)
 			{
@@ -226,7 +227,7 @@
 		{
 			// Convert the string to a proper URL. If actually valid, add it & title to the results
 			NSString *URLString = [URLStrings objectAtIndex:i];
-			NSURL *URL = [[self class] URLWithString:URLString];	/// encodeLegally to handle accented characters
+			NSURL *URL = [KSURLFormatter URLFromString:URLString];	/// encodeLegally to handle accented characters
 			if (URL)
 			{
 				KSWebLocation *aWebLocation = [[KSWebLocation alloc] initWithURL:URL title:[URLTitles objectAtIndex:i]];
