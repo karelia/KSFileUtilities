@@ -118,42 +118,11 @@
 {
     KSWebLocation *result = nil;
     
-    if ([type isEqualToString:(NSString *)kUTTypeURL])
+    NSURL *URL = [WebView URLFromPasteboard:pasteboard];
+    if (URL)
     {
-        result = [KSWebLocation webLocationWithURL:[WebView URLFromPasteboard:pasteboard]
+        result = [KSWebLocation webLocationWithURL:URL
                                              title:[WebView URLTitleFromPasteboard:pasteboard]];
-    }
-    else if ([type isEqualToString:NSURLPboardType])
-    {
-        result = [[KSWebLocation _basicURLsFromPasteboard:pasteboard] lastObject];
-    }
-    else	// the fallback option is string parsing
-    {
-#if (defined MAC_OS_X_VERSION_10_6) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6
-        NSPasteboardReadingOptions readingOptions =
-        [self readingOptionsForType:type pasteboard:pasteboard];
-        
-        id propertyList;
-        if (readingOptions & NSPasteboardReadingAsPropertyList)
-        {
-            propertyList = [pasteboard propertyListForType:type];
-        }
-        else if (readingOptions & NSPasteboardReadingAsString)
-        {
-            propertyList = [pasteboard stringForType:type];
-        }
-        else
-        {
-            propertyList = [pasteboard dataForType:type];
-        }
-        
-        KSWebLocation *webLocation = [[KSWebLocation alloc]
-                                      initWithPasteboardPropertyList:propertyList
-                                      ofType:type];
-        
-        result = [NSArray arrayWithObject:webLocation];
-        [webLocation release];
-#endif
     }
     
     return result;
@@ -289,32 +258,37 @@
 {
 	NSArray *result = nil;
 	
-	// Get the URLs and titles from the best type available on the pasteboard
+	// Get the URLs and titles from the best type available on the pasteboard.
 	NSString *type = [self availableTypeFromArray:[KSWebLocation webLocationPasteboardTypes]];
     
-	if (type)
-	{
-		if ([type isEqualToString:@"BookmarkDictionaryListPboardType"])
-        {
-			result = [KSWebLocation webLocationsWithBookmarkDictionariesPasteboardPropertyList:
-                      [self propertyListForType:type]];
-		}
-		else if ([type isEqualToString:@"WebURLsWithTitlesPboardType"])
-        {
-            result = [KSWebLocation webLocationsWithWebURLsWithTitlesPasteboardPropertyList:
-                      [self propertyListForType:type]];
-		}
-        else if ([type isEqualToString:NSFilenamesPboardType])
-        {
-            result = [KSWebLocation webLocationsWithFilenamesPasteboardPropertyList:
-                      [self propertyListForType:type]];
-        }
-        else
-        {
-            KSWebLocation *webloc = [KSWebLocation webLocationFromPasteboard:self type:type];
-            if (webloc) result = [NSArray arrayWithObject:webloc];
-        }
-	}
+    // Ideally we want to read multiple kUTTypeURLs, but this requires 10.6 or dropping down to CorePasteboard. So for now, fake it by falling back to NSFilenamesPboardType for file URLs (when possible)
+    if ([type isEqualToString:(NSString *)kUTTypeFileURL])
+    {
+        type = [self availableTypeFromArray:NSARRAY(NSFilenamesPboardType, type)];
+    }
+    
+    
+	if ([type isEqualToString:@"BookmarkDictionaryListPboardType"])
+    {
+        result = [KSWebLocation webLocationsWithBookmarkDictionariesPasteboardPropertyList:
+                  [self propertyListForType:type]];
+    }
+    else if ([type isEqualToString:@"WebURLsWithTitlesPboardType"])
+    {
+        result = [KSWebLocation webLocationsWithWebURLsWithTitlesPasteboardPropertyList:
+                  [self propertyListForType:type]];
+    }
+    else if ([type isEqualToString:NSFilenamesPboardType])
+    {
+        result = [KSWebLocation webLocationsWithFilenamesPasteboardPropertyList:
+                  [self propertyListForType:type]];
+    }
+    else
+    {
+        KSWebLocation *webloc = [KSWebLocation webLocationFromPasteboard:self type:type];
+        if (webloc) result = [NSArray arrayWithObject:webloc];
+    }
+
 	
 	return result;
 }
