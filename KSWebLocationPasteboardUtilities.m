@@ -113,7 +113,7 @@
     return self;
 }
 
-+ (KSWebLocation *)webLocationFromPasteboard:(NSPasteboard *)pasteboard type:(NSString *)type;
++ (KSWebLocation *)webLocationFromPasteboard:(NSPasteboard *)pasteboard;
 {
     KSWebLocation *result = nil;
     
@@ -263,7 +263,7 @@
     }
     else
     {
-        KSWebLocation *webloc = [KSWebLocation webLocationFromPasteboard:self type:type];
+        KSWebLocation *webloc = [KSWebLocation webLocationFromPasteboard:self];
         if (webloc) result = [NSArray arrayWithObject:webloc];
     }
 
