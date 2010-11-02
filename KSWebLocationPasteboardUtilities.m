@@ -241,7 +241,10 @@
     // Ideally we want to read multiple kUTTypeURLs, but this requires 10.6 or dropping down to CorePasteboard. So for now, fake it by falling back to NSFilenamesPboardType for file URLs (when possible)
     if ([type isEqualToString:(NSString *)kUTTypeFileURL])
     {
-        type = [self availableTypeFromArray:NSARRAY(NSFilenamesPboardType, type)];
+        type = [self availableTypeFromArray:[NSArray arrayWithObjects:
+                                             NSFilenamesPboardType,
+                                             type,
+                                             nil]];
     }
     
     
