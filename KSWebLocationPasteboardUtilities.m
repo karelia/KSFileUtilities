@@ -35,7 +35,6 @@
 + (NSArray *)webLocationsWithBookmarkDictionariesPasteboardPropertyList:(id)propertyList;
 + (NSArray *)webLocationsWithWebURLsWithTitlesPasteboardPropertyList:(id)propertyList;
 + (NSArray *)webLocationsWithFilenamesPasteboardPropertyList:(id)propertyList;
-+ (NSArray *)_basicURLsFromPasteboard:(NSPasteboard *)pasteboard;
 + (NSArray *)_basicURLsFromPasteboardString:(NSString *)string;
 @end
 
@@ -223,27 +222,6 @@
     }
     
     return result;
-}
-
-+ (NSArray *)_basicURLsFromPasteboard:(NSPasteboard *)pasteboard
-{
-	NSArray *result = nil;
-	
-	NSURL *URL = [NSURL URLFromPasteboard:pasteboard];
-	if (URL)
-	{
-		// We may be able to get title from CorePasteboardFlavorType 'urln'
-		NSString *title = nil;
-		if ([pasteboard availableTypeFromArray:[NSArray arrayWithObject:@"CorePasteboardFlavorType 0x75726C6E"]]) {
-			title = [pasteboard stringForType:@"CorePasteboardFlavorType 0x75726C6E"];
-		}
-		
-		KSWebLocation *webLocation = [[KSWebLocation alloc] initWithURL:URL title:title];
-		result = [NSArray arrayWithObject:webLocation];
-		[webLocation release];
-	}
-	
-	return result;
 }
 
 @end
