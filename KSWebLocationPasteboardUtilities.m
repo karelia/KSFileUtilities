@@ -293,42 +293,5 @@
 	return result;
 }
 
-- (NSArray *)readWebLocationsConvertingWeblocFiles:(BOOL)convertWeblocs
-                                    ignoreFileURLs:(BOOL)ignoreFileURLs;
-{
-	// Get the unfiltered URLs
-	NSArray *result = [self readWebLocations];
-	
-	
-	if (convertWeblocs || ignoreFileURLs)
-	{
-		NSMutableArray *buffer = [[NSMutableArray alloc] initWithCapacity:[result count]];
-		KSWebLocation *aWebLocation;
-		
-		for (aWebLocation in result)
-		{
-			// Convert .webloc files as required
-			NSURL *URL = [aWebLocation URL];
-			if (convertWeblocs && [URL isFileURL] && [[URL ks_pathExtension] isEqualToString:@"webloc"])
-			{
-				aWebLocation = [KSWebLocation webLocationWithContentsOfWeblocFile:URL];
-			}
-			
-			// Add the URL to the list unless we've been requested to ignore file URLs
-			if (!(ignoreFileURLs && [[aWebLocation URL] isFileURL]))
-			{
-				[buffer addObject:aWebLocation];
-			}
-		}
-		
-		result = [[buffer copy] autorelease];
-		[buffer release];
-	}
-	
-	
-	// Return
-	return result;
-}
-
 @end
 

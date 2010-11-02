@@ -55,6 +55,4 @@
 
 @interface NSPasteboard (KSWebLocation)
 - (NSArray *)readWebLocations;
-- (NSArray *)readWebLocationsConvertingWeblocFiles:(BOOL)convertWeblocs
-                                    ignoreFileURLs:(BOOL)ignoreFileURLs;
 @end
