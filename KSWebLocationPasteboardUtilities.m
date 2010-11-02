@@ -35,7 +35,6 @@
 + (NSArray *)webLocationsWithBookmarkDictionariesPasteboardPropertyList:(id)propertyList;
 + (NSArray *)webLocationsWithWebURLsWithTitlesPasteboardPropertyList:(id)propertyList;
 + (NSArray *)webLocationsWithFilenamesPasteboardPropertyList:(id)propertyList;
-+ (NSArray *)_basicURLsFromPasteboardString:(NSString *)string;
 @end
 
 
