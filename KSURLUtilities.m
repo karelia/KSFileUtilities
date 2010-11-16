@@ -134,8 +134,14 @@
 
 - (NSURL *)ks_URLByDeletingLastPathComponent
 {
-	NSURL *result = NSMakeCollectable(CFURLCreateCopyDeletingLastPathComponent(NULL, (CFURLRef)self));
-	return [result autorelease];
+    NSURL *result = self;
+    if ([[self path] length])   // #74010
+    {
+        result = NSMakeCollectable(CFURLCreateCopyDeletingLastPathComponent(NULL, (CFURLRef)self));
+        [result autorelease];
+    }
+    
+    return result;
 }
 
 - (NSURL *)ks_URLByDeletingPathExtension
