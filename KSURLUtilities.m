@@ -255,7 +255,7 @@
 		NSString *key;
 		BOOL thisIsTheFirstParameter = YES;
 		
-		while (key = [enumerator nextObject])
+		while (nil != (key = [enumerator nextObject]))
 		{
 			id rawParameter = [parameters objectForKey: key];
 			NSString *parameter = nil;
