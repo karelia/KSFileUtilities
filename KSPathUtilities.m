@@ -29,6 +29,22 @@
 
 @implementation NSString (KSPathUtilities)
 
+- (NSString *)ks_stringWithPathSuffix:(NSString *)aString;
+{
+    NSString *result = self;
+    
+    NSString *extension = [self pathExtension];
+    if ([extension length])
+    {
+        result = [[[self
+                    stringByDeletingPathExtension]
+                   stringByAppendingString:aString]
+                  stringByAppendingPathExtension:extension];
+    }
+    
+    return result;
+}
+
 - (NSString *)ks_pathRelativeToDirectory:(NSString *)dirPath
 {
     // Our internal workings currently expect dirPath to have a trailing slash, so let's supply that for them
