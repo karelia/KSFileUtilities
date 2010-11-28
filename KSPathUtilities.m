@@ -128,8 +128,12 @@
 	{
 		adjustedOtherPath = [adjustedOtherPath stringByAppendingString:@"/"];
 	}
-    BOOL result = [adjustedMePath hasPrefix:adjustedOtherPath];
-    return result;
+    
+    // Used to -hasPrefix:, but really need to do it case insensitively
+    NSRange result = [adjustedMePath rangeOfString:adjustedOtherPath
+                                           options:(NSAnchoredSearch | NSCaseInsensitiveSearch)];
+    
+    return (result.location == 0);
 }
 
 
