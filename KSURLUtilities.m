@@ -160,6 +160,8 @@
 
 - (NSURL *)ks_URLByAppendingPathComponent:(NSString *)pathComponent isDirectory:(BOOL)isDirectory
 {
+    NSParameterAssert(pathComponent);
+    
 	NSURL *result = NSMakeCollectable(CFURLCreateCopyAppendingPathComponent(NULL,
                                                                             (CFURLRef)self,
                                                                             (CFStringRef)pathComponent,
