@@ -29,6 +29,15 @@
 
 @implementation NSString (KSPathUtilities)
 
+- (BOOL)ks_isEqualToPath:(NSString *)aPath;
+{
+    NSString *myPath = [self stringByStandardizingPath];
+    aPath = [aPath stringByStandardizingPath];
+    
+    BOOL result = ([myPath caseInsensitiveCompare:aPath] == NSOrderedSame);
+    return result;
+}
+
 - (NSString *)ks_stringWithPathSuffix:(NSString *)aString;
 {
     NSString *result = self;

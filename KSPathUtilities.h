@@ -29,6 +29,9 @@
 
 @interface NSString (KSPathUtilities)
 
+// Standardizes the paths and tests equality ignoring case
+- (BOOL)ks_isEqualToPath:(NSString *)aPath;
+
 // like -stringByAppendingString: but inserts the suffix string in front of path extension if there is one. e.g. [@"foo.png" ks_stringWithPathSuffix:@"-2"] = @"foo-2.png"
 - (NSString *)ks_stringWithPathSuffix:(NSString *)aString;
 
