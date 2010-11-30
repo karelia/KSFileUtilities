@@ -97,10 +97,10 @@
         NSString *string = [propertyList description];
         if ([string length] <= 2048)	// No point processing particularly long strings
         {
-            NSURL *URL = [KSURLFormatter URLFromString:string];	/// encodeLegally to handle accented characters
-            if (URL && [URL ks_hasNetworkLocation])
+            NSURL *plistURL = [KSURLFormatter URLFromString:string];	/// encodeLegally to handle accented characters
+            if (plistURL && [plistURL ks_hasNetworkLocation])
             {
-                self = [self initWithURL:URL title:nil];
+                self = [self initWithURL:plistURL title:nil];
             }
             else
             {
