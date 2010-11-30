@@ -31,7 +31,7 @@
 
 - (NSString *)addFileWrapper:(NSFileWrapper *)wrapper subdirectory:(NSString *)subpath;
 {
-    // Create any directories required by the path
+    // Create any directories required by the subpath
     NSArray *components = [subpath pathComponents];
     NSFileWrapper *parentWrapper = self;
     
@@ -51,7 +51,7 @@
         parentWrapper = wrapper;
     }
     
-    // Add the wrapper  
+    // We finally have a suitable parent to add the wrapper to
     return [parentWrapper addFileWrapper:wrapper];
 }
 

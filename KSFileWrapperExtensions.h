@@ -29,6 +29,7 @@
 
 @interface NSFileWrapper (KSFileWrapperExtensions)
 
+// Like -addFileWrapper:, but if you supply a subdirectory the wrapper will be added as a grandchild (or deeper), rather than child
 - (NSString *)addFileWrapper:(NSFileWrapper *)wrapper subdirectory:(NSString *)subpath;
 
 @end
