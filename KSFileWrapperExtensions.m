@@ -39,16 +39,16 @@
     for (i = 0; i < count; i++)
     {
         NSString *aComponent = [components objectAtIndex:i];
-        NSFileWrapper *wrapper = [[parentWrapper fileWrappers] objectForKey:aComponent];
-        if (!wrapper)
+        NSFileWrapper *aWrapper = [[parentWrapper fileWrappers] objectForKey:aComponent];
+        if (!aWrapper)
         {
-            wrapper = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:nil];
-            [wrapper setPreferredFilename:aComponent];
-            [parentWrapper addFileWrapper:wrapper];
-            [wrapper release];
+            aWrapper = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:nil];
+            [aWrapper setPreferredFilename:aComponent];
+            [parentWrapper addFileWrapper:aWrapper];
+            [aWrapper release];
         }
         
-        parentWrapper = wrapper;
+        parentWrapper = aWrapper;
     }
     
     // We finally have a suitable parent to add the wrapper to
