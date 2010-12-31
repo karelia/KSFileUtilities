@@ -57,6 +57,11 @@
 	return self;
 }
 
+- (id)initWithURL:(NSURL *)URL;
+{
+    return [self initWithURL:URL title:nil];
+}
+
 - (id)init
 {
 	return [self initWithURL:nil title:nil];
