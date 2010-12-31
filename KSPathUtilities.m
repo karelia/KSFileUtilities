@@ -50,6 +50,10 @@
                    stringByAppendingString:aString]
                   stringByAppendingPathExtension:extension];
     }
+    else
+    {
+        result = [self stringByAppendingString:aString];
+    }
     
     return result;
 }
