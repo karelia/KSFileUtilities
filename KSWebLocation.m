@@ -81,6 +81,15 @@
 
 - (NSString *)title { return _title; }
 
+- (NSString *)description;
+{
+    return [NSString stringWithFormat:
+            @"%@ %@ %@",
+            [super description],
+            [[self URL] absoluteString],
+            [self title]];
+}
+
 #pragma mark Equality
 
 - (NSUInteger)hash
