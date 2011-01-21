@@ -1,7 +1,7 @@
 //
 //  KSWebLocationPasteboardUtilities.m
 //
-//  Copyright (c) 2007-2010, Mike Abdullah, Dan Wood and Karelia Software
+//  Copyright (c) 2007-2011, Mike Abdullah, Dan Wood and Karelia Software
 //  All rights reserved.
 //  
 //  Redistribution and use in source and binary forms, with or without
