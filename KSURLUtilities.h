@@ -64,6 +64,7 @@
 
 
 #pragma mark Mailto: URLs
+// Handles plain addresses, plus: foo@example.com (Foo)
 + (NSURL *)ks_mailtoURLWithEmailAddress:(NSString *)email;
 
 

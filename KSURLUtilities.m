@@ -212,9 +212,16 @@
 
 #pragma mark Mailto: URLs
 
-+ (NSURL *)ks_mailtoURLWithEmailAddress:(NSString *)email;
++ (NSURL *)ks_mailtoURLWithEmailAddress:(NSString *)address;
 {
-    return [self URLWithString:[@"mailto:" stringByAppendingString:email]];
+    NSScanner *s = [NSScanner scannerWithString:address];
+    if ([s scanUpToString:@"(" intoString:&address])
+    {
+        address = [address stringByTrimmingCharactersInSet:
+                   [NSCharacterSet whitespaceAndNewlineCharacterSet]];	// take out whitespace
+    }
+    
+	return [self URLWithString:[@"mailto:" stringByAppendingString:address]];
 }
 
 #pragma mark Query Dictionary
