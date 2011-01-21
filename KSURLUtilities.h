@@ -63,6 +63,10 @@
 - (BOOL)ks_isSubpathOfURL:(NSURL *)aURL;
 
 
+#pragma mark Mailto: URLs
++ (NSURL *)ks_mailtoURLWithEmailAddress:(NSString *)email;
+
+
 #pragma mark Queries
 
 // It's common to use the query part of a URL for a dictionary-like series of parameters. This method will decode that for you, including handling strings which were escaped to fit the scheme

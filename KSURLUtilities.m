@@ -210,6 +210,13 @@
     return result;
 }
 
+#pragma mark Mailto: URLs
+
++ (NSURL *)ks_mailtoURLWithEmailAddress:(NSString *)email;
+{
+    return [self URLWithString:[@"mailto:" stringByAppendingString:email]];
+}
+
 #pragma mark Query Dictionary
 
 - (NSDictionary *)ks_queryParameters;
