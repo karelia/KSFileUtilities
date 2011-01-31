@@ -60,6 +60,20 @@
 
 - (NSString *)ks_pathRelativeToDirectory:(NSString *)dirPath
 {
+    if ([dirPath isAbsolutePath])
+    {
+        if (![self isAbsolutePath]) return self;    // job's already done for us!
+    }
+    else
+    {
+        // An absolute path relative to a relative path is always going to be self
+        if ([self isAbsolutePath]) return self;
+        
+        // But comparing two relative paths is a bit of an edge case. Internally, pretend they're absolute
+        return [[@"/" stringByAppendingString:self] ks_pathRelativeToDirectory:[@"/" stringByAppendingString:dirPath]];
+    }
+    
+    
     // Our internal workings currently expect dirPath to have a trailing slash, so let's supply that for them
     if (![dirPath hasSuffix:@"/"]) dirPath = [dirPath stringByAppendingString:@"/"];
     
