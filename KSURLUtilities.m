@@ -345,8 +345,8 @@
 	}
 	
 	
-	// If the host or scheme differs, there is no possible relative path. Use object:isEqual: to handle nil.
-	if (!KSISEQUAL([self scheme], [URL scheme]) || !KSISEQUAL([self host], [URL host]))
+	// If the host or scheme differs, there is no possible relative path.
+    if (![[self scheme] isEqualToString:[URL scheme]] || ![[self host] isEqualToString:[URL host]])
 	{
 		NSString *result = [self absoluteString];
 		return result;
