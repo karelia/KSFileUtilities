@@ -293,7 +293,10 @@
 			{
 				thisIsTheFirstParameter = NO;
 			}
-			[parametersString appendFormat: @"%@=%@", [key ks_stringByAddingQueryComponentPercentEscapes], [parameter ks_stringByAddingQueryComponentPercentEscapes]];
+			[parametersString appendFormat:
+             @"%@=%@",
+             [key ks_stringByAddingQueryComponentPercentEscapes],
+             [parameter ks_stringByAddingQueryComponentPercentEscapes]];
 		}
 	}
 	return parametersString;
@@ -527,7 +530,7 @@
 {
     NSString *firstPass = [self ks_stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding
                                                charactersToLeaveUnescaped:@" "
-                                            legalURLCharactersToBeEscaped:@":/&+%="];
+                                            legalURLCharactersToBeEscaped:@";/?:@&=+,$%"];
     
     NSMutableString *result = [firstPass mutableCopy];
     [result replaceOccurrencesOfString:@" "

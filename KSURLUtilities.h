@@ -116,7 +116,7 @@
 - (NSString *)ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:(BOOL)encodeSpacesAsPlusCharacters;
 - (NSString *)ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:(BOOL)encodeSpacesAsPlusCharacters escape:(NSString *)toEscape;
 
-// For escaping a string that will go into a URL's query. Escapes : and / characters.
+// Follows RFC2396, section 3.4
 - (NSString *)ks_stringByAddingQueryComponentPercentEscapes;
 - (NSString *)ks_stringByReplacingQueryComponentPercentEscapes;
 
