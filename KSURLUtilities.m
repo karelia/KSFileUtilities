@@ -293,7 +293,7 @@
 			{
 				thisIsTheFirstParameter = NO;
 			}
-			[parametersString appendFormat: @"%@=%@", [key ks_stringByAddingURLQueryPercentEscapes], [parameter ks_stringByAddingURLQueryPercentEscapes]];
+			[parametersString appendFormat: @"%@=%@", [key ks_stringByAddingQueryComponentPercentEscapes], [parameter ks_stringByAddingQueryComponentPercentEscapes]];
 		}
 	}
 	return parametersString;
@@ -315,7 +315,7 @@
 		if (NSNotFound != whereEquals.location)
 		{
 			NSString *key = [keyValuePair substringToIndex:whereEquals.location];
-			NSString *value = [[keyValuePair substringFromIndex:whereEquals.location+1] ks_stringByReplacingURLQueryPercentEscapes];
+			NSString *value = [[keyValuePair substringFromIndex:whereEquals.location+1] ks_stringByReplacingQueryComponentPercentEscapes];
 			[result setValue:value forKey:key];
 		}
 	}
@@ -523,7 +523,7 @@
     return result;
 }
 
-- (NSString *)ks_stringByAddingURLQueryPercentEscapes;
+- (NSString *)ks_stringByAddingQueryComponentPercentEscapes;
 {
     NSString *firstPass = [self ks_stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding
                                                charactersToLeaveUnescaped:@" "
@@ -540,7 +540,7 @@
 
 /*!	Decode a URL's query-style string, taking out the + and %XX stuff
  */
-- (NSString *)ks_stringByReplacingURLQueryPercentEscapes
+- (NSString *)ks_stringByReplacingQueryComponentPercentEscapes
 {
 	NSString *ish = [self stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
