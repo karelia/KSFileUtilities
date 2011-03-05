@@ -71,7 +71,7 @@
 
 - (id)ks_initWithPath:(NSString *)path relativeToURL:(NSURL *)baseURL isDirectory:(BOOL)isDirectory
 {
-	OBPRECONDITION(path);
+	NSParameterAssert(path);
     
     NSString *URLString = path;
 	if ([path hasSuffix:@"/"] != isDirectory)
