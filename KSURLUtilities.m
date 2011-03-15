@@ -407,16 +407,17 @@
 
 #pragma mark Comparison
 
-- (BOOL)ks_isEqualToURL:(NSURL *)otherURL;   // For file: URLs, checks path equality
+- (BOOL)ks_isEqualToURL:(NSURL *)otherURL;
 {
-    if ([self isFileURL] && [otherURL isFileURL])
+    BOOL result = [self isEqual:otherURL];
+    
+   // For file: URLs the default check might have failed because they reference the host differently. If so, fall back to checking paths
+    if (!result && [self isFileURL] && [otherURL isFileURL])
     {
-        return [[self path] isEqualToString:[otherURL path]];
+        result = [[self path] isEqualToString:[otherURL path]];
     }
-    else
-    {
-        return [self isEqual:otherURL];
-    }
+    
+    return result;
 }
 
 - (BOOL)ks_isEqualExceptFragmentToURL:(NSURL *)anotherURL
