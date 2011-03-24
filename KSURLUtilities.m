@@ -527,6 +527,22 @@
     return result;
 }
 
+/*
+ 
+ By default, with null:
+ 
+ encoded:		#%<>[\]^`{|}"  space
+ 
+ Not encoded:	!$&'()*+,-./:;=?@_~
+ 
+ 
+ exclamation!number%23dollar$percent%25ampersand&tick'lparen(rparen)aster*plus+space%20comma,dash-dot.slash/colon:semicolon;lessthan%3Cequals=greaterthan%3Equestion?at@lbracket%5Bbackslashl%0Dbracket%5Dcaret%5Eunderscore_backtick%60lbrace%7Bvbar%7Crbrace%7Dtilde~doublequote%22
+ 
+ RFC2396:  Within a query component, the characters ";", "/", "?", ":", "@", "&", "=", "+", ",", and "$" are reserved.
+ 
+ 
+ */
+
 - (NSString *)ks_stringByAddingQueryComponentPercentEscapes;
 {
     NSString *firstPass = [self ks_stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding
