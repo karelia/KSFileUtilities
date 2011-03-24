@@ -180,7 +180,7 @@
         
         
         // Does the URL have no useful resource specified? If so, generate nil URL
-        if (URL)
+        if (URL && ![[URL scheme] isEqualToString:@"mailto"])
         {
             NSString *resource = [URL resourceSpecifier];
             if ([resource length] == 0 ||
@@ -189,17 +189,18 @@
             {
                 URL = nil;
             }
-        }
-        
-        
-        // URLs should also really have a host and a path
-        if (URL)
-        {
-            NSString *host = [URL host];
-			NSString *path = [URL path];
-			if (!host && !path)
-			{
-				URL = nil;
+            
+            
+            
+            // URLs should also really have a host and a path
+            if (URL)
+            {
+                NSString *host = [URL host];
+                NSString *path = [URL path];
+                if (!host && !path)
+                {
+                    URL = nil;
+                }
             }
         }
         
