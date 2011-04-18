@@ -49,7 +49,7 @@
     NSURL *result = nil;
     if (escapedString)
     {
-        result = [NSURL URLWithString:string];
+        result = [NSURL URLWithString:(NSString *)escapedString];
         CFRelease(escapedString);
     }
     
