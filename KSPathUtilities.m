@@ -135,6 +135,9 @@
  */
 - (BOOL)ks_isSubpathOfPath:(NSString *)aPath
 {
+    NSParameterAssert(aPath);  // karelia case #115844
+    
+    
 	NSString *adjustedMePath = self;
 	if (![adjustedMePath isEqualToString:@"/"])
 	{
