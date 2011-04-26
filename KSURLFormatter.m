@@ -50,19 +50,6 @@
     if (escapedString)
     {
         result = [NSURL URLWithString:(NSString *)escapedString];
-        if ( result )
-        {
-            if ( ![[result scheme] isEqualToString:@"http"]
-                && ![[result scheme] isEqualToString:@"https"]
-                && ![[result scheme] isEqualToString:@"feed"]
-                && ![[result scheme] isEqualToString:@"ftp"]
-                && ![[result scheme] isEqualToString:@"mailto"] )
-            {
-                // likely interpreting a colon for specifying port as the scheme
-                NSString *escapedAddingScheme = [NSString stringWithFormat:@"http://%@", (NSString *)escapedString];
-                result = [NSURL URLWithString:escapedAddingScheme];
-            }
-        }
         CFRelease(escapedString);
     }
     
