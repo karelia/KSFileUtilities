@@ -54,6 +54,7 @@
         {
             if ( ![[result scheme] isEqualToString:@"http"]
                 && ![[result scheme] isEqualToString:@"https"]
+                && ![[result scheme] isEqualToString:@"feed"]
                 && ![[result scheme] isEqualToString:@"ftp"]
                 && ![[result scheme] isEqualToString:@"mailto"] )
             {
