@@ -142,8 +142,9 @@
     
     NSURL *result = [self URLFromString:string];
 	
-	// this is probably a really naive check
-	if (![result scheme] && ![string hasPrefix:@"/"])
+	// This is probably a really naive check
+	if ((![result scheme] && ![string hasPrefix:@"/"]) ||   // e.g. foo
+        (![result host]))                                   // e.g. foo.com:8888
 	{
         // if it looks like an email address, use mailto:
         if ([self isValidEmailAddress:string])
