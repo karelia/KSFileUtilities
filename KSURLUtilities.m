@@ -32,6 +32,14 @@
 
 @implementation NSURL (KSPathUtilities)
 
+#pragma mark Scheme
+
+- (NSURL *)ks_URLWithScheme:(NSString *)scheme;
+{
+    NSString *string = [[NSString alloc] initWithFormat:@"%@:%@", scheme, [self resourceSpecifier]];
+    return [[self class] URLWithString:string];
+}
+
 #pragma mark Host
 
 - (NSURL *)ks_hostURL;		// returns a URL like "http://launch.karelia.com/"

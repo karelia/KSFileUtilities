@@ -29,6 +29,10 @@
 
 @interface NSURL (KSPathUtilities)
 
+#pragma mark Scheme
+- (NSURL *)ks_URLWithScheme:(NSString *)scheme;
+
+
 #pragma mark Host
 - (NSURL *)ks_hostURL;
 - (NSArray *)ks_domains;
