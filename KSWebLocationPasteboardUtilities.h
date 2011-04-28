@@ -54,5 +54,9 @@
 
 
 @interface NSPasteboard (KSWebLocation)
+// If the pboard doesn't explicitly contain a title for a location, it's guessed from the URL:
+// 1. last path component
+// 2. minus path extension
+// 3. any underscores converted to spaces
 - (NSArray *)readWebLocations;
 @end

@@ -94,7 +94,7 @@
     NSURL *URL = [[NSURL alloc] initWithPasteboardPropertyList:propertyList ofType:type];
     if (URL)
     {
-        self = [self initWithURL:URL title:nil];
+        self = [self initWithURL:URL title:[[self class] guessTitleForURL:URL]];
         [URL release];
     }
     
@@ -107,7 +107,7 @@
             NSURL *plistURL = [KSURLFormatter URLFromString:string];	/// encodeLegally to handle accented characters
             if (plistURL && [plistURL ks_hasNetworkLocation])
             {
-                self = [self initWithURL:plistURL title:nil];
+                self = [self initWithURL:plistURL title:[[self class] guessTitleForURL:URL]];
             }
             else
             {
@@ -166,6 +166,7 @@
 			if (URL)
 			{
 				NSString *title = [[objectInfo objectForKey:@"URIDictionary"] objectForKey:@"title"];
+                if (!title) title = [[self class] guessTitleForURL:URL];
 				
 				KSWebLocation *webLoc = [[KSWebLocation alloc] initWithURL:URL title:title];
 				result = [NSArray arrayWithObject:webLoc];
@@ -222,7 +223,7 @@
     for (NSString *aFilename in filenames)
     {
         NSURL *URL = [NSURL fileURLWithPath:aFilename];
-        KSWebLocation *aLocation = [[KSWebLocation alloc] initWithURL:URL title:nil];
+        KSWebLocation *aLocation = [[KSWebLocation alloc] initWithURL:URL title:[[self class] guessTitleForURL:URL]];
         [result addObject:aLocation];
         [aLocation release];
     }
