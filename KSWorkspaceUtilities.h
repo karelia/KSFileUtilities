@@ -28,4 +28,9 @@
 - (BOOL)ks_type:(NSString *)type1 isEqualToType:(NSString *)anotherUTI;
 - (BOOL)ks_type:(NSString *)type conformsToOneOfTypes:(NSArray *)types;
 
+
+#pragma mark Requesting Information
+- (NSImage *)ks_iconForType:(NSString *)aUTI;
+
+
 @end

@@ -13,6 +13,8 @@
 
 @implementation NSWorkspace (KSWorkspaceUtilities)
 
+#pragma mark Manipulating Uniform Type Identifier Information
+
 - (NSString *)ks_MIMETypeForType:(NSString *)aUTI;
 {
 	NSString *result = NSMakeCollectable(UTTypeCopyPreferredTagWithClass((CFStringRef)aUTI, kUTTagClassMIMEType));
@@ -197,6 +199,16 @@
     }
     
     return NO;
+}
+
+#pragma mark Requesting Information
+
+- (NSImage *)ks_iconForType:(NSString *)aUTI;
+{
+	NSString *extension = [self preferredFilenameExtensionForType:aUTI];
+	NSImage *result = [self iconForFileType:extension];
+    //[result normalizeSize];
+	return result;
 }
 
 @end
