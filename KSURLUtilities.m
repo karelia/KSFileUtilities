@@ -376,6 +376,10 @@
     
     // Need trailing slash?
     if ([self ks_hasDirectoryPath]) result = [result stringByAppendingString:@"/"];
+    
+    
+    // Escape
+    result = [result stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	
 	
 	// Re-build any non-path information
