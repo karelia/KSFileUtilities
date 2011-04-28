@@ -81,6 +81,13 @@
 }
 #endif
 
++ (NSString *)guessTitleForURL:(NSURL *)URL;
+{
+    NSString *result = [[URL ks_lastPathComponent] stringByDeletingPathExtension];
+    result = [result stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+    return result;
+}
+
 - (id)initWithPasteboardPropertyList:(id)propertyList ofType:(NSString *)type;
 {
     // Try with NSURL
