@@ -9,6 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 
+#define KSWORKSPACE [NSWorkspace sharedWorkspace]
+
+
 @interface NSWorkspace (KSWorkspaceUtilities)
 
 #pragma mark Manipulating Uniform Type Identifier Information
