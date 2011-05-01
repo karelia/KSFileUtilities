@@ -352,7 +352,7 @@
 	// URLs not compliant with RFC 1808 cannot be interpreted
 	if (![self ks_canBeDecomposed] || ![URL ks_canBeDecomposed])
 	{
-		return nil;
+		return [self absoluteString];
 	}
 	
 	
