@@ -101,32 +101,25 @@
 
 - (NSString *)stringForObjectValue:(id)anObject
 {
-    NSString *result = @"";
+    if (!anObject) return nil;
+    if (![anObject isKindOfClass:[NSURL class]]) return [anObject description];
     
-    if (anObject)
+    
+    NSURL *URL = anObject;
+    
+    NSString *result;
+    if ([self useDisplayNameForFileURLs] && [anObject isFileURL])
     {
-        if ([anObject isKindOfClass:[NSURL class]])
+        result = [[NSFileManager defaultManager] displayNameAtPath:[URL path]];
+    }
+    else
+    {
+        result = [URL absoluteString];
+        
+        // Append trailing slash if needed
+        if ([URL ks_hasNetworkLocation] && [[URL path] isEqualToString:@""])
         {
-            NSURL *URL = anObject;
-            
-            if ([self useDisplayNameForFileURLs] && [anObject isFileURL])
-            {
-                result = [[NSFileManager defaultManager] displayNameAtPath:[URL path]];
-            }
-            else
-            {
-                result = [URL absoluteString];
-                
-                // Append trailing slash if needed
-                if ([URL ks_hasNetworkLocation] && [[URL path] isEqualToString:@""])
-                {
-                    result = [result stringByAppendingString:@"/"];
-                }
-            }
-        }
-        else
-        {
-            result = nil;   // when might this occur? – Mike
+            result = [result stringByAppendingString:@"/"];
         }
     }
     
