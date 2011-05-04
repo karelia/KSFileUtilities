@@ -32,4 +32,7 @@
 // Like -addFileWrapper:, but if you supply a subdirectory the wrapper will be added as a grandchild (or deeper), rather than child
 - (NSString *)addFileWrapper:(NSFileWrapper *)wrapper subdirectory:(NSString *)subpath;
 
+// Removes all child file wrappers, except those whose filename begins with a period
+- (void)ks_removeAllVisibleFileWrappers;
+
 @end

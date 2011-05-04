@@ -55,4 +55,17 @@
     return [parentWrapper addFileWrapper:wrapper];
 }
 
+- (void)ks_removeAllVisibleFileWrappers;
+{
+    NSDictionary *wrappers = [self fileWrappers];
+    for (NSString *aFilename in wrappers)
+    {
+        if (![aFilename hasPrefix:@"."])
+        {
+            NSFileWrapper *aWrapper = [wrappers objectForKey:aFilename];
+            [self removeFileWrapper:aWrapper];
+        }
+    }
+}
+
 @end
