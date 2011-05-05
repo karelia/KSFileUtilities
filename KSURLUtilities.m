@@ -375,7 +375,10 @@
     
     
     // Need trailing slash?
-    if ([self ks_hasDirectoryPath]) result = [result stringByAppendingString:@"/"];
+    if ([self ks_hasDirectoryPath] && ![result hasSuffix:@"/"])
+    {
+        result = [result stringByAppendingString:@"/"];
+    }
     
     
     // Escape
