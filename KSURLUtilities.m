@@ -37,7 +37,9 @@
 - (NSURL *)ks_URLWithScheme:(NSString *)scheme;
 {
     NSString *string = [[NSString alloc] initWithFormat:@"%@:%@", scheme, [self resourceSpecifier]];
-    return [[self class] URLWithString:string];
+    NSURL *result = [[self class] URLWithString:string];
+    [string release];
+    return result;
 }
 
 #pragma mark Host
