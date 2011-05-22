@@ -78,57 +78,87 @@
     if ([self isEqualToString:dirPath]) return @".";
     
     
-    // Our internal workings currently expect dirPath to have a trailing slash, so let's supply that for them
-    if (![dirPath hasSuffix:@"/"]) dirPath = [dirPath stringByAppendingString:@"/"];
     
     
-	NSString *commonPrefix = [self commonPrefixWithString:dirPath options:NSLiteralSearch];
-	// Make sure common prefix ends with a / ... if not, back up to the previous /
-	if ([commonPrefix isEqualToString:@""])
-	{
-		return self;
-	}
-	if (![commonPrefix hasSuffix:@"/"])
-	{
-		NSRange whereSlash = [commonPrefix rangeOfString:@"/" options:NSLiteralSearch|NSBackwardsSearch];
-		if (NSNotFound == whereSlash.location)
-		{
-			return self;	// nothing in common, return
-		}
-		
-		// Fix commonPrefix so it ends in /
-		commonPrefix = [commonPrefix substringToIndex:NSMaxRange(whereSlash)];
-	}
+    // Our internal workings currently expect trailing slashes, so let's supply that for them
+    //if (![dirPath hasSuffix:@"/"]) dirPath = [dirPath stringByAppendingString:@"/"];
+    //if (![self hasSuffix:@"/"]) self = [self stringByAppendingString:@"/"];
+    
+    
+	NSString *commonDir = [self commonPrefixWithString:dirPath options:NSLiteralSearch];
+	if ([commonDir isEqualToString:@""]) return self;
 	
-	NSString *myDifferingPath = [self substringFromIndex:[commonPrefix length]];
-	NSString *otherDifferingPath = [dirPath substringFromIndex:[commonPrefix length]];
 	
-	NSMutableString *buf = [NSMutableString string];
-	NSUInteger i;
+    // What the paths have in common could be two similar folder names
+    // e.g. /foo/barnicle and /foo/bart/baz
+    // If so, wind back to the nearest slash
+    if (![commonDir hasSuffix:@"/"])
+    {
+        if ([self length] > [commonDir length] &&
+        [self characterAtIndex:[commonDir length]] != '/')
+        {
+            NSUInteger separatorLocation = [commonDir rangeOfString:@"/" options:NSBackwardsSearch].location;
+            if (separatorLocation == NSNotFound) separatorLocation = 0;
+            commonDir = [commonDir substringToIndex:separatorLocation];
+        }
+        else if ([dirPath length] > [commonDir length] &&
+                 [dirPath characterAtIndex:[commonDir length]] != '/')
+        {
+            NSUInteger separatorLocation = [commonDir rangeOfString:@"/" options:NSBackwardsSearch].location;
+            if (separatorLocation == NSNotFound) separatorLocation = 0;
+            commonDir = [commonDir substringToIndex:separatorLocation];
+        }
+    }
+    
+    
+    NSMutableString *result = [NSMutableString stringWithCapacity:
+                        [self length] + [dirPath length] - 2*[commonDir length]];
+    
+    
+    // How do you get from the directory path, to commonDir?
+    NSString *otherDifferingPath = [dirPath substringFromIndex:[commonDir length]];
+	NSArray *hopsUpArray = [otherDifferingPath componentsSeparatedByString:@"/"];
+    
+	for (NSString *aComponent in hopsUpArray)
+    {
+        if ([aComponent length] && ![aComponent isEqualToString:@"."])
+        {
+            NSAssert(![aComponent isEqualToString:@".."], @".. unsupported");  
+            if ([result length]) [result appendString:@"/"];
+            [result appendString:@".."];
+        }
+    }
+    
+    
+    // And then navigating from commonDir, to self, is mostly a simple append
+	NSString *pathRelativeToCommonDir = [self substringFromIndex:[commonDir length]];
+    
+    // But ignore leading slash(es) since they cause relative path to be reported as absolute
+    while ([pathRelativeToCommonDir hasPrefix:@"/"])
+    {
+        pathRelativeToCommonDir = [pathRelativeToCommonDir substringFromIndex:1];
+    }
+    
+    if ([pathRelativeToCommonDir length])
+    {
+        if ([result length]) [result appendString:@"/"];
+        [result appendString:pathRelativeToCommonDir];
+    }
 	
-	// generate hops up from other to the common place
-	NSArray *hopsUpArray = [otherDifferingPath pathComponents];
-	NSUInteger hopsUp = MAX(0,(NSInteger)[hopsUpArray count] - 1);
-	for (i = 0 ; i < hopsUp ; i++ )
-	{
-		[buf appendString:@"../"];
-	}
-	
-	// the rest is the relative path to me
-	[buf appendString:myDifferingPath];
-	
-	if ([buf isEqualToString:@""])	
+    
+    // Final tidy-up?
+	if ([result isEqualToString:@""])	
 	{
 		if ([self hasSuffix:@"/"])
 		{
-			[buf appendString:@"./"];	// if our relative link is to the top, then replace with ./
+			[result appendString:@"./"];	// if our relative link is to the top, then replace with ./
 		}
 		else	// link to yourself; give us just the file name
 		{
-			[buf appendString:[self lastPathComponent]];
+			[result appendString:[self lastPathComponent]];
 		}
 	}
-	NSString *result = [NSString stringWithString:buf];
+	
 	return result;
 }
 
