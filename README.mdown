@@ -82,3 +82,14 @@ A simple class that represents a URL, optionally with a title attached. Features
 - NSCopying
 
 You can pull in the WebKit.framework-dependent KSWebLocationPasteboardAdditions too, to (unsurprisingly) gain support for reading and writing Web Locations from/to the pasteboard.
+
+Development
+===========
+
+There are two branches in this repository: the *master* branch and the *tests* branch. The master branch just has the classes which can easily be used as a submodule in other repositories.
+
+The *tests* branch has a project with a single target - a unit test bundle.
+
+If the *tests* branch is currently checked out, changes from master can be brought over by doing a simple merge.
+
+If the *master* branch is currently checked out, changes from *tests* can be brought over by cherry-picking the commits that change the main class files. Of course, with this method it is important to keep the changes to the main class files in their own commits that do not include changes from the test project or unit testing classes. This isn't usually a problem as long as commits are kept small and frequent.
