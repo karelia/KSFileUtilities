@@ -42,7 +42,7 @@
 		}
 	}
     
-    OBPOSTCONDITION(result);
+    NSAssert(result, @"Should always fall back to raw data MIME type at the least");
     return result;
 }
 
