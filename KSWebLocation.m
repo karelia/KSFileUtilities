@@ -48,7 +48,7 @@
 {
 	NSParameterAssert(URL);
 	
-	if (self = [super init])
+	if ((self = [super init]))
 	{
 		_URL = [URL copy];
 		_title = [name copy];
@@ -138,7 +138,7 @@
 
 - (id)initWithCoder:(NSCoder *)decoder
 {
-	if (self = [super init])
+	if ((self = [super init]))
 	{
 		_URL = [[decoder decodeObjectForKey:@"URL"] retain];
 		_title = [[decoder decodeObjectForKey:@"name"] retain];
