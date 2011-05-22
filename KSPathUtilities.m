@@ -74,6 +74,10 @@
     }
     
     
+    // Easy way out
+    if ([self isEqualToString:dirPath]) return @".";
+    
+    
     // Our internal workings currently expect dirPath to have a trailing slash, so let's supply that for them
     if (![dirPath hasSuffix:@"/"]) dirPath = [dirPath stringByAppendingString:@"/"];
     
