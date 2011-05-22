@@ -78,18 +78,11 @@
     if ([self isEqualToString:dirPath]) return @".";
     
     
-    
-    
-    // Our internal workings currently expect trailing slashes, so let's supply that for them
-    //if (![dirPath hasSuffix:@"/"]) dirPath = [dirPath stringByAppendingString:@"/"];
-    //if (![self hasSuffix:@"/"]) self = [self stringByAppendingString:@"/"];
-    
-    
-	NSString *commonDir = [self commonPrefixWithString:dirPath options:NSLiteralSearch];
+    // Determine the common ancestor directory containing both paths. String comparison is a naive first pass...
+    NSString *commonDir = [self commonPrefixWithString:dirPath options:NSLiteralSearch];
 	if ([commonDir isEqualToString:@""]) return self;
 	
-	
-    // What the paths have in common could be two similar folder names
+    // ...as what the paths have in common could be two similar folder names
     // e.g. /foo/barnicle and /foo/bart/baz
     // If so, wind back to the nearest slash
     if (![commonDir hasSuffix:@"/"])
