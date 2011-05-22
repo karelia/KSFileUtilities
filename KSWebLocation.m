@@ -152,7 +152,7 @@
 // Pass in nil for aName if we want to use ID
 + (NSData *)readFromResourceFileAtPath:(NSString *)aPath type:(ResType) aType named:(NSString *)aName id:(NSInteger)anID
 {
-	NSInteger	fileRef = 0;
+	ResFileRefNum fileRef = 0;
 	NSData *result = nil;
 	@try
 	{
@@ -163,7 +163,7 @@
 			if (noErr == ResError())
 			{
 				Handle		theResHandle = NULL;
-				NSInteger	thePreviousRefNum = CurResFile();	// save current resource
+				ResFileRefNum	thePreviousRefNum = CurResFile();	// save current resource
 				Str255		thePName;
 				
 				UseResFile(fileRef);    		// set this resource to be current
