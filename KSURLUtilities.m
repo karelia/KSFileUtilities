@@ -372,6 +372,7 @@
     
     
     NSString *dirPath = [URL path];
+    if (![dirPath length]) dirPath = @"/";  // handle pathless URLs. e.g. http://example.com
     if (![URL ks_hasDirectoryPath]) dirPath = [dirPath stringByDeletingLastPathComponent];
     NSString *result = [myPath ks_pathRelativeToDirectory:dirPath];
     

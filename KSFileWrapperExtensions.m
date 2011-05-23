@@ -57,7 +57,9 @@
 
 - (void)ks_removeAllVisibleFileWrappers;
 {
-    NSDictionary *wrappers = [self fileWrappers];
+    // Leopard had a bug where -fileWrappers returns its own backing store, which means it will mutate while enumerating
+    NSDictionary *wrappers = [[self fileWrappers] copy];
+    
     for (NSString *aFilename in wrappers)
     {
         if (![aFilename hasPrefix:@"."])
@@ -66,6 +68,8 @@
             [self removeFileWrapper:aWrapper];
         }
     }
+    
+    [wrappers release];
 }
 
 @end
