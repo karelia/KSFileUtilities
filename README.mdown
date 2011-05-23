@@ -93,3 +93,9 @@ The *tests* branch has a project with a single target - a unit test bundle.
 If the *tests* branch is currently checked out, changes from master can be brought over by doing a simple merge.
 
 If the *master* branch is currently checked out, changes from *tests* can be brought over by cherry-picking the commits that change the main class files. Of course, with this method it is important to keep the changes to the main class files in their own commits that do not include changes from the test project or unit testing classes. This isn't usually a problem as long as commits are kept small and frequent.
+
+Sometimes, there may be artefacts left over when switching branches. These are files that are ignored by git (in the `.gitignore` file) so they are not created or destroyed when switching branches. If they are distracting they can be cleaned up using the standard command:
+
+    git clean -dxf
+    
+This deletes all files that are not tracked by git.q
