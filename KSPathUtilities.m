@@ -139,18 +139,13 @@
     }
 	
     
-    // Final tidy-up?
-	if ([result isEqualToString:@""])	
-	{
-		if ([self hasSuffix:@"/"])
-		{
-			[result appendString:@"./"];	// if our relative link is to the top, then replace with ./
-		}
-		else	// link to yourself; give us just the file name
-		{
-			[result appendString:[self lastPathComponent]];
-		}
-	}
+    // Were the paths found to be equal?
+	if ([result length] == 0)
+    {
+        [result appendString:@"."];
+        [result appendString:[self substringFromIndex:[commonDir length]]]; // match original's oddities
+    }
+    
 	
 	return result;
 }
