@@ -14,6 +14,7 @@
     
 }
 
+- (void)testPath:(NSString *)path relativeToDirectory:(NSString *)dirPath expectedResult:(NSString *)expectedResult;
 @end
 
 
@@ -39,216 +40,101 @@ NSString * const pathFooBar_Relative = @"foo/bar";
 
 #pragma mark - Tests
 
+- (void)testPath:(NSString *)path relativeToDirectory:(NSString *)dirPath expectedResult:(NSString *)expectedResult;
+{
+    NSString *result = [path ks_pathRelativeToDirectory:dirPath];
+    
+    STAssertTrue([result isEqualToString:expectedResult],
+                 @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'",
+                 path,
+                 dirPath,
+                 expectedResult,
+                 result);
+}
+
 - (void)testPathRelativeToDirectory {
     // Test cases for ks_pathRelativeToDirectory
-    NSString *result;
-    NSString *expectedResult;
     
     
     /*  No traversal needed
      */
-    result = [pathRoot ks_pathRelativeToDirectory:pathRoot];
-    expectedResult = @".";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathRoot, pathRoot, expectedResult, result);
-    
-    
-    result = [pathFoo ks_pathRelativeToDirectory:pathFoo];
-    expectedResult = @".";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFoo, pathFoo, expectedResult, result);
-    
-    
-    result = [pathFooBar ks_pathRelativeToDirectory:pathFooBar];
-    expectedResult = @".";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFooBar, pathFooBar, expectedResult, result);
+    [self testPath:pathRoot relativeToDirectory:pathRoot expectedResult:@"."];
+    [self testPath:pathFoo relativeToDirectory:pathFoo expectedResult:@"."];
+    [self testPath:pathFooBar relativeToDirectory:pathFooBar expectedResult:@"."];
     
     
     
     /*  No traversal needed, trailing slashes
      */
-    result = [pathRoot_TrailingSlash ks_pathRelativeToDirectory:pathRoot_TrailingSlash];
-    expectedResult = @".";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathRoot_TrailingSlash, pathRoot_TrailingSlash, expectedResult, result);
+    [self testPath:pathRoot_TrailingSlash relativeToDirectory:pathRoot_TrailingSlash expectedResult:@"."];
+    [self testPath:pathRoot_TrailingSlash relativeToDirectory:pathRoot expectedResult:@"./"];
+    [self testPath:pathRoot relativeToDirectory:pathRoot_TrailingSlash expectedResult:@"./"]; // this is legal, but would ideally be @"."
+    [self testPath:pathFoo_TrailingSlash relativeToDirectory:pathFoo_TrailingSlash expectedResult:@"."];
+    [self testPath:pathFoo_TrailingSlash relativeToDirectory:pathFoo expectedResult:@"./"];
+    [self testPath:pathFoo relativeToDirectory:pathFoo_TrailingSlash expectedResult:@"."];
+    [self testPath:pathFooBar_TrailingSlash relativeToDirectory:pathFooBar_TrailingSlash expectedResult:@"."];
+    [self testPath:pathFooBar_TrailingSlash relativeToDirectory:pathFooBar expectedResult:@"./"];
+    [self testPath:pathFooBar relativeToDirectory:pathFooBar_TrailingSlash expectedResult:@"."];
     
-    
-    result = [pathRoot_TrailingSlash ks_pathRelativeToDirectory:pathRoot];
-    expectedResult = @"./";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathRoot_TrailingSlash, pathRoot, expectedResult, result);
-    
-    
-    result = [pathRoot ks_pathRelativeToDirectory:pathRoot_TrailingSlash];
-    expectedResult = @"./"; // this is legal, but would ideally be @"."
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathRoot, pathRoot_TrailingSlash, expectedResult, result);
-    
-    
-    result = [pathFoo_TrailingSlash ks_pathRelativeToDirectory:pathFoo_TrailingSlash];
-    expectedResult = @".";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFoo_TrailingSlash, pathFoo_TrailingSlash, expectedResult, result);
-    
-    
-    result = [pathFoo_TrailingSlash ks_pathRelativeToDirectory:pathFoo];
-    expectedResult = @"./";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFoo_TrailingSlash, pathFoo, expectedResult, result);
-    
-    
-    result = [pathFoo ks_pathRelativeToDirectory:pathFoo_TrailingSlash];
-    expectedResult = @".";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFoo, pathFoo_TrailingSlash, expectedResult, result);
-    
-    
-    result = [pathFooBar_TrailingSlash ks_pathRelativeToDirectory:pathFooBar_TrailingSlash];
-    expectedResult = @".";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFooBar_TrailingSlash, pathFooBar_TrailingSlash, expectedResult, result);
-    
-    
-    result = [pathFooBar_TrailingSlash ks_pathRelativeToDirectory:pathFooBar];
-    expectedResult = @"./";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFooBar_TrailingSlash, pathFooBar, expectedResult, result);
-    
-    
-    result = [pathFooBar ks_pathRelativeToDirectory:pathFooBar_TrailingSlash];
-    expectedResult = @".";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFooBar, pathFooBar_TrailingSlash, expectedResult, result);
-    
-    
-    
+        
     /*  No traversal needed, relative paths
      */
-    result = [pathFoo_Relative ks_pathRelativeToDirectory:pathFoo_Relative];
-    expectedResult = @".";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFoo_Relative, pathFoo_Relative, expectedResult, result);
-    
-    
-    result = [pathFooBar_Relative ks_pathRelativeToDirectory:pathFooBar_Relative];
-    expectedResult = @".";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFooBar_Relative, pathFooBar_Relative, expectedResult, result);
+    [self testPath:pathFoo_Relative relativeToDirectory:pathFoo_Relative expectedResult:@"."];
+    [self testPath:pathFooBar_Relative relativeToDirectory:pathFooBar_Relative expectedResult:@"."];
     
     
     /*  Traversing from root
      */
-    result = [pathFoo ks_pathRelativeToDirectory:pathRoot];
-    expectedResult = @"foo";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFoo, pathRoot, expectedResult, result);
-    
-    
-    result = [pathFooBar ks_pathRelativeToDirectory:pathRoot];
-    expectedResult = @"foo/bar";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFooBar, pathRoot, expectedResult, result);
-    
-    
-    result = [pathFoo_TrailingSlash ks_pathRelativeToDirectory:pathRoot];
-    expectedResult = @"foo/";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFoo_TrailingSlash, pathRoot, expectedResult, result);
-    
-    
-    result = [pathFooBar_TrailingSlash ks_pathRelativeToDirectory:pathRoot];
-    expectedResult = @"foo/bar/";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFooBar_TrailingSlash, pathRoot, expectedResult, result);
+    [self testPath:pathFoo relativeToDirectory:pathRoot expectedResult:@"foo"];
+    [self testPath:pathFooBar relativeToDirectory:pathRoot expectedResult:@"foo/bar"];
+    [self testPath:pathFoo_TrailingSlash relativeToDirectory:pathRoot expectedResult:@"foo/"];
+    [self testPath:pathFooBar_TrailingSlash relativeToDirectory:pathRoot expectedResult:@"foo/bar/"];
     
     
     
     /*  Traversing from unusual root
      */
-    result = [pathFoo ks_pathRelativeToDirectory:pathRoot_TrailingSlash];
-    expectedResult = @"foo";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFoo, pathRoot, expectedResult, result);
-    
-    
-    result = [pathFooBar ks_pathRelativeToDirectory:pathRoot_TrailingSlash];
-    expectedResult = @"foo/bar";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFooBar, pathRoot, expectedResult, result);
+    [self testPath:pathFoo relativeToDirectory:pathRoot_TrailingSlash expectedResult:@"foo"];
+    [self testPath:pathFooBar relativeToDirectory:pathRoot_TrailingSlash expectedResult:@"foo/bar"];
     
     
     
     /*  Traversing back to root
      */
-    result = [pathRoot ks_pathRelativeToDirectory:pathFoo];
-    expectedResult = @"..";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathRoot, pathFoo, expectedResult, result);
-    
-    
-    result = [pathRoot ks_pathRelativeToDirectory:pathFooBar];
-    expectedResult = @"../..";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathRoot, pathFooBar, expectedResult, result);
-    
-    
-    result = [pathRoot ks_pathRelativeToDirectory:pathFoo_TrailingSlash];
-    expectedResult = @"..";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathRoot, pathFoo_TrailingSlash, expectedResult, result);
-    
-    
-    result = [pathRoot ks_pathRelativeToDirectory:pathFooBar_TrailingSlash];
-    expectedResult = @"../..";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathRoot, pathFooBar_TrailingSlash, expectedResult, result);
+    [self testPath:pathRoot relativeToDirectory:pathFoo expectedResult:@".."];
+    [self testPath:pathRoot relativeToDirectory:pathFooBar expectedResult:@"../.."];
+    [self testPath:pathRoot relativeToDirectory:pathFoo_TrailingSlash expectedResult:@".."];
+    [self testPath:pathRoot relativeToDirectory:pathFooBar_TrailingSlash expectedResult:@"../.."];
     
     
     
     /*  Traversing from parent folder
      */
-    result = [pathFooBar ks_pathRelativeToDirectory:pathFoo];
-    expectedResult = @"bar";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFooBar, pathFoo, expectedResult, result);
-    
-    
-    result = [pathFooBar ks_pathRelativeToDirectory:pathFoo_TrailingSlash];
-    expectedResult = @"bar";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFooBar, pathFoo, expectedResult, result);
-    
-    
-    result = [pathFooBar_TrailingSlash ks_pathRelativeToDirectory:pathFoo];
-    expectedResult = @"bar/";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFooBar_TrailingSlash, pathFoo, expectedResult, result);
+    [self testPath:pathFooBar relativeToDirectory:pathFoo expectedResult:@"bar"];
+    [self testPath:pathFooBar relativeToDirectory:pathFoo_TrailingSlash expectedResult:@"bar"];
+    [self testPath:pathFooBar_TrailingSlash relativeToDirectory:pathFoo expectedResult:@"bar/"];
     
     
     
     /*  Traversing to parent folder
      */
-    result = [pathFoo ks_pathRelativeToDirectory:pathFooBar];
-    expectedResult = @"..";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFoo, pathFooBar, expectedResult, result);
-    
-    
-    result = [pathFoo ks_pathRelativeToDirectory:pathFooBar_TrailingSlash];
-    expectedResult = @"..";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFoo, pathFooBar_TrailingSlash, expectedResult, result);
-    
-    
-    result = [pathFoo_TrailingSlash ks_pathRelativeToDirectory:pathFooBar];
-    expectedResult = @".."; // TODO: It would probably be nicer to return @"../" although this is valid
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFoo_TrailingSlash, pathFooBar, expectedResult, result);
+    [self testPath:pathFoo relativeToDirectory:pathFooBar expectedResult:@".."];
+    [self testPath:pathFoo relativeToDirectory:pathFooBar_TrailingSlash expectedResult:@".."];
+    [self testPath:pathFoo_TrailingSlash relativeToDirectory:pathFooBar expectedResult:@".."]; // TODO: It would probably be nicer to return @"../" although this is valid
     
     
     /*  Only dir in common is root
      */
-    result = [pathFoo ks_pathRelativeToDirectory:pathBaz];
-    expectedResult = @"../foo";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFoo, pathBaz, expectedResult, result);
-    
-    
-    result = [pathFoo_TrailingSlash ks_pathRelativeToDirectory:pathBaz];
-    expectedResult = @"../foo/";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFoo_TrailingSlash, pathBaz, expectedResult, result);
-    
-    
-    result = [pathFooBar ks_pathRelativeToDirectory:pathBaz];
-    expectedResult = @"../foo/bar";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFooBar, pathBaz, expectedResult, result);
-    
-    
-    result = [pathFooBar_TrailingSlash ks_pathRelativeToDirectory:pathBaz];
-    expectedResult = @"../foo/bar/";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFooBar_TrailingSlash, pathBaz, expectedResult, result);
-    
-    
-    result = [pathBaz ks_pathRelativeToDirectory:pathFooBar];
-    expectedResult = @"../../baz";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathBaz, pathFooBar, expectedResult, result);
+    [self testPath:pathFoo relativeToDirectory:pathBaz expectedResult:@"../foo"];
+    [self testPath:pathFoo_TrailingSlash relativeToDirectory:pathBaz expectedResult:@"../foo/"];
+    [self testPath:pathFooBar relativeToDirectory:pathBaz expectedResult:@"../foo/bar"];
+    [self testPath:pathFooBar_TrailingSlash relativeToDirectory:pathBaz expectedResult:@"../foo/bar/"];
+    [self testPath:pathBaz relativeToDirectory:pathFooBar expectedResult:@"../../baz"];
     
     
     /*  Foo dir is in common
      */
-    result = [pathFooBar ks_pathRelativeToDirectory:pathFooBaz];
-    expectedResult = @"../bar";
-    STAssertTrue([result isEqualToString:expectedResult], @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'", pathFooBar, pathFooBaz, expectedResult, result);
+    [self testPath:pathFooBar relativeToDirectory:pathFooBaz expectedResult:@"../bar"];
 }
 
 @end
