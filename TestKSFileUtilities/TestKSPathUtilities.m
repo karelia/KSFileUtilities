@@ -68,7 +68,7 @@ NSString * const pathFooBar_Relative = @"foo/bar";
      */
     [self testPath:pathRoot_TrailingSlash relativeToDirectory:pathRoot_TrailingSlash expectedResult:@"."];
     [self testPath:pathRoot_TrailingSlash relativeToDirectory:pathRoot expectedResult:@"./"];
-    [self testPath:pathRoot relativeToDirectory:pathRoot_TrailingSlash expectedResult:@"./"]; // this is legal, but would ideally be @"."
+    [self testPath:pathRoot relativeToDirectory:pathRoot_TrailingSlash expectedResult:@"."];
     [self testPath:pathFoo_TrailingSlash relativeToDirectory:pathFoo_TrailingSlash expectedResult:@"."];
     [self testPath:pathFoo_TrailingSlash relativeToDirectory:pathFoo expectedResult:@"./"];
     [self testPath:pathFoo relativeToDirectory:pathFoo_TrailingSlash expectedResult:@"."];
