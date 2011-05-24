@@ -143,6 +143,7 @@
 	if ([result length] == 0)
     {
         [result appendString:@"."];
+        [result appendString:[self substringFromIndex:[commonDir length]]]; // match original's oddities
     }
     
 	
