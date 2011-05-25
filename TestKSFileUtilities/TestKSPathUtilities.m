@@ -38,7 +38,13 @@
     
     if (![path isAbsolutePath] && ![dirPath isAbsolutePath])
     {
-        [self testPath:[@"/" stringByAppendingString:path]
+        path = [@"/" stringByAppendingString:path];
+        
+        // Absolute path, relative to a relative path = the exact path
+        [self testPath:path relativeToDirectory:dirPath expectedResult:path];
+        
+        // Absolute variants of the paths should give the same result
+        [self testPath:path
    relativeToDirectory:[@"/" stringByAppendingString:dirPath]
         expectedResult:expectedResult];
     }
