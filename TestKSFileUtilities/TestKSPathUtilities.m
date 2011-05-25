@@ -22,6 +22,9 @@
 
 #pragma mark - Tests
 
+/*  Performs test pretty much as it says on the tin
+ *  If you pass in a non-absolute path, will test that, plus absolute equivalent
+ */
 - (void)testPath:(NSString *)path relativeToDirectory:(NSString *)dirPath expectedResult:(NSString *)expectedResult;
 {
     NSString *result = [path ks_pathRelativeToDirectory:dirPath];
@@ -32,6 +35,13 @@
                  dirPath,
                  expectedResult,
                  result);
+    
+    if (![path isAbsolutePath] && ![dirPath isAbsolutePath])
+    {
+        [self testPath:[@"/" stringByAppendingString:path]
+   relativeToDirectory:[@"/" stringByAppendingString:dirPath]
+        expectedResult:expectedResult];
+    }
 }
 
 - (void)testPathRelativeToDirectory {
@@ -41,8 +51,8 @@
     /*  No traversal needed
      */
     [self testPath:@"/" relativeToDirectory:@"/" expectedResult:@"."];
-    [self testPath:@"/foo" relativeToDirectory:@"/foo" expectedResult:@"."];
-    [self testPath:@"/foo/bar" relativeToDirectory:@"/foo/bar" expectedResult:@"."];
+    [self testPath:@"foo" relativeToDirectory:@"foo" expectedResult:@"."];
+    [self testPath:@"foo/bar" relativeToDirectory:@"foo/bar" expectedResult:@"."];
     
     
     
@@ -56,19 +66,14 @@
     [self testPath:@"/" relativeToDirectory:@"/." expectedResult:@"."];
     [self testPath:@"/" relativeToDirectory:@"/.//.///." expectedResult:@"."];
     
-    [self testPath:@"/foo/" relativeToDirectory:@"/foo/" expectedResult:@"."];
-    [self testPath:@"/foo/" relativeToDirectory:@"/foo" expectedResult:@"./"];
-    [self testPath:@"/foo" relativeToDirectory:@"/foo/" expectedResult:@"."];
-    [self testPath:@"/foo/bar/" relativeToDirectory:@"/foo/bar/" expectedResult:@"."];
-    [self testPath:@"/foo/bar/" relativeToDirectory:@"/foo/bar" expectedResult:@"./"];
-    [self testPath:@"/foo/bar" relativeToDirectory:@"/foo/bar/" expectedResult:@"."];
+    [self testPath:@"foo/" relativeToDirectory:@"foo/" expectedResult:@"."];
+    [self testPath:@"foo/" relativeToDirectory:@"foo" expectedResult:@"./"];
+    [self testPath:@"foo" relativeToDirectory:@"foo/" expectedResult:@"."];
+    [self testPath:@"foo/bar/" relativeToDirectory:@"foo/bar/" expectedResult:@"."];
+    [self testPath:@"foo/bar/" relativeToDirectory:@"foo/bar" expectedResult:@"./"];
+    [self testPath:@"foo/bar" relativeToDirectory:@"foo/bar/" expectedResult:@"."];
     
         
-    /*  No traversal needed, relative paths
-     */
-    [self testPath:@"foo" relativeToDirectory:@"foo" expectedResult:@"."];
-    [self testPath:@"foo/bar" relativeToDirectory:@"foo/bar" expectedResult:@"."];
-    
     
     /*  Traversing from root
      */
@@ -97,17 +102,18 @@
     
     /*  Traversing from parent folder
      */
-    [self testPath:@"/foo/bar" relativeToDirectory:@"/foo" expectedResult:@"bar"];
-    [self testPath:@"/foo/bar" relativeToDirectory:@"/foo/" expectedResult:@"bar"];
-    [self testPath:@"/foo/bar/" relativeToDirectory:@"/foo" expectedResult:@"bar/"];
-    
+    [self testPath:@"foo/bar" relativeToDirectory:@"foo" expectedResult:@"bar"];
+    [self testPath:@"foo/bar" relativeToDirectory:@"foo/" expectedResult:@"bar"];
+    [self testPath:@"foo/bar/" relativeToDirectory:@"foo" expectedResult:@"bar/"];
+        
     
     
     /*  Traversing to parent folder
      */
-    [self testPath:@"/foo" relativeToDirectory:@"/foo/bar" expectedResult:@".."];
-    [self testPath:@"/foo" relativeToDirectory:@"/foo/bar/" expectedResult:@".."];
-    [self testPath:@"/foo/" relativeToDirectory:@"/foo/bar" expectedResult:@".."]; // TODO: It would probably be nicer to return @"../" although this is valid
+    [self testPath:@"foo" relativeToDirectory:@"foo/bar" expectedResult:@".."];
+    [self testPath:@"foo" relativeToDirectory:@"foo/bar/" expectedResult:@".."];
+    [self testPath:@"foo/" relativeToDirectory:@"foo/bar" expectedResult:@".."]; // TODO: It would probably be nicer to return @"../" although this is valid
+    
     
     
     /*  Only dir in common is root
@@ -121,7 +127,7 @@
     
     /*  Foo dir is in common
      */
-    [self testPath:@"/foo/bar" relativeToDirectory:@"/foo/baz" expectedResult:@"../bar"];
+    [self testPath:@"foo/bar" relativeToDirectory:@"foo/baz" expectedResult:@"../bar"];
 }
 
 @end
