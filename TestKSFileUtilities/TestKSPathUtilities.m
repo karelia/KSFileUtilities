@@ -51,6 +51,11 @@
     [self testPath:@"//" relativeToDirectory:@"//" expectedResult:@"."];
     [self testPath:@"//" relativeToDirectory:@"/" expectedResult:@"./"];
     [self testPath:@"/" relativeToDirectory:@"//" expectedResult:@"."];
+    [self testPath:@"/." relativeToDirectory:@"/" expectedResult:@"."];
+    [self testPath:@"/.////././//" relativeToDirectory:@"/" expectedResult:@".////././//"];
+    [self testPath:@"/" relativeToDirectory:@"/." expectedResult:@"."];
+    [self testPath:@"/" relativeToDirectory:@"/.//.///." expectedResult:@"."];
+    
     [self testPath:@"/foo/" relativeToDirectory:@"/foo/" expectedResult:@"."];
     [self testPath:@"/foo/" relativeToDirectory:@"/foo" expectedResult:@"./"];
     [self testPath:@"/foo" relativeToDirectory:@"/foo/" expectedResult:@"."];
