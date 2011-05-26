@@ -27,6 +27,21 @@
 #import "KSPathUtilities.h"
 
 
+@interface KSIncrementedPath : NSString
+{
+  @private
+    NSString    *_storage;
+    NSString    *_basePath;
+    NSUInteger  _suffix;
+}
+
+- (id)initWithBasePath:(NSString *)basePath suffix:(NSUInteger)suffix;
+@end
+
+
+#pragma mark -
+
+
 @implementation NSString (KSPathUtilities)
 
 - (BOOL)ks_isEqualToPath:(NSString *)aPath;
@@ -37,6 +52,8 @@
     BOOL result = ([myPath caseInsensitiveCompare:aPath] == NSOrderedSame);
     return result;
 }
+
+#pragma mark Path Suffix
 
 - (NSString *)ks_stringWithPathSuffix:(NSString *)aString;
 {
@@ -56,6 +73,11 @@
     }
     
     return result;
+}
+
+- (NSString *)ks_stringByIncrementingPath;
+{
+    return [[[KSIncrementedPath alloc] initWithBasePath:self suffix:2] autorelease];
 }
 
 - (NSString *)ks_pathRelativeToDirectory:(NSString *)dirPath
@@ -205,3 +227,42 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation KSIncrementedPath
+
+- (id)initWithBasePath:(NSString *)basePath suffix:(NSUInteger)suffix;
+{
+    NSParameterAssert(suffix >= 2);
+    
+    self = [self init];
+    
+    _basePath = [basePath copy];
+    _suffix = suffix;
+    _storage = [[basePath ks_stringWithPathSuffix:[NSString stringWithFormat:@"-%u", suffix]] copy];
+    
+    return self;
+}
+
+- (void)dealloc;
+{
+    [_basePath release];
+    [_storage release];
+    [super dealloc];
+}
+
+- (NSString *)ks_stringByIncrementingPath;
+{
+    return [[[[self class] alloc] initWithBasePath:_basePath suffix:(_suffix + 1)] autorelease];
+}
+
+#pragma mark NSString Primitives
+
+- (NSUInteger)length; { return [_storage length]; }
+- (unichar)characterAtIndex:(NSUInteger)index; { return [_storage characterAtIndex:index]; }
+
+@end
+

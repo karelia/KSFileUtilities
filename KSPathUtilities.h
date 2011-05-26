@@ -32,13 +32,25 @@
 // Standardizes the paths and tests equality ignoring case
 - (BOOL)ks_isEqualToPath:(NSString *)aPath;
 
+
+#pragma mark Path Suffix
+
+// Given a path "foo/bar.png", adjusts it to be "foo/bar-2.png". Calling -ks_stringByIncrementingPath on that string will then give "foo/bar-3.png" and so on
+- (NSString *)ks_stringByIncrementingPath;
+
 // like -stringByAppendingString: but inserts the suffix string in front of path extension if there is one. e.g. [@"foo.png" ks_stringWithPathSuffix:@"-2"] = @"foo-2.png"
 - (NSString *)ks_stringWithPathSuffix:(NSString *)aString;
+
+
+#pragma mark Comparing Paths
 
 // Will preserve any trailing slashes that are part of self
 - (NSString *)ks_pathRelativeToDirectory:(NSString *)otherPath;
 
 - (BOOL)ks_isSubpathOfPath:(NSString *)aPath;  // Does aPath contain self?
+
+
+#pragma mark POSIX Paths
 
 // NSString has built-in methods for standardizing a path, but they consult the filesystem for symlinks. This method only looks at the path itself
 - (NSString *)ks_standardizedPOSIXPath;
