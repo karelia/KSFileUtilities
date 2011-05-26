@@ -44,15 +44,6 @@
 
 @implementation NSString (KSPathUtilities)
 
-- (BOOL)ks_isEqualToPath:(NSString *)aPath;
-{
-    NSString *myPath = [self stringByStandardizingPath];
-    aPath = [aPath stringByStandardizingPath];
-    
-    BOOL result = ([myPath caseInsensitiveCompare:aPath] == NSOrderedSame);
-    return result;
-}
-
 #pragma mark Path Suffix
 
 - (NSString *)ks_stringWithPathSuffix:(NSString *)aString;
@@ -79,6 +70,46 @@
 {
     return [[[KSIncrementedPath alloc] initWithBasePath:self suffix:2] autorelease];
 }
+
+#pragma mark Comparing Paths
+
+- (BOOL)ks_isEqualToPath:(NSString *)aPath;
+{
+    NSString *myPath = [self stringByStandardizingPath];
+    aPath = [aPath stringByStandardizingPath];
+    
+    BOOL result = ([myPath caseInsensitiveCompare:aPath] == NSOrderedSame);
+    return result;
+}
+
+/*  We can somewhat cheat by giving each path a trailing slash and then do simple string comparison.
+ That way we ensure that we don't have something like ABCDEFGH being considered a subpath of ABCD
+ But ABCD/EFGH will be.
+ */
+- (BOOL)ks_isSubpathOfPath:(NSString *)aPath
+{
+    NSParameterAssert(aPath);  // karelia case #115844
+    
+    
+	NSString *adjustedMePath = self;
+	if (![adjustedMePath isEqualToString:@"/"])
+	{
+		adjustedMePath = [adjustedMePath stringByAppendingString:@"/"];
+	}
+	
+	NSString *adjustedOtherPath = aPath;
+	if (![adjustedOtherPath isEqualToString:@"/"])
+	{
+		adjustedOtherPath = [adjustedOtherPath stringByAppendingString:@"/"];
+	}
+    
+    // Used to -hasPrefix:, but really need to do it case insensitively
+    NSRange result = [adjustedMePath rangeOfString:adjustedOtherPath
+                                           options:(NSAnchoredSearch | NSCaseInsensitiveSearch)];
+    
+    return (result.location == 0);
+}
+
 
 - (NSString *)ks_pathRelativeToDirectory:(NSString *)dirPath
 {
@@ -172,35 +203,7 @@
 	return result;
 }
 
-
-/*  We can somewhat cheat by giving each path a trailing slash and then do simple string comparison.
- That way we ensure that we don't have something like ABCDEFGH being considered a subpath of ABCD
- But ABCD/EFGH will be.
- */
-- (BOOL)ks_isSubpathOfPath:(NSString *)aPath
-{
-    NSParameterAssert(aPath);  // karelia case #115844
-    
-    
-	NSString *adjustedMePath = self;
-	if (![adjustedMePath isEqualToString:@"/"])
-	{
-		adjustedMePath = [adjustedMePath stringByAppendingString:@"/"];
-	}
-	
-	NSString *adjustedOtherPath = aPath;
-	if (![adjustedOtherPath isEqualToString:@"/"])
-	{
-		adjustedOtherPath = [adjustedOtherPath stringByAppendingString:@"/"];
-	}
-    
-    // Used to -hasPrefix:, but really need to do it case insensitively
-    NSRange result = [adjustedMePath rangeOfString:adjustedOtherPath
-                                           options:(NSAnchoredSearch | NSCaseInsensitiveSearch)];
-    
-    return (result.location == 0);
-}
-
+#pragma mark POSIX
 
 /*  Trailing slashes are insignificant under the POSIX standard. If the receiver has a trailing
  *  slash, a new string is returned with the slash removed.

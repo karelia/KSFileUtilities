@@ -29,10 +29,6 @@
 
 @interface NSString (KSPathUtilities)
 
-// Standardizes the paths and tests equality ignoring case
-- (BOOL)ks_isEqualToPath:(NSString *)aPath;
-
-
 #pragma mark Path Suffix
 
 // Given a path "foo/bar.png", adjusts it to be "foo/bar-2.png". Calling -ks_stringByIncrementingPath on that string will then give "foo/bar-3.png" and so on
@@ -44,10 +40,13 @@
 
 #pragma mark Comparing Paths
 
-// Will preserve any trailing slashes that are part of self
-- (NSString *)ks_pathRelativeToDirectory:(NSString *)otherPath;
+// Standardizes the paths and tests equality ignoring case
+- (BOOL)ks_isEqualToPath:(NSString *)aPath;
 
 - (BOOL)ks_isSubpathOfPath:(NSString *)aPath;  // Does aPath contain self?
+
+// Will preserve any trailing slashes that are part of self
+- (NSString *)ks_pathRelativeToDirectory:(NSString *)otherPath;
 
 
 #pragma mark POSIX Paths
