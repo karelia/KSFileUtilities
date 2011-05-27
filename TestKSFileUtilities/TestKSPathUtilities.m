@@ -20,7 +20,7 @@
 
 @implementation TestKSPathUtilities
 
-#pragma mark - Tests
+#pragma mark - Test helpers.
 
 /*  Performs test pretty much as it says on the tin
  *  If you pass in a non-absolute path, will test that, plus absolute equivalent
@@ -49,6 +49,8 @@
         expectedResult:expectedResult];
     }
 }
+
+#pragma mark - Tests
 
 - (void)testPathRelativeToDirectory {
     // Test cases for ks_pathRelativeToDirectory
