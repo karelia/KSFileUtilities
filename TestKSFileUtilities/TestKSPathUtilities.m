@@ -14,18 +14,18 @@
     
 }
 
-- (void)testPath:(NSString *)path relativeToDirectory:(NSString *)dirPath expectedResult:(NSString *)expectedResult;
+- (void)checkPath:(NSString *)path relativeToDirectory:(NSString *)dirPath againstExpectedResult:(NSString *)expectedResult;
 @end
 
 
 @implementation TestKSPathUtilities
 
-#pragma mark - Tests
+#pragma mark - Test helpers.
 
 /*  Performs test pretty much as it says on the tin
  *  If you pass in a non-absolute path, will test that, plus absolute equivalent
  */
-- (void)testPath:(NSString *)path relativeToDirectory:(NSString *)dirPath expectedResult:(NSString *)expectedResult;
+- (void)checkPath:(NSString *)path relativeToDirectory:(NSString *)dirPath againstExpectedResult:(NSString *)expectedResult;
 {
     NSString *result = [path ks_pathRelativeToDirectory:dirPath];
     
@@ -41,14 +41,16 @@
         path = [@"/" stringByAppendingString:path];
         
         // Absolute path, relative to a relative path = the exact path
-        [self testPath:path relativeToDirectory:dirPath expectedResult:path];
+        [self checkPath:path relativeToDirectory:dirPath againstExpectedResult:path];
         
         // Absolute variants of the paths should give the same result
-        [self testPath:path
+        [self checkPath:path
    relativeToDirectory:[@"/" stringByAppendingString:dirPath]
-        expectedResult:expectedResult];
+        againstExpectedResult:expectedResult];
     }
 }
+
+#pragma mark - Tests
 
 - (void)testPathRelativeToDirectory {
     // Test cases for ks_pathRelativeToDirectory
@@ -56,84 +58,84 @@
     
     /*  No traversal needed
      */
-    [self testPath:@"/" relativeToDirectory:@"/" expectedResult:@"."];
-    [self testPath:@"foo" relativeToDirectory:@"foo" expectedResult:@"."];
-    [self testPath:@"foo/bar" relativeToDirectory:@"foo/bar" expectedResult:@"."];
+    [self checkPath:@"/" relativeToDirectory:@"/" againstExpectedResult:@"."];
+    [self checkPath:@"foo" relativeToDirectory:@"foo" againstExpectedResult:@"."];
+    [self checkPath:@"foo/bar" relativeToDirectory:@"foo/bar" againstExpectedResult:@"."];
     
     
     
     /*  No traversal needed, trailing slashes
      */
-    [self testPath:@"//" relativeToDirectory:@"//" expectedResult:@"."];
-    [self testPath:@"//" relativeToDirectory:@"/" expectedResult:@"./"];
-    [self testPath:@"/" relativeToDirectory:@"//" expectedResult:@"."];
-    [self testPath:@"/." relativeToDirectory:@"/" expectedResult:@"."];
-    [self testPath:@"/.////././//" relativeToDirectory:@"/" expectedResult:@".////././//"];
-    [self testPath:@"/" relativeToDirectory:@"/." expectedResult:@"."];
-    [self testPath:@"/" relativeToDirectory:@"/.//.///." expectedResult:@"."];
+    [self checkPath:@"//" relativeToDirectory:@"//" againstExpectedResult:@"."];
+    [self checkPath:@"//" relativeToDirectory:@"/" againstExpectedResult:@"./"];
+    [self checkPath:@"/" relativeToDirectory:@"//" againstExpectedResult:@"."];
+    [self checkPath:@"/." relativeToDirectory:@"/" againstExpectedResult:@"."];
+    [self checkPath:@"/.////././//" relativeToDirectory:@"/" againstExpectedResult:@".////././//"];
+    [self checkPath:@"/" relativeToDirectory:@"/." againstExpectedResult:@"."];
+    [self checkPath:@"/" relativeToDirectory:@"/.//.///." againstExpectedResult:@"."];
     
-    [self testPath:@"foo/" relativeToDirectory:@"foo/" expectedResult:@"."];
-    [self testPath:@"foo/" relativeToDirectory:@"foo" expectedResult:@"./"];
-    [self testPath:@"foo" relativeToDirectory:@"foo/" expectedResult:@"."];
-    [self testPath:@"foo/bar/" relativeToDirectory:@"foo/bar/" expectedResult:@"."];
-    [self testPath:@"foo/bar/" relativeToDirectory:@"foo/bar" expectedResult:@"./"];
-    [self testPath:@"foo/bar" relativeToDirectory:@"foo/bar/" expectedResult:@"."];
+    [self checkPath:@"foo/" relativeToDirectory:@"foo/" againstExpectedResult:@"."];
+    [self checkPath:@"foo/" relativeToDirectory:@"foo" againstExpectedResult:@"./"];
+    [self checkPath:@"foo" relativeToDirectory:@"foo/" againstExpectedResult:@"."];
+    [self checkPath:@"foo/bar/" relativeToDirectory:@"foo/bar/" againstExpectedResult:@"."];
+    [self checkPath:@"foo/bar/" relativeToDirectory:@"foo/bar" againstExpectedResult:@"./"];
+    [self checkPath:@"foo/bar" relativeToDirectory:@"foo/bar/" againstExpectedResult:@"."];
     
         
     
     /*  Traversing from root
      */
-    [self testPath:@"/foo" relativeToDirectory:@"/" expectedResult:@"foo"];
-    [self testPath:@"/foo/bar" relativeToDirectory:@"/" expectedResult:@"foo/bar"];
-    [self testPath:@"/foo/" relativeToDirectory:@"/" expectedResult:@"foo/"];
-    [self testPath:@"/foo/bar/" relativeToDirectory:@"/" expectedResult:@"foo/bar/"];
+    [self checkPath:@"/foo" relativeToDirectory:@"/" againstExpectedResult:@"foo"];
+    [self checkPath:@"/foo/bar" relativeToDirectory:@"/" againstExpectedResult:@"foo/bar"];
+    [self checkPath:@"/foo/" relativeToDirectory:@"/" againstExpectedResult:@"foo/"];
+    [self checkPath:@"/foo/bar/" relativeToDirectory:@"/" againstExpectedResult:@"foo/bar/"];
     
     
     
     /*  Traversing from unusual root
      */
-    [self testPath:@"/foo" relativeToDirectory:@"//" expectedResult:@"foo"];
-    [self testPath:@"/foo/bar" relativeToDirectory:@"//" expectedResult:@"foo/bar"];
+    [self checkPath:@"/foo" relativeToDirectory:@"//" againstExpectedResult:@"foo"];
+    [self checkPath:@"/foo/bar" relativeToDirectory:@"//" againstExpectedResult:@"foo/bar"];
     
     
     
     /*  Traversing back to root
      */
-    [self testPath:@"/" relativeToDirectory:@"/foo" expectedResult:@".."];
-    [self testPath:@"/" relativeToDirectory:@"/foo/bar" expectedResult:@"../.."];
-    [self testPath:@"/" relativeToDirectory:@"/foo/" expectedResult:@".."];
-    [self testPath:@"/" relativeToDirectory:@"/foo/bar/" expectedResult:@"../.."];
+    [self checkPath:@"/" relativeToDirectory:@"/foo" againstExpectedResult:@".."];
+    [self checkPath:@"/" relativeToDirectory:@"/foo/bar" againstExpectedResult:@"../.."];
+    [self checkPath:@"/" relativeToDirectory:@"/foo/" againstExpectedResult:@".."];
+    [self checkPath:@"/" relativeToDirectory:@"/foo/bar/" againstExpectedResult:@"../.."];
     
     
     
     /*  Traversing from parent folder
      */
-    [self testPath:@"foo/bar" relativeToDirectory:@"foo" expectedResult:@"bar"];
-    [self testPath:@"foo/bar" relativeToDirectory:@"foo/" expectedResult:@"bar"];
-    [self testPath:@"foo/bar/" relativeToDirectory:@"foo" expectedResult:@"bar/"];
+    [self checkPath:@"foo/bar" relativeToDirectory:@"foo" againstExpectedResult:@"bar"];
+    [self checkPath:@"foo/bar" relativeToDirectory:@"foo/" againstExpectedResult:@"bar"];
+    [self checkPath:@"foo/bar/" relativeToDirectory:@"foo" againstExpectedResult:@"bar/"];
         
     
     
     /*  Traversing to parent folder
      */
-    [self testPath:@"foo" relativeToDirectory:@"foo/bar" expectedResult:@".."];
-    [self testPath:@"foo" relativeToDirectory:@"foo/bar/" expectedResult:@".."];
-    [self testPath:@"foo/" relativeToDirectory:@"foo/bar" expectedResult:@".."]; // TODO: It would probably be nicer to return @"../" although this is valid
+    [self checkPath:@"foo" relativeToDirectory:@"foo/bar" againstExpectedResult:@".."];
+    [self checkPath:@"foo" relativeToDirectory:@"foo/bar/" againstExpectedResult:@".."];
+    [self checkPath:@"foo/" relativeToDirectory:@"foo/bar" againstExpectedResult:@".."]; // TODO: It would probably be nicer to return @"../" although this is valid
     
     
     
     /*  Only dir in common is root
      */
-    [self testPath:@"/foo" relativeToDirectory:@"/baz" expectedResult:@"../foo"];
-    [self testPath:@"/foo/" relativeToDirectory:@"/baz" expectedResult:@"../foo/"];
-    [self testPath:@"/foo/bar" relativeToDirectory:@"/baz" expectedResult:@"../foo/bar"];
-    [self testPath:@"/foo/bar/" relativeToDirectory:@"/baz" expectedResult:@"../foo/bar/"];
-    [self testPath:@"/baz" relativeToDirectory:@"/foo/bar" expectedResult:@"../../baz"];
+    [self checkPath:@"/foo" relativeToDirectory:@"/baz" againstExpectedResult:@"../foo"];
+    [self checkPath:@"/foo/" relativeToDirectory:@"/baz" againstExpectedResult:@"../foo/"];
+    [self checkPath:@"/foo/bar" relativeToDirectory:@"/baz" againstExpectedResult:@"../foo/bar"];
+    [self checkPath:@"/foo/bar/" relativeToDirectory:@"/baz" againstExpectedResult:@"../foo/bar/"];
+    [self checkPath:@"/baz" relativeToDirectory:@"/foo/bar" againstExpectedResult:@"../../baz"];
     
     
     /*  Foo dir is in common
      */
-    [self testPath:@"foo/bar" relativeToDirectory:@"foo/baz" expectedResult:@"../bar"];
+    [self checkPath:@"foo/bar" relativeToDirectory:@"foo/baz" againstExpectedResult:@"../bar"];
 }
 
 @end
