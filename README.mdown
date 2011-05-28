@@ -17,6 +17,11 @@ How's this work? Well, everyone loves examples right?
 	<tr><td>http://karelia.com/baz/index.xml</td><td>http://karelia.com/foo/bar/</td><td>../../baz/index.xml</td></tr>
 </table>
 
+Relative Paths
+--------------
+
+KSPathUtilities has an equivalent for operating on path strings: `-ks_pathRelativeToDirectory:`
+
 Query Parameters
 ================
 
@@ -49,6 +54,14 @@ Mac OS X 10.6 gave us a bunch of new URL methods like `-URLByDeletingLastPathCom
 	- (NSURL *)ks_URLByDeletingPathExtension;
 	- (BOOL)ks_hasDirectoryPath;
 	- (NSURL *)ks_URLByAppendingPathComponent:(NSString *)pathComponent isDirectory:(BOOL)isDirectory;
+
+Subpaths
+========
+
+To test if one URL/path contains another:
+
+	- [NSURL ks_isSubpathOfURL:]
+	- [NSString ks_isSubpathOfPath:]
 
 Host
 ====
