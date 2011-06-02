@@ -138,4 +138,39 @@
     [self checkPath:@"foo/bar" relativeToDirectory:@"foo/baz" againstExpectedResult:@"../bar"];
 }
 
+- (void)testStringByIncrementingPath;
+{
+    NSString *path = @"foo/bar.png/";
+    path = [path ks_stringByIncrementingPath];
+    
+    STAssertTrue([path isEqualToString:@"foo/bar-2.png"],
+                 @"Incremented path \'%@\' should be \'%@\'",
+                 path,
+                 @"foo/bar-2.png");
+    
+    path = [path ks_stringByIncrementingPath];
+    
+    STAssertTrue([path isEqualToString:@"foo/bar-3.png"],
+                 @"Incremented path \'%@\' should be \'%@\'",
+                 path,
+                 @"foo/bar-3.png");
+    
+    
+    
+    path = @"foo/bar/";
+    path = [path ks_stringByIncrementingPath];
+    
+    STAssertTrue([path isEqualToString:@"foo/bar-2"],
+                 @"Incremented path \'%@\' should be \'%@\'",
+                 path,
+                 @"foo/bar-2");
+    
+    path = [path ks_stringByIncrementingPath];
+    
+    STAssertTrue([path isEqualToString:@"foo/bar-3"],
+                 @"Incremented path \'%@\' should be \'%@\'",
+                 path,
+                 @"foo/bar-3");
+}
+
 @end
