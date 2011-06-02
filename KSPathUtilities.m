@@ -60,7 +60,8 @@
     }
     else
     {
-        result = [self stringByAppendingString:aString];
+        // It's possible that the extension-less path ends with a slash. They need to be stripped
+        result = [[self ks_standardizedPOSIXPath] stringByAppendingString:aString];
     }
     
     return result;
