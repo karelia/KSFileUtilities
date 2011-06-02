@@ -140,7 +140,7 @@
 
 - (void)testStringByIncrementingPath;
 {
-    NSString *path = @"foo/bar.png/";
+    NSString *path = @"foo/bar.png//";
     path = [path ks_stringByIncrementingPath];
     
     STAssertTrue([path isEqualToString:@"foo/bar-2.png"],
@@ -157,7 +157,7 @@
     
     
     
-    path = @"foo/bar/";
+    path = @"foo/bar//";
     path = [path ks_stringByIncrementingPath];
     
     STAssertTrue([path isEqualToString:@"foo/bar-2"],
