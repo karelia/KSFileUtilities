@@ -211,14 +211,14 @@
  */
 - (NSString *)ks_standardizedPOSIXPath
 {
-    if ([self length] > 1 && [self hasSuffix:@"/"]) // Stops @"/" being altered
+    NSString *result = self;
+    
+    while ([result length] > 1 && [result hasSuffix:@"/"]) // Stops @"/" being altered
     {
-        return [self substringToIndex:([self length] - 1)];
+        result = [result substringToIndex:([result length] - 1)];
     }
-    else
-    {
-        return self;
-    }
+    
+    return result;
 }
 
 /*  You should generally use this method when comparing two paths for equality. Unlike -isEqualToString:
