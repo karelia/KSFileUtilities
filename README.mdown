@@ -76,6 +76,19 @@ Strips a URL down to nothing but its scheme and host. e.g. `http://karelia.com/f
 	
 Splits the host up into its domains. e.g. `http://www.karelia.com` gives `(www, karelia, com)`
 
+Incrementing a Path
+===================
+
+On occasion there is a need to try to find the best available filename/path for a task. e.g. Choosing a filename that won't conflict with ay existing file. To simplify this, `-[NSString ks_stringByIncrementingPath:]` is offered. Given the path `example.png`, it will cycle through like so:
+
+	example.png
+	example-2.png
+	example-3.png
+	exampke-4.png
+	…
+
+More information on the implementation and use of this method is on [Mike's blog]([http://www.mikeabdullah.net/incrementing-paths.html])
+
 KSURLFormatter
 ==============
 
