@@ -32,6 +32,7 @@
 #pragma mark Path Suffix
 
 // Given a path "foo/bar.png", adjusts it to be "foo/bar-2.png". Calling -ks_stringByIncrementingPath on that string will then give "foo/bar-3.png" and so on
+// More at http://www.mikeabdullah.net/incrementing-paths.html
 - (NSString *)ks_stringByIncrementingPath;
 
 // like -stringByAppendingString: but inserts the suffix string in front of path extension if there is one. e.g. [@"foo.png" ks_stringWithPathSuffix:@"-2"] = @"foo-2.png"
