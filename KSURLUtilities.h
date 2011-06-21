@@ -46,8 +46,16 @@
 
 + (NSString *)ks_fileURLStringWithPath:(NSString *)path;
 
-#if !(defined MAC_OS_X_VERSION_10_6) || MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_6
-// These methods are already defined on Snow Leopard
+- (BOOL)ks_hasDirectoryPath;
+- (NSURL *)ks_URLByAppendingPathComponent:(NSString *)pathComponent isDirectory:(BOOL)isDirectory;
+
+- (BOOL)ks_isSubpathOfURL:(NSURL *)aURL;
+
+
+#pragma mark Paths - Pre-Snowy compatibility
+
+// If you're targeting 10.6+, these methods are provided by Foundation, so we just #define them for compatibility
+#if !(defined MAC_OS_X_VERSION_10_6) || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6
 - (NSString *)ks_lastPathComponent;
 - (NSString *)ks_pathExtension;
 - (NSURL *)ks_URLByAppendingPathExtension:(NSString *)pathExtension;
@@ -60,11 +68,6 @@
 #define ks_URLByDeletingLastPathComponent URLByDeletingLastPathComponent
 #define ks_URLByDeletingPathExtension URLByDeletingPathExtension
 #endif
-
-- (BOOL)ks_hasDirectoryPath;
-- (NSURL *)ks_URLByAppendingPathComponent:(NSString *)pathComponent isDirectory:(BOOL)isDirectory;
-
-- (BOOL)ks_isSubpathOfURL:(NSURL *)aURL;
 
 
 #pragma mark Mailto: URLs

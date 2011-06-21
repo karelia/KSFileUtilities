@@ -114,7 +114,7 @@
 }
 
 
-#if !(defined MAC_OS_X_VERSION_10_6) || MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_6
+#if !(defined MAC_OS_X_VERSION_10_6) || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6
 // already defined in Snow Leopard
 
 /*	The CFURL APIs expose a bunch more path functionality than NSURL. You could of course use
