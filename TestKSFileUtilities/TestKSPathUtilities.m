@@ -45,7 +45,7 @@
         
         // Absolute variants of the paths should give the same result
         [self checkPath:path
-   relativeToDirectory:[@"/" stringByAppendingString:dirPath]
+   relativeToDirectory:(dirPath ? [@"/" stringByAppendingString:dirPath] : @"/")
         againstExpectedResult:expectedResult];
     }
 }
@@ -96,6 +96,8 @@
      */
     [self checkPath:@"/foo" relativeToDirectory:@"//" againstExpectedResult:@"foo"];
     [self checkPath:@"/foo/bar" relativeToDirectory:@"//" againstExpectedResult:@"foo/bar"];
+    [self checkPath:@"/foo" relativeToDirectory:nil againstExpectedResult:@"/foo"];
+    [self checkPath:@"foo" relativeToDirectory:nil againstExpectedResult:@"foo"];
     
     
     
