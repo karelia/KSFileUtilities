@@ -124,7 +124,8 @@
         if ([self isAbsolutePath]) return self;
         
         // But comparing two relative paths is a bit of an edge case. Internally, pretend they're absolute
-        return [[@"/" stringByAppendingString:self] ks_pathRelativeToDirectory:[@"/" stringByAppendingString:dirPath]];
+        dirPath = (dirPath ? [@"/" stringByAppendingString:dirPath] : @"/");
+        return [[@"/" stringByAppendingString:self] ks_pathRelativeToDirectory:dirPath];
     }
     
     
