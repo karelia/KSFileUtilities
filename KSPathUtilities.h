@@ -29,6 +29,10 @@
 
 @interface NSString (KSPathUtilities)
 
+#pragma mark Making Paths
++ (NSString *)ks_stringWithPath:(NSString *)path relativeToDirectory:(NSString *)directory;
+
+
 #pragma mark Path Suffix
 
 // Given a path "foo/bar.png", adjusts it to be "foo/bar-2.png". Calling -ks_stringByIncrementingPath on that string will then give "foo/bar-3.png" and so on
