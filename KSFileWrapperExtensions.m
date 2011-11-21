@@ -29,6 +29,8 @@
 
 @implementation NSFileWrapper (KSFileWrapperExtensions)
 
+#pragma mark Directories
+
 - (NSString *)addFileWrapper:(NSFileWrapper *)wrapper subdirectory:(NSString *)subpath;
 {
     // Create any directories required by the subpath
@@ -70,6 +72,25 @@
     }
     
     [wrappers release];
+}
+
+#pragma mark Symlinks
+
+- (NSFileWrapper *)ks_symbolicLinkDestinationFileWrapper;
+{
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6
+    if (![self respondsToSelector:@selector(symbolicLinkDestinationURL)] ||
+        ![NSFileWrapper instancesRespondToSelector:@selector(initWithURL:options:error:)])
+    {
+        NSFileWrapper *result = [[NSFileWrapper alloc] initWithPath:[self symbolicLinkDestination]];
+        return [result autorelease];
+    }
+#endif
+    
+    NSFileWrapper *result = [[NSFileWrapper alloc] initWithURL:[self symbolicLinkDestinationURL]
+                                                       options:0
+                                                         error:NULL];
+    return [result autorelease];
 }
 
 @end

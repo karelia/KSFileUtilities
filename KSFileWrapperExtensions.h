@@ -35,4 +35,7 @@
 // Removes all child file wrappers, except those whose filename begins with a period
 - (void)ks_removeAllVisibleFileWrappers;
 
+// Tries to construct a wrapper from the link's destination
+- (NSFileWrapper *)ks_symbolicLinkDestinationFileWrapper;
+
 @end
