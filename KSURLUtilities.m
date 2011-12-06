@@ -375,7 +375,8 @@
     
     
     // ... and the other path
-    CFStringRef dirPath = CFURLCopyPath((CFURLRef)[URL absoluteURL]);
+    URL = [URL absoluteURL];                            // so don't have to resolve it again inside -ks_hasDirectoryPath
+    CFStringRef dirPath = CFURLCopyPath((CFURLRef)URL);
     if (!CFStringGetLength(dirPath))     
     {
         // e.g. http://example.com
