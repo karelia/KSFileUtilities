@@ -27,6 +27,7 @@
 
 /*  Performs test pretty much as it says on the tin
  *  URLs are tested as given, but then also with a trailing slash applied to A
+ *  Similarly they are also tested by appending escaping sequences to check escaping is working fine
  */
 - (void)checkURL:(NSURL *)a relativeToURL:(NSURL *)b againstExpectedResult:(NSString *)expectedResult;
 {
@@ -50,8 +51,16 @@
         //NSURL *bTrailing = [NSURL URLWithString:[b.relativeString stringByAppendingString:@"/"] relativeToURL:b.baseURL];
         
         [self checkURL:aTrailing relativeToURL:b againstExpectedResult:[expectedResult stringByAppendingString:@"/"]];
+        
+        
+        // Percent encoding, but not for root URLs
+        NSString *encodedSlash = @"%2F";
+        if (![[a relativeString] hasSuffix:encodedSlash] && a.path.length)
+        {
+            NSURL *aWithCrazyEncoding = [NSURL URLWithString:[a.relativeString stringByAppendingString:encodedSlash] relativeToURL:a.baseURL];
+            [self checkURL:aWithCrazyEncoding relativeToURL:b againstExpectedResult:[expectedResult stringByAppendingString:encodedSlash]];
+        }
     }
-    
 }
 
 - (void)testURLRelativeToURL
@@ -68,10 +77,10 @@
     
     
     // Diving in
-    [self checkURL:URL(@"http://example.com/foo%2F")     relativeToURL:URL(@"http://example.com")         againstExpectedResult:@"foo%2F"];
-    [self checkURL:URL(@"http://example.com/foo%2F/bar") relativeToURL:URL(@"http://example.com")         againstExpectedResult:@"foo%2F/bar"];
-    [self checkURL:URL(@"http://example.com/foo%2F/bar") relativeToURL:URL(@"http://example.com/foo%2F")  againstExpectedResult:@"foo%2F/bar"];
-    [self checkURL:URL(@"http://example.com/foo%2F/bar") relativeToURL:URL(@"http://example.com/foo%2F/") againstExpectedResult:@"bar"];
+    [self checkURL:URL(@"http://example.com/foo")     relativeToURL:URL(@"http://example.com")         againstExpectedResult:@"foo"];
+    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com")         againstExpectedResult:@"foo/bar"];
+    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/foo")  againstExpectedResult:@"foo/bar"];
+    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@"bar"];
     
     
     // Walking out
@@ -82,12 +91,12 @@
     
     
     // Cross-directory
-    [self checkURL:URL(@"http://example.com/foo%2F")     relativeToURL:URL(@"http://example.com/bar")         againstExpectedResult:@"foo%2F"];
-    [self checkURL:URL(@"http://example.com/foo%2F")     relativeToURL:URL(@"http://example.com/bar/")        againstExpectedResult:@"../foo%2F"];
-    [self checkURL:URL(@"http://example.com/foo%2F/bar") relativeToURL:URL(@"http://example.com/bar")         againstExpectedResult:@"foo%2F/bar"];
-    [self checkURL:URL(@"http://example.com/foo%2F/bar") relativeToURL:URL(@"http://example.com/bar/")        againstExpectedResult:@"../foo%2F/bar"];
-    [self checkURL:URL(@"http://example.com/foo%2F/bar") relativeToURL:URL(@"http://example.com/bar/foo%2F")  againstExpectedResult:@"../foo%2F/bar"];
-    [self checkURL:URL(@"http://example.com/foo%2F/bar") relativeToURL:URL(@"http://example.com/bar/foo%2F/") againstExpectedResult:@"../../foo%2F/bar"];
+    [self checkURL:URL(@"http://example.com/foo")     relativeToURL:URL(@"http://example.com/bar")         againstExpectedResult:@"foo"];
+    [self checkURL:URL(@"http://example.com/foo")     relativeToURL:URL(@"http://example.com/bar/")        againstExpectedResult:@"../foo"];
+    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar")         againstExpectedResult:@"foo/bar"];
+    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/")        againstExpectedResult:@"../foo/bar"];
+    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/foo%2F")  againstExpectedResult:@"../foo/bar"];
+    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/foo%2F/") againstExpectedResult:@"../../foo/bar"];
     
 }
 
