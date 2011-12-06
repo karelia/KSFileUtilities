@@ -63,26 +63,26 @@
     
     
     // Diving in
-    [self checkURL:URL(@"http://example.com/foo")     relativeToURL:URL(@"http://example.com")      againstExpectedResult:@"foo"];
-    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com")      againstExpectedResult:@"foo/bar"];
-    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/foo")  againstExpectedResult:@"foo/bar"];
-    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@"bar"];
+    [self checkURL:URL(@"http://example.com/foo%2F")     relativeToURL:URL(@"http://example.com")         againstExpectedResult:@"foo%2F"];
+    [self checkURL:URL(@"http://example.com/foo%2F/bar") relativeToURL:URL(@"http://example.com")         againstExpectedResult:@"foo%2F/bar"];
+    [self checkURL:URL(@"http://example.com/foo%2F/bar") relativeToURL:URL(@"http://example.com/foo%2F")  againstExpectedResult:@"foo%2F/bar"];
+    [self checkURL:URL(@"http://example.com/foo%2F/bar") relativeToURL:URL(@"http://example.com/foo%2F/") againstExpectedResult:@"bar"];
     
     
     // Walking out
-    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo")      againstExpectedResult:@"."];
-    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo/")     againstExpectedResult:@".."];
-    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo/bar")  againstExpectedResult:@".."];
-    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo/bar/") againstExpectedResult:@"../.."];
+    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo%2F")      againstExpectedResult:@"."];
+    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo%2F/")     againstExpectedResult:@".."];
+    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo%2F/bar")  againstExpectedResult:@".."];
+    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo%2F/bar/") againstExpectedResult:@"../.."];
     
     
     // Cross-directory
-    [self checkURL:URL(@"http://example.com/foo")     relativeToURL:URL(@"http://example.com/bar")      againstExpectedResult:@"foo"];
-    [self checkURL:URL(@"http://example.com/foo")     relativeToURL:URL(@"http://example.com/bar/")     againstExpectedResult:@"../foo"];
-    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar")      againstExpectedResult:@"foo/bar"];
-    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/")     againstExpectedResult:@"../foo/bar"];
-    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/foo")  againstExpectedResult:@"../foo/bar"];
-    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/foo/") againstExpectedResult:@"../../foo/bar"];
+    [self checkURL:URL(@"http://example.com/foo%2F")     relativeToURL:URL(@"http://example.com/bar")         againstExpectedResult:@"foo%2F"];
+    [self checkURL:URL(@"http://example.com/foo%2F")     relativeToURL:URL(@"http://example.com/bar/")        againstExpectedResult:@"../foo%2F"];
+    [self checkURL:URL(@"http://example.com/foo%2F/bar") relativeToURL:URL(@"http://example.com/bar")         againstExpectedResult:@"foo%2F/bar"];
+    [self checkURL:URL(@"http://example.com/foo%2F/bar") relativeToURL:URL(@"http://example.com/bar/")        againstExpectedResult:@"../foo%2F/bar"];
+    [self checkURL:URL(@"http://example.com/foo%2F/bar") relativeToURL:URL(@"http://example.com/bar/foo%2F")  againstExpectedResult:@"../foo%2F/bar"];
+    [self checkURL:URL(@"http://example.com/foo%2F/bar") relativeToURL:URL(@"http://example.com/bar/foo%2F/") againstExpectedResult:@"../../foo%2F/bar"];
     
 }
 
