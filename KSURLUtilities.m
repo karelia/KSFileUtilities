@@ -366,32 +366,43 @@
 	}
 	
 	
-	// Time to test the paths then!
-    
+	// OK, to figure out, need my path...
     CFStringRef myPath = CFURLCopyPath((CFURLRef)[self absoluteURL]);
     if (!CFStringGetLength(myPath))     // e.g. http://example.com
     {
         CFRelease(myPath); myPath = CFRetain(CFSTR("/"));
     }
     
+    
+    // ... and the other path
     CFStringRef dirPath = CFURLCopyPath((CFURLRef)[URL absoluteURL]);
-    if (![URL ks_hasDirectoryPath])
+    if (!CFStringGetLength(dirPath))     
     {
-        if (CFStringGetLength(dirPath))     
+        // e.g. http://example.com
+        CFRelease(dirPath); dirPath = CFRetain(CFSTR("/"));
+    }
+    else if (![URL ks_hasDirectoryPath])
+    {
+        NSString *shortenedPath = [(NSString *)dirPath stringByDeletingLastPathComponent];
+        CFRelease(dirPath); dirPath = CFRetain(shortenedPath);
+    }
+    
+    
+    // Let -ks_pathRelativeToDirectory: do the heavy lifting
+    NSString *result = [(NSString *)myPath ks_pathRelativeToDirectory:(NSString *)dirPath];
+    
+    // But here's an odd edge case, http://example.com/foo relative to http://example.com/foo/ should be '../foo' which -ks_pathRelativeToDirectory returns '.' from; perfectly fine for posix, but not us!
+    if ([result isEqualToString:@"."])
+    {
+        if ([[(NSString *)myPath stringByAppendingString:@"/"] isEqualToString:(NSString *)dirPath])
         {
-            NSString *shortenedPath = [(NSString *)dirPath stringByDeletingLastPathComponent];
-            CFRelease(dirPath); dirPath = CFRetain(shortenedPath);
-        }
-        else
-        {
-            // e.g. http://example.com
-            CFRelease(dirPath); dirPath = CFRetain(CFSTR("/"));
+            result = [@"../" stringByAppendingString:[(NSString *)myPath lastPathComponent]];
         }
     }
     
-    NSString *result = [(NSString *)myPath ks_pathRelativeToDirectory:(NSString *)dirPath];
     CFRelease(dirPath);
     CFRelease(myPath);
+    
     
     // Need trailing slash?
     if ([self ks_hasDirectoryPath] && ![result hasSuffix:@"/"])
