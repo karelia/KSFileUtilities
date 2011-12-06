@@ -25,14 +25,8 @@
 #define URL(string) [NSURL URLWithString:string]
 #define RELURL(string, base) [NSURL URLWithString:string relativeToURL:base]
 
-/*  Performs test pretty much as it says on the tin
- *  URLs are tested as given, but then also with a trailing slash applied to A
- *  Similarly they are also tested by appending escaping sequences to check escaping is working fine
- */
-- (void)checkURL:(NSURL *)a relativeToURL:(NSURL *)b againstExpectedResult:(NSString *)expectedResult;
+- (void)checkURL:(NSURL *)a relativeToURL:(NSURL *)b againstExpectedResult:(NSString *)expectedResult checkByAppendingToURLToo:(BOOL)testAppending;
 {
-    
-    
     // Regular
     NSString *result = [a ks_stringRelativeToURL:b];
     
@@ -45,12 +39,12 @@
     
     
     // A trailing
-    if (![a ks_hasDirectoryPath])
+    if (testAppending)
     {
         NSURL *aTrailing = [NSURL URLWithString:[a.relativeString stringByAppendingString:@"/"] relativeToURL:a.baseURL];
         //NSURL *bTrailing = [NSURL URLWithString:[b.relativeString stringByAppendingString:@"/"] relativeToURL:b.baseURL];
         
-        [self checkURL:aTrailing relativeToURL:b againstExpectedResult:[expectedResult stringByAppendingString:@"/"]];
+        [self checkURL:aTrailing relativeToURL:b againstExpectedResult:[expectedResult stringByAppendingString:@"/"] checkByAppendingToURLToo:NO];
         
         
         // Percent encoding, but not for root URLs
@@ -61,9 +55,19 @@
             
             [self checkURL:aWithCrazyEncoding
              relativeToURL:b
-     againstExpectedResult:(/*[expectedResult isEqualToString:@"."] ? encodedSlash : */[expectedResult stringByAppendingString:encodedSlash])];
+     againstExpectedResult:[expectedResult stringByAppendingString:encodedSlash]
+  checkByAppendingToURLToo:YES];
         }
     }
+}
+
+/*  Performs test pretty much as it says on the tin
+ *  URLs are tested as given, but then also with a trailing slash applied to A
+ *  Similarly they are also tested by appending escaping sequences to check escaping is working fine
+ */
+- (void)checkURL:(NSURL *)a relativeToURL:(NSURL *)b againstExpectedResult:(NSString *)expectedResult;
+{
+    [self checkURL:a relativeToURL:b againstExpectedResult:expectedResult checkByAppendingToURLToo:![a ks_hasDirectoryPath]];
 }
 
 - (void)testURLRelativeToURL
@@ -74,11 +78,17 @@
     [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"")                     againstExpectedResult:@"http://example.com"];
     
     
+    
     // Same
     [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com")  againstExpectedResult:@"."];
     [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/")  againstExpectedResult:@"."];
     [self checkURL:URL(@"http://example.com/foo") relativeToURL:URL(@"http://example.com/foo")  againstExpectedResult:@"foo"];
-    [self checkURL:URL(@"http://example.com/foo") relativeToURL:URL(@"http://example.com/foo/")  againstExpectedResult:@"../foo"];
+    
+    // somewhat of a special case:
+    [self checkURL:URL(@"http://example.com/foo") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@"../foo" checkByAppendingToURLToo:NO];
+    [self checkURL:URL(@"http://example.com/foo/") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@"./" checkByAppendingToURLToo:NO];
+    [self checkURL:URL(@"http://example.com/foo%2F") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@"../foo%2F"];
+    
     
     
     // Diving in
@@ -88,11 +98,13 @@
     [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@"bar"];
     
     
+    
     // Walking out
     [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo%2F")      againstExpectedResult:@"."];
     [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo%2F/")     againstExpectedResult:@".."];
     [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo%2F/bar")  againstExpectedResult:@".."];
     [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo%2F/bar/") againstExpectedResult:@"../.."];
+    
     
     
     // Cross-directory
@@ -102,7 +114,6 @@
     [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/")        againstExpectedResult:@"../foo/bar"];
     [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/foo%2F")  againstExpectedResult:@"../foo/bar"];
     [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/foo%2F/") againstExpectedResult:@"../../foo/bar"];
-    
 }
 
 @end
