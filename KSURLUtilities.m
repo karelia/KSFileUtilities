@@ -366,16 +366,32 @@
 	}
 	
 	
-	// Wanted to use CFURLCopyPath(anAbsoluteURL) to retain trailing slash(es). However, both it and CFURLCopyStrictPath() don't escape percent sequences despite being documented to do so! No longer shall I trust them! Instead, stick to Cocoa, and tack on a trailing slash afterwards if required
-    NSString *myPath = [self path];
-    if (!myPath || [myPath isEqualToString:@""]) myPath = @"/";
+	// Time to test the paths then!
     
+    CFStringRef myPath = CFURLCopyPath((CFURLRef)[self absoluteURL]);
+    if (!CFStringGetLength(myPath))     // e.g. http://example.com
+    {
+        CFRelease(myPath); myPath = CFRetain(CFSTR("/"));
+    }
     
-    NSString *dirPath = [URL path];
-    if (![dirPath length]) dirPath = @"/";  // handle pathless URLs. e.g. http://example.com
-    if (![URL ks_hasDirectoryPath]) dirPath = [dirPath stringByDeletingLastPathComponent];
-    NSString *result = [myPath ks_pathRelativeToDirectory:dirPath];
+    CFStringRef dirPath = CFURLCopyPath((CFURLRef)[URL absoluteURL]);
+    if (![URL ks_hasDirectoryPath])
+    {
+        if (CFStringGetLength(dirPath))     
+        {
+            NSString *shortenedPath = [(NSString *)dirPath stringByDeletingLastPathComponent];
+            CFRelease(dirPath); dirPath = CFRetain(shortenedPath);
+        }
+        else
+        {
+            // e.g. http://example.com
+            CFRelease(dirPath); dirPath = CFRetain(CFSTR("/"));
+        }
+    }
     
+    NSString *result = [(NSString *)myPath ks_pathRelativeToDirectory:(NSString *)dirPath];
+    CFRelease(dirPath);
+    CFRelease(myPath);
     
     // Need trailing slash?
     if ([self ks_hasDirectoryPath] && ![result hasSuffix:@"/"])
@@ -384,11 +400,7 @@
     }
     
     
-    // Escape
-    result = [result stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	
-	
-	// Re-build any non-path information
+    // Re-build any non-path information
 	NSString *parameters = [self parameterString];
 	if (parameters)
 	{
