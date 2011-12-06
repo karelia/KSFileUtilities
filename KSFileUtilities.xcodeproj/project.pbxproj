@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27DA2577148E641100209E50 /* TestKSURLUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DA2576148E641100209E50 /* TestKSURLUtilities.m */; };
 		EE0F59A313897980006045D3 /* KSPathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EE0F599713897980006045D3 /* KSPathUtilities.m */; };
 		EE0F59AA13897B20006045D3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0F59A913897B20006045D3 /* WebKit.framework */; };
 		EE20B4B613897F7400AE2AF9 /* TestKSPathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EE20B4B513897F7400AE2AF9 /* TestKSPathUtilities.m */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		27DA2576148E641100209E50 /* TestKSURLUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSURLUtilities.m; sourceTree = "<group>"; };
 		EE0F599613897980006045D3 /* KSPathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPathUtilities.h; sourceTree = SOURCE_ROOT; };
 		EE0F599713897980006045D3 /* KSPathUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPathUtilities.m; sourceTree = SOURCE_ROOT; };
 		EE0F59A913897B20006045D3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/WebKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -123,6 +125,7 @@
 			children = (
 				EE20B4B513897F7400AE2AF9 /* TestKSPathUtilities.m */,
 				EE83868213897644005E0FFD /* Supporting Files */,
+				27DA2576148E641100209E50 /* TestKSURLUtilities.m */,
 			);
 			path = TestKSFileUtilities;
 			sourceTree = "<group>";
@@ -223,6 +226,7 @@
 				EE43C85213898D7B008ABD16 /* KSWebLocation.m in Sources */,
 				EE43C85313898D7B008ABD16 /* KSWebLocationPasteboardUtilities.m in Sources */,
 				EE43C85413898D7B008ABD16 /* KSWorkspaceUtilities.m in Sources */,
+				27DA2577148E641100209E50 /* TestKSURLUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
