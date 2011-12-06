@@ -38,6 +38,16 @@
                  result);
     
     
+    // Get NSURL to see if it agrees with the result
+    NSURL *nsurlsOpinion = [[[NSURL URLWithString:result relativeToURL:b] absoluteURL] standardizedURL];    // gotta do absoluteURL first apparently
+    STAssertEqualObjects([nsurlsOpinion absoluteString], [a absoluteString],
+                         @"(\'%@\' relative to \'%@\')",
+                         result,
+                         b,
+                         [a absoluteString],
+                         nsurlsOpinion);
+    
+    
     // A trailing
     if (testAppending)
     {
