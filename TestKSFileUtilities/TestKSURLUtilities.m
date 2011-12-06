@@ -70,8 +70,10 @@
     
     
     // Walking out
-    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo") againstExpectedResult:@"."];
-    
+    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo")      againstExpectedResult:@"."];
+    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo/")     againstExpectedResult:@".."];
+    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo/bar")  againstExpectedResult:@".."];
+    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo/bar/") againstExpectedResult:@"../.."];
 }
 
 @end
