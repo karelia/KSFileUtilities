@@ -57,16 +57,16 @@
 - (void)testURLRelativeToURL
 {
     // Impossible to find a relative path
-    [self checkURL:URL(@"http://example.com/") relativeToURL:URL(@"https://example.com/") againstExpectedResult:@"http://example.com/"];
-    [self checkURL:URL(@"http://example.com/") relativeToURL:URL(@"http://example.org/")  againstExpectedResult:@"http://example.com/"];
-    [self checkURL:URL(@"http://example.com/") relativeToURL:URL(@"")                     againstExpectedResult:@"http://example.com/"];
+    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"https://example.com/") againstExpectedResult:@"http://example.com"];
+    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.org/")  againstExpectedResult:@"http://example.com"];
+    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"")                     againstExpectedResult:@"http://example.com"];
     
     
     // Diving in
     [self checkURL:URL(@"http://example.com/foo")     relativeToURL:URL(@"http://example.com")      againstExpectedResult:@"foo"];
     [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com")      againstExpectedResult:@"foo/bar"];
-    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@"bar"];
     [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/foo")  againstExpectedResult:@"foo/bar"];
+    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@"bar"];
     
     
     // Walking out
