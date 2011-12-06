@@ -74,6 +74,16 @@
     [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo/")     againstExpectedResult:@".."];
     [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo/bar")  againstExpectedResult:@".."];
     [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo/bar/") againstExpectedResult:@"../.."];
+    
+    
+    // Cross-directory
+    [self checkURL:URL(@"http://example.com/foo")     relativeToURL:URL(@"http://example.com/bar")      againstExpectedResult:@"foo"];
+    [self checkURL:URL(@"http://example.com/foo")     relativeToURL:URL(@"http://example.com/bar/")     againstExpectedResult:@"../foo"];
+    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar")      againstExpectedResult:@"foo/bar"];
+    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/")     againstExpectedResult:@"../foo/bar"];
+    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/foo")  againstExpectedResult:@"../foo/bar"];
+    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/foo/") againstExpectedResult:@"../../foo/bar"];
+    
 }
 
 @end
