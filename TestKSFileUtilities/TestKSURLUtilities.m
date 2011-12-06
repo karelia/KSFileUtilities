@@ -62,6 +62,11 @@
     [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"")                     againstExpectedResult:@"http://example.com"];
     
     
+    // Same
+    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com")  againstExpectedResult:@"."];
+    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/")  againstExpectedResult:@"."];
+    
+    
     // Diving in
     [self checkURL:URL(@"http://example.com/foo%2F")     relativeToURL:URL(@"http://example.com")         againstExpectedResult:@"foo%2F"];
     [self checkURL:URL(@"http://example.com/foo%2F/bar") relativeToURL:URL(@"http://example.com")         againstExpectedResult:@"foo%2F/bar"];
