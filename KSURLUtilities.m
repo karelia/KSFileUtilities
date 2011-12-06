@@ -367,7 +367,9 @@
 	
 	
 	// OK, to figure out, need my path...
-    CFStringRef myPath = CFURLCopyPath((CFURLRef)[self absoluteURL]);
+    CFURLRef absoluteSelf = CFURLCopyAbsoluteURL((CFURLRef)self);
+    CFStringRef myPath = CFURLCopyPath((CFURLRef)absoluteSelf);
+    
     if (!CFStringGetLength(myPath))     // e.g. http://example.com
     {
         CFRelease(myPath); myPath = CFRetain(CFSTR("/"));
@@ -375,18 +377,21 @@
     
     
     // ... and the other path
-    URL = [URL absoluteURL];                            // so don't have to resolve it again inside -ks_hasDirectoryPath
-    CFStringRef dirPath = CFURLCopyPath((CFURLRef)URL);
+    CFURLRef absoluteURL = CFURLCopyAbsoluteURL((CFURLRef)URL);
+    CFStringRef dirPath = CFURLCopyPath(absoluteURL);
+    
     if (!CFStringGetLength(dirPath))     
     {
         // e.g. http://example.com
         CFRelease(dirPath); dirPath = CFRetain(CFSTR("/"));
     }
-    else if (![URL ks_hasDirectoryPath])
+    else if (!CFURLHasDirectoryPath(absoluteURL))   // faster than -ks_hasDirectoryPath
     {
         NSString *shortenedPath = [(NSString *)dirPath stringByDeletingLastPathComponent];
         CFRelease(dirPath); dirPath = CFRetain(shortenedPath);
     }
+    
+    CFRelease(absoluteURL);
     
     
     // Let -ks_pathRelativeToDirectory: do the heavy lifting
@@ -401,15 +406,18 @@
         }
     }
     
-    CFRelease(dirPath);
-    CFRelease(myPath);
-    
     
     // Need trailing slash?
-    if ([self ks_hasDirectoryPath] && ![result hasSuffix:@"/"])
+    if (CFURLHasDirectoryPath(absoluteSelf) && ![result hasSuffix:@"/"])
     {
         result = [result stringByAppendingString:@"/"];
     }
+    
+    
+    // Time for a little cleanup
+    CFRelease(dirPath);
+    CFRelease(myPath);
+    CFRelease(absoluteSelf);
     
     
     // Re-build any non-path information
