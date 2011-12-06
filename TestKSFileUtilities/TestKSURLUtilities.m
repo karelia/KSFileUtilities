@@ -58,7 +58,10 @@
         if (![[a relativeString] hasSuffix:encodedSlash] && a.path.length)
         {
             NSURL *aWithCrazyEncoding = [NSURL URLWithString:[a.relativeString stringByAppendingString:encodedSlash] relativeToURL:a.baseURL];
-            [self checkURL:aWithCrazyEncoding relativeToURL:b againstExpectedResult:[expectedResult stringByAppendingString:encodedSlash]];
+            
+            [self checkURL:aWithCrazyEncoding
+             relativeToURL:b
+     againstExpectedResult:(/*[expectedResult isEqualToString:@"."] ? encodedSlash : */[expectedResult stringByAppendingString:encodedSlash])];
         }
     }
 }
@@ -74,6 +77,8 @@
     // Same
     [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com")  againstExpectedResult:@"."];
     [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/")  againstExpectedResult:@"."];
+    [self checkURL:URL(@"http://example.com/foo") relativeToURL:URL(@"http://example.com/foo")  againstExpectedResult:@"foo"];
+    [self checkURL:URL(@"http://example.com/foo") relativeToURL:URL(@"http://example.com/foo/")  againstExpectedResult:@"../foo"];
     
     
     // Diving in
