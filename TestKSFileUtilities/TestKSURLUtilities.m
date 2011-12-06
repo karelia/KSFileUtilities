@@ -22,13 +22,14 @@
 
 #pragma mark - Test helpers.
 
+#define URL(string) [NSURL URLWithString:string]
+#define RELURL(string, base) [NSURL URLWithString:string relativeToURL:base]
+
 /*  Performs test pretty much as it says on the tin
  *  URLs are tested as given, but then also with a trailing slash applied to A
  */
 - (void)checkURL:(NSURL *)a relativeToURL:(NSURL *)b againstExpectedResult:(NSString *)expectedResult;
 {
-    NSURL *aTrailing = [NSURL URLWithString:[a.relativeString stringByAppendingString:@"/"] relativeToURL:a.baseURL];
-    //NSURL *bTrailing = [NSURL URLWithString:[b.relativeString stringByAppendingString:@"/"] relativeToURL:b.baseURL];
     
     
     // Regular
@@ -43,39 +44,33 @@
     
     
     // A trailing
-    result = [aTrailing ks_stringRelativeToURL:b];
-    expectedResult = [expectedResult stringByAppendingString:@"/"];
-    
-    STAssertTrue([result isEqualToString:expectedResult],
-                 @"\'%@\' relative to \'%@\' should be \'%@\' instead of \'%@\'",
-                 aTrailing,
-                 b,
-                 expectedResult,
-                 result);
+    if (![a ks_hasDirectoryPath])
+    {
+        NSURL *aTrailing = [NSURL URLWithString:[a.relativeString stringByAppendingString:@"/"] relativeToURL:a.baseURL];
+        //NSURL *bTrailing = [NSURL URLWithString:[b.relativeString stringByAppendingString:@"/"] relativeToURL:b.baseURL];
+        
+        [self checkURL:aTrailing relativeToURL:b againstExpectedResult:[expectedResult stringByAppendingString:@"/"]];
+    }
     
 }
 
 - (void)testURLRelativeToURL
 {
-    NSURL *exampleURL = [NSURL URLWithString:@"http://example.com/"];
-    
     // Impossible to find a relative path
-    [self checkURL:exampleURL relativeToURL:[NSURL URLWithString:@"https://example.com/"] againstExpectedResult:@"http://example.com/"];
-    [self checkURL:exampleURL relativeToURL:[NSURL URLWithString:@"http://example.org/"] againstExpectedResult:@"http://example.com/"];
-    [self checkURL:exampleURL relativeToURL:[NSURL URLWithString:@""] againstExpectedResult:@"http://example.com/"];
+    [self checkURL:URL(@"http://example.com/") relativeToURL:URL(@"https://example.com/") againstExpectedResult:@"http://example.com/"];
+    [self checkURL:URL(@"http://example.com/") relativeToURL:URL(@"http://example.org/")  againstExpectedResult:@"http://example.com/"];
+    [self checkURL:URL(@"http://example.com/") relativeToURL:URL(@"")                     againstExpectedResult:@"http://example.com/"];
     
     
     // Diving in
-    [self checkURL:[NSURL URLWithString:@"http://example.com/foo"] relativeToURL:exampleURL againstExpectedResult:@"foo"];
-    [self checkURL:[NSURL URLWithString:@"http://example.com/foo/bar"] relativeToURL:exampleURL againstExpectedResult:@"foo/bar"];
+    [self checkURL:URL(@"http://example.com/foo")     relativeToURL:URL(@"http://example.com")      againstExpectedResult:@"foo"];
+    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com")      againstExpectedResult:@"foo/bar"];
+    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@"bar"];
+    [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/foo")  againstExpectedResult:@"foo/bar"];
     
-    [self checkURL:[NSURL URLWithString:@"http://example.com/foo/bar"]
-     relativeToURL:[NSURL URLWithString:@"http://example.com/foo/"]
-againstExpectedResult:@"bar"];
-
-    [self checkURL:[NSURL URLWithString:@"http://example.com/foo/bar"]
-     relativeToURL:[NSURL URLWithString:@"http://example.com/foo"]
-againstExpectedResult:@"foo/bar"];
+    
+    // Walking out
+    [self checkURL:URL(@"http://example.com") relativeToURL:URL(@"http://example.com/foo") againstExpectedResult:@"."];
     
 }
 
