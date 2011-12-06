@@ -134,7 +134,15 @@
 
     
     NSURL *result = [self URLFromString:string];
-	
+    
+    
+    // Allow fragment links as-is
+	if ([string hasPrefix:@"#"] && ([string length] > [@"#" length] && result))
+    {
+        return result;
+    }
+    
+    
 	// This is probably a really naive check
 	if ((![result scheme] && ![string hasPrefix:@"/"]) ||   // e.g. foo
         (![result host]))                                   // e.g. foo.com:8888
@@ -191,7 +199,7 @@
             {
                 NSString *host = [URL host];
                 NSString *path = [URL path];
-                if (!host && !path)
+                if (!host && !path && ![URL fragment])
                 {
                     URL = nil;
                 }

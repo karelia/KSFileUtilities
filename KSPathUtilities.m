@@ -44,6 +44,18 @@
 
 @implementation NSString (KSPathUtilities)
 
+#pragma mark Making Paths
+
++ (NSString *)ks_stringWithPath:(NSString *)path relativeToDirectory:(NSString *)directory;
+{
+    NSParameterAssert(path);
+    
+    if (!directory || [path isAbsolutePath]) return path;
+    
+    NSString *result = [directory stringByAppendingPathComponent:path];
+    return result;
+}
+
 #pragma mark Path Suffix
 
 - (NSString *)ks_stringWithPathSuffix:(NSString *)aString;
