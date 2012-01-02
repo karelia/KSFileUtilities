@@ -1,7 +1,7 @@
 //
 //  KSPathUtilities.h
 //
-//  Copyright (c) 2005-2011, Dan Wood, Mike Abdullah and Karelia Software
+//  Copyright (c) 2005-2012 Dan Wood, Mike Abdullah and Karelia Software
 //  All rights reserved.
 //  
 //  Redistribution and use in source and binary forms, with or without

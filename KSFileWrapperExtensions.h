@@ -1,7 +1,7 @@
 //
 //  KSFileWrapperExtensions.h
 //
-//  Copyright (c) 2011, Mike Abdullah and Karelia Software
+//  Copyright (c) 2012 Mike Abdullah and Karelia Software
 //  All rights reserved.
 //  
 //  Redistribution and use in source and binary forms, with or without
