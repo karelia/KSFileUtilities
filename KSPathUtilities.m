@@ -60,23 +60,20 @@
 
 - (NSString *)ks_stringWithPathSuffix:(NSString *)aString;
 {
-    NSString *result = self;
-    
     NSString *extension = [self pathExtension];
     if ([extension length])
     {
-        result = [[[self
-                    stringByDeletingPathExtension]
-                   stringByAppendingString:aString]
-                  stringByAppendingPathExtension:extension];
+        NSString *result = [[[self
+                              stringByDeletingPathExtension]
+                             stringByAppendingString:aString]
+                            stringByAppendingPathExtension:extension];
+        return result;
     }
     else
     {
         // It's possible that the extension-less path ends with a slash. They need to be stripped
-        result = [[self ks_standardizedPOSIXPath] stringByAppendingString:aString];
+        return [[self ks_standardizedPOSIXPath] stringByAppendingString:aString];
     }
-    
-    return result;
 }
 
 - (NSString *)ks_stringByIncrementingPath;
