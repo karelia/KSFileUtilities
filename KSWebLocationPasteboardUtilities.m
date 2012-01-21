@@ -107,13 +107,11 @@
             NSURL *plistURL = [KSURLFormatter URLFromString:string];	/// encodeLegally to handle accented characters
             if (plistURL && [plistURL ks_hasNetworkLocation])
             {
-                self = [self initWithURL:plistURL title:[[self class] guessTitleForURL:URL]];
-            }
-            else
-            {
-                [self release]; self = nil;
+                return [self initWithURL:plistURL title:[[self class] guessTitleForURL:URL]];
             }
         }
+        
+        [self release]; self = nil;
 	}
         
     return self;
