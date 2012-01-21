@@ -76,11 +76,6 @@
 
 + (NSURL *)ks_URLWithPath:(NSString *)path relativeToURL:(NSURL *)baseURL isDirectory:(BOOL)isDirectory
 {
-	return [[[self alloc] ks_initWithPath:path relativeToURL:baseURL isDirectory:isDirectory] autorelease];
-}
-
-- (id)ks_initWithPath:(NSString *)path relativeToURL:(NSURL *)baseURL isDirectory:(BOOL)isDirectory
-{
 	NSParameterAssert(path);
     
     NSString *URLString = path;
@@ -96,8 +91,7 @@
 		}
 	}
 	
-	[self initWithString:URLString relativeToURL:baseURL];
-	return self;
+	return [self URLWithString:URLString relativeToURL:baseURL];
 }
 
 
