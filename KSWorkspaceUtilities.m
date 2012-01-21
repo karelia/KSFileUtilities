@@ -18,7 +18,7 @@
 - (NSString *)ks_MIMETypeForType:(NSString *)aUTI;
 {
 	NSString *result = NSMakeCollectable(UTTypeCopyPreferredTagWithClass((CFStringRef)aUTI, kUTTagClassMIMEType));
-	result = [result autorelease];
+	[result autorelease];
     
     // BUGSID:37340 OS X doesn't know the MIME type for .m4a files, so we're hardcoding it here.
     if (!result)
@@ -52,8 +52,7 @@
 																		 (CFStringRef)aUTI,
 																		 kUTTagClassOSType
 																		 ));
-	result = [result autorelease];
-	return result;
+	return [result autorelease];
 }
 
 - (OSType)ks_OSTypeForType:(NSString *)aUTI
@@ -132,7 +131,7 @@
                                                                       (CFStringRef)anExtension,
                                                                       NULL
                                                                       ));
-		UTI = [UTI autorelease];
+		[UTI autorelease];
 	}
     
 	// If we don't find it, add an entry to the info.plist of the APP,
@@ -157,9 +156,7 @@
                                                                                    (CFStringRef)aMIMEType,
                                                                                    kUTTypeData 
                                                                                    ));
-		result = [result autorelease];
-		return result;
-        
+		return [result autorelease];
 	}
 }
 
@@ -170,8 +167,7 @@
 																			   (CFStringRef)aFileType,
 																			   NULL
 																			   ));
-	result = [result autorelease];
-	return result;
+	return [result autorelease];
 }
 
 - (NSString *)ks_typeForOSType:(OSType)anOSType;
