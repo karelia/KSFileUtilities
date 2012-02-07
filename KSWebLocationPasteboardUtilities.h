@@ -44,6 +44,10 @@
 - (id)initWithPasteboardPropertyList:(id)propertyList ofType:(NSString *)type;
 
 
+#pragma mark URL Guessing
++ (NSURL *)URLFromPasteboard:(NSPasteboard *)pboard;   // like the WebView method, but takes advantage of NSTextCheckingTypeLink on 10.6+
+
+
 #pragma mark 10.5 Pasteboard Support
 + (NSArray *)webLocationPasteboardTypes;
 

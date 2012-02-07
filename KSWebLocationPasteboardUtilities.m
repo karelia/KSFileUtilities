@@ -121,12 +121,43 @@
 {
     KSWebLocation *result = nil;
     
-    NSURL *URL = [WebView URLFromPasteboard:pasteboard];
+    NSURL *URL = [self URLFromPasteboard:pasteboard];
     if (URL)
     {
         result = [KSWebLocation webLocationWithURL:URL
                                              title:[WebView URLTitleFromPasteboard:pasteboard]];
     }
+    
+    return result;
+}
+
++ (NSURL *)URLFromPasteboard:(NSPasteboard *)pboard
+{
+    NSURL *result = [WebView URLFromPasteboard:pboard];
+    
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6
+    if (!result)
+    {
+        NSSpellChecker *spellChecker = [NSSpellChecker sharedSpellChecker];
+        if ([spellChecker respondsToSelector:@selector(checkString:range:types:options:inSpellDocumentWithTag:orthography:wordCount:)])
+        {
+            NSString *string = [pboard stringForType:NSStringPboardType];
+            
+            NSArray *checkResults = [spellChecker checkString:string
+                                                        range:NSMakeRange(0, [string length])
+                                                        types:NSTextCheckingTypeLink
+                                                      options:nil
+                                       inSpellDocumentWithTag:0
+                                                  orthography:NULL
+                                                    wordCount:NULL];
+            
+            if ([checkResults count])
+            {
+                result = [[checkResults objectAtIndex:0] URL];
+            }
+        }
+    }
+#endif
     
     return result;
 }
