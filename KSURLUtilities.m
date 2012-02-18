@@ -239,15 +239,7 @@
 - (NSURL *)ks_URLWithQueryParameters:(NSDictionary *)parameters;
 {
 	NSString *query = [NSURL ks_queryWithParameters:parameters];
-	if (![query isEqualToString:@""])
-	{
-		NSString *existingQuery = [self query];	// check if we already have a query -- if so we need & not ?
-		NSString *firstSeparator = (nil == existingQuery || [existingQuery isEqualToString:@""]) ? @"?" : @"&";
-		query = [firstSeparator stringByAppendingString:query];
-	}
-	
-    // Create the URL from the query string
-	return [NSURL URLWithString:query relativeToURL:self];
+	return [NSURL URLWithString:[@"?" stringByAppendingString:query] relativeToURL:self];
 }
 
 + (NSURL *)ks_URLWithScheme:(NSString *)scheme
