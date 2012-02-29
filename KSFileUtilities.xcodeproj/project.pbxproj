@@ -1,0 +1,345 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		27DA2577148E641100209E50 /* TestKSURLUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DA2576148E641100209E50 /* TestKSURLUtilities.m */; };
+		EE0F59A313897980006045D3 /* KSPathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EE0F599713897980006045D3 /* KSPathUtilities.m */; };
+		EE0F59AA13897B20006045D3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0F59A913897B20006045D3 /* WebKit.framework */; };
+		EE20B4B613897F7400AE2AF9 /* TestKSPathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EE20B4B513897F7400AE2AF9 /* TestKSPathUtilities.m */; };
+		EE43C84F13898D7B008ABD16 /* KSFileWrapperExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = EE43C84413898D7B008ABD16 /* KSFileWrapperExtensions.m */; };
+		EE43C85013898D7B008ABD16 /* KSURLFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = EE43C84613898D7B008ABD16 /* KSURLFormatter.m */; };
+		EE43C85113898D7B008ABD16 /* KSURLUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EE43C84813898D7B008ABD16 /* KSURLUtilities.m */; };
+		EE43C85213898D7B008ABD16 /* KSWebLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = EE43C84A13898D7B008ABD16 /* KSWebLocation.m */; };
+		EE43C85313898D7B008ABD16 /* KSWebLocationPasteboardUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EE43C84C13898D7B008ABD16 /* KSWebLocationPasteboardUtilities.m */; };
+		EE43C85413898D7B008ABD16 /* KSWorkspaceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EE43C84E13898D7B008ABD16 /* KSWorkspaceUtilities.m */; };
+		EE83867C13897644005E0FFD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE83867B13897644005E0FFD /* Cocoa.framework */; };
+		EE83868613897644005E0FFD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EE83868413897644005E0FFD /* InfoPlist.strings */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		27DA2576148E641100209E50 /* TestKSURLUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSURLUtilities.m; sourceTree = "<group>"; };
+		EE0F599613897980006045D3 /* KSPathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPathUtilities.h; sourceTree = SOURCE_ROOT; };
+		EE0F599713897980006045D3 /* KSPathUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPathUtilities.m; sourceTree = SOURCE_ROOT; };
+		EE0F59A913897B20006045D3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/WebKit.framework; sourceTree = DEVELOPER_DIR; };
+		EE20B4B513897F7400AE2AF9 /* TestKSPathUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSPathUtilities.m; sourceTree = "<group>"; };
+		EE43C84413898D7B008ABD16 /* KSFileWrapperExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSFileWrapperExtensions.m; sourceTree = SOURCE_ROOT; };
+		EE43C84513898D7B008ABD16 /* KSURLFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLFormatter.h; sourceTree = SOURCE_ROOT; };
+		EE43C84613898D7B008ABD16 /* KSURLFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSURLFormatter.m; sourceTree = SOURCE_ROOT; };
+		EE43C84713898D7B008ABD16 /* KSURLUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLUtilities.h; sourceTree = SOURCE_ROOT; };
+		EE43C84813898D7B008ABD16 /* KSURLUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSURLUtilities.m; sourceTree = SOURCE_ROOT; };
+		EE43C84913898D7B008ABD16 /* KSWebLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWebLocation.h; sourceTree = SOURCE_ROOT; };
+		EE43C84A13898D7B008ABD16 /* KSWebLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebLocation.m; sourceTree = SOURCE_ROOT; };
+		EE43C84B13898D7B008ABD16 /* KSWebLocationPasteboardUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWebLocationPasteboardUtilities.h; sourceTree = SOURCE_ROOT; };
+		EE43C84C13898D7B008ABD16 /* KSWebLocationPasteboardUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebLocationPasteboardUtilities.m; sourceTree = SOURCE_ROOT; };
+		EE43C84D13898D7B008ABD16 /* KSWorkspaceUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWorkspaceUtilities.h; sourceTree = SOURCE_ROOT; };
+		EE43C84E13898D7B008ABD16 /* KSWorkspaceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWorkspaceUtilities.m; sourceTree = SOURCE_ROOT; };
+		EE83867813897644005E0FFD /* TestKSFileUtilities.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestKSFileUtilities.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE83867B13897644005E0FFD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		EE83867E13897644005E0FFD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		EE83867F13897644005E0FFD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		EE83868013897644005E0FFD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		EE83868313897644005E0FFD /* TestKSFileUtilities-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TestKSFileUtilities-Info.plist"; sourceTree = "<group>"; };
+		EE83868513897644005E0FFD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		EE83868713897644005E0FFD /* TestKSFileUtilities-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestKSFileUtilities-Prefix.pch"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EE83867413897644005E0FFD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE0F59AA13897B20006045D3 /* WebKit.framework in Frameworks */,
+				EE83867C13897644005E0FFD /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EE0F599213897956006045D3 /* KSFileUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				EE43C84413898D7B008ABD16 /* KSFileWrapperExtensions.m */,
+				EE43C84513898D7B008ABD16 /* KSURLFormatter.h */,
+				EE43C84613898D7B008ABD16 /* KSURLFormatter.m */,
+				EE43C84713898D7B008ABD16 /* KSURLUtilities.h */,
+				EE43C84813898D7B008ABD16 /* KSURLUtilities.m */,
+				EE43C84913898D7B008ABD16 /* KSWebLocation.h */,
+				EE43C84A13898D7B008ABD16 /* KSWebLocation.m */,
+				EE43C84B13898D7B008ABD16 /* KSWebLocationPasteboardUtilities.h */,
+				EE43C84C13898D7B008ABD16 /* KSWebLocationPasteboardUtilities.m */,
+				EE43C84D13898D7B008ABD16 /* KSWorkspaceUtilities.h */,
+				EE43C84E13898D7B008ABD16 /* KSWorkspaceUtilities.m */,
+				EE0F599613897980006045D3 /* KSPathUtilities.h */,
+				EE0F599713897980006045D3 /* KSPathUtilities.m */,
+			);
+			name = KSFileUtilities;
+			path = TestKSFileUtilities;
+			sourceTree = "<group>";
+		};
+		EE83866A13897613005E0FFD = {
+			isa = PBXGroup;
+			children = (
+				EE83868113897644005E0FFD /* TestKSFileUtilities */,
+				EE0F599213897956006045D3 /* KSFileUtilities */,
+				EE83867A13897644005E0FFD /* Frameworks */,
+				EE83867913897644005E0FFD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EE83867913897644005E0FFD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EE83867813897644005E0FFD /* TestKSFileUtilities.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EE83867A13897644005E0FFD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EE0F59A913897B20006045D3 /* WebKit.framework */,
+				EE83867B13897644005E0FFD /* Cocoa.framework */,
+				EE83867D13897644005E0FFD /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EE83867D13897644005E0FFD /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EE83867E13897644005E0FFD /* AppKit.framework */,
+				EE83867F13897644005E0FFD /* CoreData.framework */,
+				EE83868013897644005E0FFD /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		EE83868113897644005E0FFD /* TestKSFileUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				EE20B4B513897F7400AE2AF9 /* TestKSPathUtilities.m */,
+				EE83868213897644005E0FFD /* Supporting Files */,
+				27DA2576148E641100209E50 /* TestKSURLUtilities.m */,
+			);
+			path = TestKSFileUtilities;
+			sourceTree = "<group>";
+		};
+		EE83868213897644005E0FFD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EE83868313897644005E0FFD /* TestKSFileUtilities-Info.plist */,
+				EE83868413897644005E0FFD /* InfoPlist.strings */,
+				EE83868713897644005E0FFD /* TestKSFileUtilities-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EE83867713897644005E0FFD /* TestKSFileUtilities */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EE83868C13897644005E0FFD /* Build configuration list for PBXNativeTarget "TestKSFileUtilities" */;
+			buildPhases = (
+				EE83867313897644005E0FFD /* Sources */,
+				EE83867413897644005E0FFD /* Frameworks */,
+				EE83867513897644005E0FFD /* Resources */,
+				EE83867613897644005E0FFD /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestKSFileUtilities;
+			productName = TestKSFileUtilities;
+			productReference = EE83867813897644005E0FFD /* TestKSFileUtilities.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EE83866C13897613005E0FFD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Jungle Candy Software";
+			};
+			buildConfigurationList = EE83866F13897613005E0FFD /* Build configuration list for PBXProject "KSFileUtilities" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = EE83866A13897613005E0FFD;
+			productRefGroup = EE83867913897644005E0FFD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EE83867713897644005E0FFD /* TestKSFileUtilities */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EE83867513897644005E0FFD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE83868613897644005E0FFD /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		EE83867613897644005E0FFD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EE83867313897644005E0FFD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE0F59A313897980006045D3 /* KSPathUtilities.m in Sources */,
+				EE20B4B613897F7400AE2AF9 /* TestKSPathUtilities.m in Sources */,
+				EE43C84F13898D7B008ABD16 /* KSFileWrapperExtensions.m in Sources */,
+				EE43C85013898D7B008ABD16 /* KSURLFormatter.m in Sources */,
+				EE43C85113898D7B008ABD16 /* KSURLUtilities.m in Sources */,
+				EE43C85213898D7B008ABD16 /* KSWebLocation.m in Sources */,
+				EE43C85313898D7B008ABD16 /* KSWebLocationPasteboardUtilities.m in Sources */,
+				EE43C85413898D7B008ABD16 /* KSWorkspaceUtilities.m in Sources */,
+				27DA2577148E641100209E50 /* TestKSURLUtilities.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		EE83868413897644005E0FFD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EE83868513897644005E0FFD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EE83867113897614005E0FFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				RUN_CLANG_STATIC_ANALYZER = YES;
+			};
+			name = Debug;
+		};
+		EE83867213897614005E0FFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+			};
+			name = Release;
+		};
+		EE83868D13897644005E0FFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TestKSFileUtilities/TestKSFileUtilities-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "TestKSFileUtilities/TestKSFileUtilities-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		EE83868E13897644005E0FFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TestKSFileUtilities/TestKSFileUtilities-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "TestKSFileUtilities/TestKSFileUtilities-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EE83866F13897613005E0FFD /* Build configuration list for PBXProject "KSFileUtilities" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE83867113897614005E0FFD /* Debug */,
+				EE83867213897614005E0FFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EE83868C13897644005E0FFD /* Build configuration list for PBXNativeTarget "TestKSFileUtilities" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE83868D13897644005E0FFD /* Debug */,
+				EE83868E13897644005E0FFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EE83866C13897613005E0FFD /* Project object */;
+}
