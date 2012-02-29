@@ -3,27 +3,29 @@
 //  http://en.wikipedia.org/wiki/URL_normalization
 
 
-#import "NSURL+SVIURLUtils.h"
+#import "NSURL+KSURLUtilities.h"
+#import "NSURL+KSURLUtilitiesPrivate.h"
 
 
-@implementation NSURL (SVIURLUtils)
+@implementation NSURL (KSURLUtilities)
 
-- (NSURL *)sviURLByNormalizingURL
+
+- (NSURL *)ks_normalizedURL
 {
     NSURL *norm = self;
-    norm = [norm sviURLByLowercasingSchemeAndHost];
-    norm = [norm sviURLByUppercasingEscapes];
-    norm = [norm sviURLByAddingTrailingSlashToDirectory];
-    norm = [norm sviURLByRemovingDefaultPort];
-    norm = [norm sviURLByRemovingDotSegments];
-    norm = [norm sviURLByRemovingDirectoryIndex];
-    norm = [norm sviURLByRemovingFragment];
-    norm = [norm sviURLByRemovingDuplicateSlashes];
+    norm = [norm ks_URLByLowercasingSchemeAndHost];
+    norm = [norm ks_URLByUppercasingEscapes];
+    norm = [norm ks_URLByAddingTrailingSlashToDirectory];
+    norm = [norm ks_URLByRemovingDefaultPort];
+    norm = [norm ks_URLByRemovingDotSegments];
+    norm = [norm ks_URLByRemovingDirectoryIndex];
+    norm = [norm ks_URLByRemovingFragment];
+    norm = [norm ks_URLByRemovingDuplicateSlashes];
     return norm;
 }
 
 
-- (NSRange)sviReplacementRangeOfURLPart:(SVIURLPart)anURLPart
+- (NSRange)ks_replacementRangeOfURLPart:(ks_URLPart)anURLPart
 {
     // Determine correct range for replacing the specified URL part INCLUDING DELIMITERS.
     // Note that if the URL part is not found, the range length is 0, but the range location is NOT NSNotFound, but rather the location that the indicated URL part could be inserted.
@@ -49,17 +51,17 @@
     NSString *fragmentDelimiter = @"#";
     
     NSRange rPart = (NSRange){0,0};
-    if (anURLPart >= SVIURLPartScheme)
+    if (anURLPart >= ks_URLPartScheme)
     {
         rPart.location += 0;
         rPart.length = [scheme length];
     }
-    if (anURLPart >= SVIURLPartSchemePart)
+    if (anURLPart >= ks_URLPartSchemePart)
     {
         rPart.location += [scheme length];
         rPart.length = [schemePart length];
     }
-    if (anURLPart >= SVIURLPartUserAndPassword)
+    if (anURLPart >= ks_URLPartUserAndPassword)
     {
         rPart.location += [schemePart length];
         rPart.length = 0;
@@ -72,7 +74,7 @@
             rPart.length += ([password length] + [passwordDelimiter length]);
         }
     }
-    if (anURLPart >= SVIURLPartHost)
+    if (anURLPart >= ks_URLPartHost)
     {
         if (user && [user length])
         {
@@ -84,7 +86,7 @@
         }
         rPart.length = [host length];
     }
-    if (anURLPart >= SVIURLPartPort)
+    if (anURLPart >= ks_URLPartPort)
     {
         rPart.location += [host length];
         rPart.length = 0;
@@ -93,7 +95,7 @@
             rPart.length = [port length] + [portDelimiter length];
         }
     }
-    if (anURLPart >= SVIURLPartPath)
+    if (anURLPart >= ks_URLPartPath)
     {
         if (port && [port length])
         {
@@ -112,7 +114,7 @@
         }
         rPart.length = [path length];
     }
-    if (anURLPart >= SVIURLPartParameterString)
+    if (anURLPart >= ks_URLPartParameterString)
     {
         rPart.location += [path length];
         rPart.length = 0;
@@ -121,7 +123,7 @@
             rPart.length = [parameterString length] + [parameterDelimiter length];
         }
     }
-    if (anURLPart >= SVIURLPartQuery)
+    if (anURLPart >= ks_URLPartQuery)
     {
         if (parameterString && [parameterString length])
         {
@@ -133,7 +135,7 @@
             rPart.length = [query length] + [queryDelimiter length];
         }
     }
-    if (anURLPart >= SVIURLPartFragment)
+    if (anURLPart >= ks_URLPartFragment)
     {
         if (query && [query length])
         {
@@ -152,10 +154,11 @@
 
 #pragma mark Normalizations that preserve semantics.
 
-- (NSURL *)sviURLByLowercasingSchemeAndHost
+// Convert scheme and host to lower case.
+- (NSURL *)ks_URLByLowercasingSchemeAndHost
 {
-    NSRange rScheme = [self sviReplacementRangeOfURLPart:SVIURLPartScheme];
-    NSRange rHost = [self sviReplacementRangeOfURLPart:SVIURLPartHost];
+    NSRange rScheme = [self ks_replacementRangeOfURLPart:ks_URLPartScheme];
+    NSRange rHost = [self ks_replacementRangeOfURLPart:ks_URLPartHost];
     NSString *schemeLower = [[self scheme] lowercaseString];
     NSString *hostLower = (rHost.length > 0) ? [[self host] lowercaseString] : @"";
     NSString *abs = [self absoluteString];
@@ -166,7 +169,8 @@
 }
 
 
-- (NSURL *)sviURLByUppercasingEscapes
+// Capitalize letters in escape sequences.
+- (NSURL *)ks_URLByUppercasingEscapes
 {
     // http://en.wikipedia.org/wiki/Percent_encoding
     
@@ -197,14 +201,19 @@
 }
 
 
-- (NSURL *)sviURLByAddingTrailingSlashToDirectory
+// Decode percent-encoded octets of unreserved characters.
+//- (NSURL *)ks_URLByUnescapingUnreservedCharacters;
+
+
+// Add trailing "/".
+- (NSURL *)ks_URLByAddingTrailingSlashToDirectory
 {
     NSString *pathExt = [self pathExtension];
     if (pathExt && [pathExt length] > 0)
     {   // No need for trailing slash.
         return self;
     }
-    NSRange rPath = [self sviReplacementRangeOfURLPart:SVIURLPartPath];
+    NSRange rPath = [self ks_replacementRangeOfURLPart:ks_URLPartPath];
     NSString *abs = [self absoluteString];
     NSString *path = [abs substringWithRange:rPath];
     if ([path rangeOfString:@"/" options:NSBackwardsSearch].location == ([path length] - 1))
@@ -218,7 +227,8 @@
 }
 
 
-- (NSURL *)sviURLByRemovingDefaultPort
+// Remove default port for http, https.
+- (NSURL *)ks_URLByRemovingDefaultPort
 {
     NSString *scheme = [[self scheme] lowercaseString];
     NSInteger portVal = [[self port] integerValue];
@@ -236,7 +246,7 @@
         return self;
     }
     
-    NSRange rPort = [self sviReplacementRangeOfURLPart:SVIURLPartPort];
+    NSRange rPort = [self ks_replacementRangeOfURLPart:ks_URLPartPort];
     NSString *abs = [self absoluteString];
     abs = [abs stringByReplacingCharactersInRange:rPort withString:@""];
     NSURL *correctedURL = [NSURL URLWithString:abs];
@@ -244,7 +254,8 @@
 }
 
 
-- (NSURL *)sviURLByRemovingDotSegments
+// Remove dot-segments.
+- (NSURL *)ks_URLByRemovingDotSegments
 {
     return [self standardizedURL];
 }
@@ -252,7 +263,8 @@
 
 #pragma mark Normalizations that change semantics.
 
-- (NSURL *)sviURLByRemovingDirectoryIndex
+// Remove common directory index filenames.
+- (NSURL *)ks_URLByRemovingDirectoryIndex
 {
     // No doc specified in URL, early return.
     NSString *pathExt = [self pathExtension];
@@ -289,7 +301,7 @@
         return self;
     }
     
-    NSRange rPath = [self sviReplacementRangeOfURLPart:SVIURLPartPath];
+    NSRange rPath = [self ks_replacementRangeOfURLPart:ks_URLPartPath];
     NSString *abs = [self absoluteString];
     lastPathComponent = [self lastPathComponent];   // preserve case
     NSString *correctedStr = [abs stringByReplacingOccurrencesOfString:lastPathComponent withString:@"" options:NSBackwardsSearch range:rPath];
@@ -298,9 +310,10 @@
 }
 
 
-- (NSURL *)sviURLByRemovingFragment
+// Remove the fragment.
+- (NSURL *)ks_URLByRemovingFragment
 {
-    NSRange rFragment = [self sviReplacementRangeOfURLPart:SVIURLPartFragment];
+    NSRange rFragment = [self ks_replacementRangeOfURLPart:ks_URLPartFragment];
     if (rFragment.length == 0)
     {
         return self;
@@ -313,9 +326,14 @@
 }
 
 
-- (NSURL *)sviURLByRemovingDuplicateSlashes
+// Replace IP with host.
+//- (NSURL *)ks_URLByReplacingIPWithHost;
+
+
+// Remove duplicate slashes.
+- (NSURL *)ks_URLByRemovingDuplicateSlashes
 {
-    NSRange rPath = [self sviReplacementRangeOfURLPart:SVIURLPartPath];
+    NSRange rPath = [self ks_replacementRangeOfURLPart:ks_URLPartPath];
     NSString *abs = [self absoluteString];
     NSString *goodPath = [abs substringWithRange:rPath];
     while ([goodPath rangeOfString:@"//"].location != NSNotFound) 
@@ -328,9 +346,10 @@
 }
 
 
-//- (NSURL *)sviURLByRemovingEmptyQuery
+// Remove empty query string.
+//- (NSURL *)ks_URLByRemovingEmptyQuery
 //{
-//    NSRange rQuery = [self sviReplacementRangeOfURLPart:SVIURLPartQuery];
+//    NSRange rQuery = [self ks_replacementRangeOfURLPart:ks_URLPartQuery];
 //    if (rQuery.length != 1)
 //    {   // Not an empty query.
 //        return self;
