@@ -67,7 +67,7 @@ typedef enum
 } ks_URLPart;
 
 
-@interface NSURL (KSURLUtilities)
+@interface NSURL (KSURLNormalization)
 
 - (NSURL *)ks_normalizedURL;
 

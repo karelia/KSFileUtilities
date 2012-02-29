@@ -3,11 +3,11 @@
 //  http://en.wikipedia.org/wiki/URL_normalization
 
 
-#import "NSURL+KSURLUtilities.h"
-#import "NSURL+KSURLUtilitiesPrivate.h"
+#import "KSURLNormalization.h"
+#import "KSURLNormalizationPrivate.h"
 
 
-@implementation NSURL (KSURLUtilities)
+@implementation NSURL (KSURLNormalization)
 
 
 - (NSURL *)ks_normalizedURL

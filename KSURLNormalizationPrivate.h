@@ -2,10 +2,10 @@
 // Private methods of NSURL+KSURLUtilities category.
 
 
-#import "NSURL+KSURLUtilities.h"
+#import "KSURLNormalization.h"
 
 
-@interface NSURL (KSURLUtilitiesPrivate)
+@interface NSURL (KSURLNormalizationPrivate)
 
 - (NSRange)ks_replacementRangeOfURLPart:(ks_URLPart)anURLPart;
 
