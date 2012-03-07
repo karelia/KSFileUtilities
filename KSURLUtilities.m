@@ -46,7 +46,7 @@
 
 - (NSURL *)ks_hostURL;		// returns a URL like "http://launch.karelia.com/"
 {
-	NSURL *result = [NSURL URLWithString:@"/" relativeToURL:self];
+	NSURL *result = [[NSURL URLWithString:@"/" relativeToURL:self] absoluteURL];
     return result;
 }
 
