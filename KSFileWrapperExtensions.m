@@ -93,4 +93,36 @@
     return [result autorelease];
 }
 
+#pragma mark Writing Files
+
+- (BOOL)ks_writeToURL:(NSURL *)URL options:(NSFileWrapperWritingOptions)options originalParentDirectoryURL:(NSURL *)originalParentDirectory error:(NSError **)outError;
+{
+    NSString *filename = [self filename];
+    NSURL *originalURL = (filename ? [originalParentDirectory URLByAppendingPathComponent:filename] : nil);
+    
+    // NSFileWrapper won't create hardlinks when writing an individual file, so we try to do so ourselves when reasonable, for performance reasons
+    if ([self isRegularFile])    
+    {
+        // If the file is already inside a doc, we favour hardlinking for performance
+        if ([self matchesContentsOfURL:originalURL])
+        {
+            NSFileManager *fileManager = [[NSFileManager alloc] init];
+            BOOL result = [fileManager linkItemAtURL:originalURL toURL:URL error:outError];
+            
+            if (!result)    // linking will fail on filesystems that don't support it, and across partitions
+            {
+                result = [fileManager copyItemAtURL:originalURL toURL:URL error:outError];
+            }
+            [fileManager release];
+            
+            return result;
+        }
+    }
+    
+    // For regular files, asking NSFileWrapper is the final fallback
+    // For directories that have already been copied into a doc, this will take the fast path of using hardlinks if possible. Unfortunately when taking the slow path, it does so by loading each file into memory. We dump them back out again when releasing the wrapper, but this could definitely be improved
+    // For everything else (highly rare) this is the easy fallback
+    return [self writeToURL:URL options:options originalContentsURL:originalURL error:outError];
+}
+
 @end
