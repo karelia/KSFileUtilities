@@ -124,4 +124,4 @@ Sometimes, there may be artefacts left over when switching branches. These are f
 
     git clean -dxf
     
-This deletes all files that are not tracked by git.q
+This deletes all files that are not tracked by git.
