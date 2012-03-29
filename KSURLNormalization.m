@@ -30,7 +30,8 @@
     // Determine correct range for replacing the specified URL part INCLUDING DELIMITERS.
     // Note that if the URL part is not found, the range length is 0, but the range location is NOT NSNotFound, but rather the location that the indicated URL part could be inserted.
     NSString *scheme = [[self scheme] lowercaseString];
-    NSString *schemePart = @"://";
+    NSString *templateSchemePart = @"://";
+    NSString *realSchemePart = @"";
     NSString *user = [self user];
     NSString *password = [self password];
     NSString *passwordDelimiter = @":";
@@ -59,11 +60,23 @@
     if (anURLPart >= ks_URLPartSchemePart)
     {
         rPart.location += [scheme length];
-        rPart.length = [schemePart length];
+        
+        NSRange testForSchemePart = NSMakeRange(rPart.location, [templateSchemePart length]);
+        NSRange searchForSchemePart = [[self absoluteString] rangeOfString:templateSchemePart];
+        if (NSEqualRanges(testForSchemePart, searchForSchemePart))
+        {
+            realSchemePart = templateSchemePart;
+            rPart.length = [realSchemePart length];
+        }
+        else 
+        {
+            realSchemePart = @"";
+            rPart.length = [realSchemePart length];
+        }
     }
     if (anURLPart >= ks_URLPartUserAndPassword)
     {
-        rPart.location += [schemePart length];
+        rPart.location += [realSchemePart length];
         rPart.length = 0;
         if (user && [user length])
         {
@@ -162,8 +175,14 @@
     NSString *schemeLower = [[self scheme] lowercaseString];
     NSString *hostLower = (rHost.length > 0) ? [[self host] lowercaseString] : @"";
     NSString *abs = [self absoluteString];
-    abs = [abs stringByReplacingCharactersInRange:rScheme withString:schemeLower];
-    abs = [abs stringByReplacingCharactersInRange:rHost withString:hostLower];
+    if ([schemeLower length])
+    {
+        abs = [abs stringByReplacingCharactersInRange:rScheme withString:schemeLower];
+    }
+    if ([hostLower length])
+    {
+        abs = [abs stringByReplacingCharactersInRange:rHost withString:hostLower];
+    }
     NSURL *correctedURL = [NSURL URLWithString:abs];
     return correctedURL;
 }
@@ -215,6 +234,10 @@
     }
     NSRange rPath = [self ks_replacementRangeOfURLPart:ks_URLPartPath];
     NSString *abs = [self absoluteString];
+    if ([abs length] == 0)
+    {
+        return self;
+    }
     NSString *path = [abs substringWithRange:rPath];
     if ([path rangeOfString:@"/" options:NSBackwardsSearch].location == ([path length] - 1))
     {   // last char of path is "/" already
@@ -257,7 +280,15 @@
 // Remove dot-segments.
 - (NSURL *)ks_URLByRemovingDotSegments
 {
-    return [self standardizedURL];
+    NSURL *standardized = [self standardizedURL];
+    if (standardized)
+    {
+        return standardized;
+    }
+    else 
+    {
+        return self;
+    }
 }
 
 
