@@ -33,6 +33,7 @@
   @private
     BOOL        _useDisplayNameForFileURLs;
     NSString    *_fallbackTopLevelDomain;
+    BOOL        _generateStrings;
 }
 
 #pragma mark Class Methods
@@ -59,5 +60,7 @@
 
 #pragma mark Conversion
 - (NSURL *)URLFromString:(NSString *)string;    // convenience
+@property(nonatomic) BOOL generatesURLStrings;  // defaults to NO, so that NSURL objects are generated
+
 
 @end
