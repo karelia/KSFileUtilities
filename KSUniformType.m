@@ -173,14 +173,51 @@
 	return result;
 }
 
-+ (BOOL)type:(NSString *)type1 isEqualToType:(NSString *)anotherUTI;
+#pragma mark Creating a KSUniformType Instance
+
++ (id)bestGuessUniformTypeForURL:(NSURL *)url;
 {
-	return UTTypeEqual (
-						(CFStringRef)type1,
-						(CFStringRef)anotherUTI
-						);
+    return [[[self alloc] initWithIdentifier:[self typeOfFileAtURL:url]] autorelease];
 }
 
+- (id)initWithIdentifier:(NSString *)uti;
+{
+    NSParameterAssert(uti);
+    if (self = [self init])
+    {
+        _identifier = [uti copy];
+    }
+    
+    return self;
+}
+
+#pragma mark Properties
+
+@synthesize identifier = _identifier;
+
+#pragma mark Testing Uniform Type Identifiers
+
+- (BOOL)isEqualToType:(NSString *)type; { return [[self class] type:[self identifier] isEqualToType:type]; }
+
+- (BOOL)isEqual:(id)object;
+{
+    if (self == object) return YES;
+    if (![object isKindOfClass:[KSUniformType class]]) return NO;
+    
+    return [self isEqualToType:[object identifier]];
+}
+
+- (NSUInteger)hash; { return 0; }   // see header
+
+- (BOOL)conformsToType:(NSString *)type;
+{
+    return [[NSWorkspace sharedWorkspace] type:[self identifier] conformsToType:type];
+}
+
++ (BOOL)type:(NSString *)type1 isEqualToType:(NSString *)anotherUTI;
+{
+	return UTTypeEqual((CFStringRef)type1, (CFStringRef)anotherUTI);
+}
 
 + (BOOL)type:(NSString *)type conformsToOneOfTypes:(NSArray *)types;
 {
