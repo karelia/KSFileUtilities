@@ -40,6 +40,7 @@
 
 #pragma mark Properties
 @property(nonatomic, readonly, copy) NSString *identifier;
+- (NSString *)MIMEType;
 
 
 #pragma mark Testing Uniform Type Identifiers

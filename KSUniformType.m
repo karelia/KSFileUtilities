@@ -205,6 +205,8 @@
 
 @synthesize identifier = _identifier;
 
+- (NSString *)MIMEType; { return [[self class] MIMETypeForType:[self identifier]]; }
+
 #pragma mark Testing Uniform Type Identifiers
 
 - (BOOL)isEqualToType:(NSString *)type; { return [[self class] type:[self identifier] isEqualToType:type]; }
