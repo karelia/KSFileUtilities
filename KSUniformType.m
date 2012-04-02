@@ -180,6 +180,11 @@
     return [[[self alloc] initWithIdentifier:[self typeForFilenameExtension:extension]] autorelease];
 }
 
++ (id)uniformTypeWithIdentifier:(NSString *)identifier;
+{
+    return [[[self alloc] initWithIdentifier:identifier] autorelease];
+}
+
 + (id)bestGuessUniformTypeForURL:(NSURL *)url;
 {
     return [[[self alloc] initWithIdentifier:[self typeOfFileAtURL:url]] autorelease];
