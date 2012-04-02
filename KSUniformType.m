@@ -182,6 +182,7 @@
 
 + (id)uniformTypeWithIdentifier:(NSString *)identifier;
 {
+    if (!identifier) return nil;
     return [[[self alloc] initWithIdentifier:identifier] autorelease];
 }
 

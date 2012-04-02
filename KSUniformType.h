@@ -31,7 +31,7 @@
 
 + (id)uniformTypeWithFilenameExtension:(NSString *)extension;
 + (id)bestGuessUniformTypeForURL:(NSURL *)url;
-+ (id)uniformTypeWithIdentifier:(NSString *)identifier;
++ (id)uniformTypeWithIdentifier:(NSString *)identifier; // lenient and handles nil identifier by returning nil
 
 // KSUniformType returns the right to return nil should the identifier be unsuitable (a la NSURL). This doesn't happen at present though
 // Designated initializer
