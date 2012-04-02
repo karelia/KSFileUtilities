@@ -175,6 +175,11 @@
 
 #pragma mark Creating a KSUniformType Instance
 
++ (id)uniformTypeWithFilenameExtension:(NSString *)extension;
+{
+    return [[[self alloc] initWithIdentifier:[self typeForFilenameExtension:extension]] autorelease];
+}
+
 + (id)bestGuessUniformTypeForURL:(NSURL *)url;
 {
     return [[[self alloc] initWithIdentifier:[self typeOfFileAtURL:url]] autorelease];

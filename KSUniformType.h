@@ -29,6 +29,7 @@
 
 #pragma mark Creating a KSUniformType Instance
 
++ (id)uniformTypeWithFilenameExtension:(NSString *)extension;
 + (id)bestGuessUniformTypeForURL:(NSURL *)url;
 
 // KSUniformType returns the right to return nil should the identifier be unsuitable (a la NSURL). This doesn't happen at present though
