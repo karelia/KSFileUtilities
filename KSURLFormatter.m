@@ -173,69 +173,75 @@
 
 - (BOOL)getObjectValue:(id *)anObject forString:(NSString *)string errorDescription:(NSString **)error
 {
-    BOOL result = YES;
-    NSURL *URL = nil;
-    
-    if ([string length] > 0)
+    if (anObject)
     {
-        URL = [KSURLFormatter URLFromString:string fallbackScheme:@"http"];
-        
-        
-        // Does the URL have no useful resource specified? If so, generate nil URL
-        if (URL && ![[URL scheme] isEqualToString:@"mailto"])
+        NSURL *URL = [self URLFromString:string];
+        if ([self generatesURLStrings])
         {
-            NSString *resource = [URL resourceSpecifier];
-            if ([resource length] == 0 ||
-                [resource isEqualToString:@"/"] ||
-                [resource isEqualToString:@"//"])
-            {
-                URL = nil;
-            }
-            
-            
-            
-            // URLs should also really have a host and a path
-            if (URL)
-            {
-                NSString *host = [URL host];
-                NSString *path = [URL path];
-                if (!host && !path && ![URL fragment])
-                {
-                    URL = nil;
-                }
-            }
+            *anObject = [URL absoluteString];
         }
-        
-        
-        // Did the user not enter a top-level domain? We'll guess for them
-        if (URL && [self fallbackTopLevelDomain])
+        else
         {
-            if ([[URL ks_domains] count] == 1)
-            {
-                NSString *urlString = [NSString stringWithFormat:
-                                       @"%@://%@.%@/",
-                                       [URL scheme],
-                                       [URL host],
-                                       [self fallbackTopLevelDomain]];
-                URL = [NSURL URLWithString:urlString];
-            }
+            *anObject = URL;
         }
     }
     
-    
-    // Finish up
-    if (result && anObject) *anObject = URL;
-    return result;
+    return YES;
 }
 
 - (NSURL *)URLFromString:(NSString *)string;
 {
     NSURL *result = nil;
     
-    NSURL *URL;
-    if ([self getObjectValue:&URL forString:string errorDescription:NULL]) result = URL;
+    if ([string length] > 0)
+    {
+        result = [KSURLFormatter URLFromString:string fallbackScheme:@"http"];
+        
+        
+        // Does the URL have no useful resource specified? If so, generate nil URL
+        if (result && ![[result scheme] isEqualToString:@"mailto"])
+        {
+            NSString *resource = [result resourceSpecifier];
+            if ([resource length] == 0 ||
+                [resource isEqualToString:@"/"] ||
+                [resource isEqualToString:@"//"])
+            {
+                result = nil;
+            }
+            
+            
+            
+            // URLs should also really have a host and a path
+            if (result)
+            {
+                NSString *host = [result host];
+                NSString *path = [result path];
+                if (!host && !path && ![result fragment])
+                {
+                    result = nil;
+                }
+            }
+        }
+        
+        
+        // Did the user not enter a top-level domain? We'll guess for them
+        if (result && [self fallbackTopLevelDomain])
+        {
+            if ([[result ks_domains] count] == 1)
+            {
+                NSString *urlString = [NSString stringWithFormat:
+                                       @"%@://%@.%@/",
+                                       [result scheme],
+                                       [result host],
+                                       [self fallbackTopLevelDomain]];
+                result = [NSURL URLWithString:urlString];
+            }
+        }
+    }
     
     return result;
 }
+
+@synthesize generatesURLStrings = _generateStrings;
 
 @end

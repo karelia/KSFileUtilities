@@ -38,4 +38,6 @@
 // Tries to construct a wrapper from the link's destination
 - (NSFileWrapper *)ks_symbolicLinkDestinationFileWrapper;
 
+- (BOOL)ks_writeToURL:(NSURL *)URL options:(NSFileWrapperWritingOptions)options originalParentDirectoryURL:(NSURL *)originalParentDirectory error:(NSError **)outError;
+
 @end

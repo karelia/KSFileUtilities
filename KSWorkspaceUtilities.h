@@ -14,24 +14,6 @@
 
 @interface NSWorkspace (KSWorkspaceUtilities)
 
-#pragma mark Manipulating Uniform Type Identifier Information
-
-- (NSString *)ks_MIMETypeForType:(NSString *)aUTI;
-- (NSString *)ks_OSTypeStringForType:(NSString *)aUTI;
-- (OSType)ks_OSTypeForType:(NSString *)aUTI;
-
-// Unlike -typeOfFile:error: this will fallback to guessing from the path extension
-- (NSString *)ks_typeOfFileAtURL:(NSURL *)url;
-
-- (NSString *)ks_typeForFilenameExtension:(NSString *)anExtension;
-- (NSString *)ks_typeForMIMEType:(NSString *)aMIMEType;
-- (NSString *)ks_typeForOSTypeString:(NSString *)aFileType;
-- (NSString *)ks_typeForOSType:(OSType)anOSType;
-
-- (BOOL)ks_type:(NSString *)type1 isEqualToType:(NSString *)anotherUTI;
-- (BOOL)ks_type:(NSString *)type conformsToOneOfTypes:(NSArray *)types;
-
-
 #pragma mark Requesting Information
 - (NSImage *)ks_iconForType:(NSString *)aUTI;
 
