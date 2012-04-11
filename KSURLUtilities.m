@@ -344,12 +344,19 @@
 	}
 	
 	
-	// If the host or scheme differs, there is no possible relative path.
+	// If the scheme, host or port differs, there is no possible relative path.
     if (![[self scheme] isEqualToString:[URL scheme]] || ![[self host] isEqualToString:[URL host]])
 	{
 		NSString *result = [self absoluteString];
 		return result;
 	}
+    
+    NSNumber *myPort = [self port];
+    NSNumber *aPort = [URL port];
+    if (aPort != myPort && ![myPort isEqual:aPort]) // -isEqualToNumber: throws when passed nil
+    {
+        return [self absoluteString];
+    }
 	
 	
 	// OK, to figure out, need my path...
