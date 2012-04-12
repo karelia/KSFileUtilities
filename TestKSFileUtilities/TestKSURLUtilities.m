@@ -3,7 +3,7 @@
 //  KSFileUtilities
 //
 //  Created by Mike on 06/12/2011.
-//  Copyright 2011 Jungle Candy Software. All rights reserved.
+//  Copyright 2011 Karelia Software. All rights reserved.
 //
 
 
