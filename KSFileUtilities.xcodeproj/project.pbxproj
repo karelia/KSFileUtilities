@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27A60C0E1536E7F500EEE538 /* TestKSURLFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60C0D1536E7F500EEE538 /* TestKSURLFormatter.m */; };
 		27DA2577148E641100209E50 /* TestKSURLUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DA2576148E641100209E50 /* TestKSURLUtilities.m */; };
 		801978D514FEDE0B008F41E3 /* TestKSURLNormalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 801978D414FEDE0B008F41E3 /* TestKSURLNormalization.m */; };
 		801978D914FEDE26008F41E3 /* KSURLNormalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 801978D714FEDE26008F41E3 /* KSURLNormalization.m */; };
@@ -24,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		27A60C0C1536E7F500EEE538 /* TestKSURLFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestKSURLFormatter.h; sourceTree = "<group>"; };
+		27A60C0D1536E7F500EEE538 /* TestKSURLFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSURLFormatter.m; sourceTree = "<group>"; };
 		27DA2576148E641100209E50 /* TestKSURLUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSURLUtilities.m; sourceTree = "<group>"; };
 		801978D414FEDE0B008F41E3 /* TestKSURLNormalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSURLNormalization.m; sourceTree = "<group>"; };
 		801978D614FEDE26008F41E3 /* KSURLNormalization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLNormalization.h; sourceTree = SOURCE_ROOT; };
@@ -136,6 +139,8 @@
 				EE83868213897644005E0FFD /* Supporting Files */,
 				27DA2576148E641100209E50 /* TestKSURLUtilities.m */,
 				801978D414FEDE0B008F41E3 /* TestKSURLNormalization.m */,
+				27A60C0C1536E7F500EEE538 /* TestKSURLFormatter.h */,
+				27A60C0D1536E7F500EEE538 /* TestKSURLFormatter.m */,
 			);
 			path = TestKSFileUtilities;
 			sourceTree = "<group>";
@@ -239,6 +244,7 @@
 				27DA2577148E641100209E50 /* TestKSURLUtilities.m in Sources */,
 				801978D514FEDE0B008F41E3 /* TestKSURLNormalization.m in Sources */,
 				801978D914FEDE26008F41E3 /* KSURLNormalization.m in Sources */,
+				27A60C0E1536E7F500EEE538 /* TestKSURLFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

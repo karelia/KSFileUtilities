@@ -82,12 +82,17 @@
 - (id)init
 {
     [super init];
+    
+    _defaultScheme = [@"http" retain];
     _fallbackTopLevelDomain = [@"com" retain];
+    
     return self;
 }
 
 - (void)dealloc
 {
+    [_defaultScheme release];
+    [_allowedSchemes release];
     [_fallbackTopLevelDomain release];
     [super dealloc];
 }
@@ -95,6 +100,17 @@
 #pragma mark Managing Behaviour
 
 @synthesize useDisplayNameForFileURLs = _useDisplayNameForFileURLs;
+@synthesize defaultScheme = _defaultScheme;
+
+@synthesize allowedSchemes = _allowedSchemes;
+- (void)setAllowedSchemes:(NSArray *)schemes;
+{
+    if (schemes) NSParameterAssert([schemes count] > 0);
+    
+    schemes = [schemes copy];
+    [_allowedSchemes release]; _allowedSchemes = schemes;
+}
+
 @synthesize fallbackTopLevelDomain = _fallbackTopLevelDomain;
 
 #pragma mark Textual Representation of Cell Content
@@ -128,7 +144,7 @@
 
 #pragma mark Object Equivalent to Textual Representation
 
-+ (NSURL *)URLFromString:(NSString *)string fallbackScheme:(NSString *)fallbackScheme;
++ (NSURL *)URLFromString:(NSString *)string defaultScheme:(NSString *)fallbackScheme;
 {
 	//  Tries to interpret the string as a complete URL. If there is no scheme specified, try it as an email address. If that doesn't seem reasonable, combine with fallbackScheme
 
@@ -195,7 +211,7 @@
     
     if ([string length] > 0)
     {
-        result = [KSURLFormatter URLFromString:string fallbackScheme:@"http"];
+        result = [KSURLFormatter URLFromString:string defaultScheme:[self defaultScheme]];
         
         
         // Does the URL have no useful resource specified? If so, generate nil URL
@@ -235,6 +251,29 @@
                                        [result host],
                                        [self fallbackTopLevelDomain]];
                 result = [NSURL URLWithString:urlString];
+            }
+        }
+        
+        
+        // Make sure the scheme is allowed
+        NSArray *allowedSchemes = [self allowedSchemes];
+        if (allowedSchemes)
+        {
+            NSString *scheme = [result scheme];
+            if (scheme && ![allowedSchemes containsObject:[result scheme]])
+            {
+                // Look for the best matching scheme based on the assumption that the URL was simply pasted in missing a small number of initial characters
+                for (NSString *aScheme in allowedSchemes)
+                {
+                    if ([aScheme hasSuffix:scheme])
+                    {
+                        result = [result ks_URLWithScheme:aScheme];
+                        return result;
+                    }
+                }
+                
+                // Nothing matched? Alright, go for the first one then
+                result = [result ks_URLWithScheme:[allowedSchemes objectAtIndex:0]];
             }
         }
     }

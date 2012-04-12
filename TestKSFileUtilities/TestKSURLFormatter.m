@@ -1,0 +1,51 @@
+//
+//  TestKSURLFormatter.m
+//  KSFileUtilities
+//
+//  Created by Mike Abdullah on 12/04/2012.
+//  Copyright (c) 2012 Jungle Candy Software. All rights reserved.
+//
+
+#import "TestKSURLFormatter.h"
+#import "KSURLFormatter.h"
+
+
+@implementation TestKSURLFormatter
+
+- (void)testAllowedSchemesWithString:(NSString *)urlString expectedURLString:(NSString *)expectedResult
+{
+    KSURLFormatter *formatter = [[KSURLFormatter alloc] init];
+    [formatter setAllowedSchemes:[NSArray arrayWithObjects:@"http", @"https", @"file", nil]];
+    
+    NSURL *URL = [formatter URLFromString:urlString];
+    STAssertEqualObjects([URL absoluteString], expectedResult, nil);
+    
+    [formatter release];
+}
+
+- (void)testAllowedSchemesPrimary;
+{
+    [self testAllowedSchemesWithString:@"http://example.com/" expectedURLString:@"http://example.com/"];
+}
+
+- (void)testAllowedSchemesSecondary
+{
+    [self testAllowedSchemesWithString:@"https://example.com/" expectedURLString:@"https://example.com/"];
+}
+
+- (void)testAllowedSchemesCloseMatchPrimary
+{
+    [self testAllowedSchemesWithString:@"ttp://example.com/" expectedURLString:@"http://example.com/"];
+}
+
+- (void)testAllowedSchemesCloseMatchSecondary
+{
+    [self testAllowedSchemesWithString:@"ttps://example.com/" expectedURLString:@"https://example.com/"];
+}
+
+- (void)testAllowedSchemesRandom
+{
+    [self testAllowedSchemesWithString:@"test://example.com/" expectedURLString:@"http://example.com/"];
+}
+
+@end
