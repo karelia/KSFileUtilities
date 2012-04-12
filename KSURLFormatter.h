@@ -32,6 +32,7 @@
 {
   @private
     BOOL        _useDisplayNameForFileURLs;
+    NSString    *_defaultScheme;
     NSString    *_fallbackTopLevelDomain;
     BOOL        _generateStrings;
 }
@@ -53,6 +54,9 @@
 
 // Default is NO. If YES, -stringForObjectValue: will return -[NSFileManager displayName…] for file URLs
 @property(nonatomic) BOOL useDisplayNameForFileURLs;
+
+// If no scheme is recognisable from the string, this will be substituted. Default is http
+@property(nonatomic, copy) NSString *defaultScheme;
 
 // If the URL's host does not have a top-level domain specified, and this is non-nil, it is substituted in. Defaults is "com"
 @property(nonatomic, copy) NSString *fallbackTopLevelDomain;

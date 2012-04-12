@@ -82,12 +82,16 @@
 - (id)init
 {
     [super init];
+    
+    _defaultScheme = [@"http" retain];
     _fallbackTopLevelDomain = [@"com" retain];
+    
     return self;
 }
 
 - (void)dealloc
 {
+    [_defaultScheme release];
     [_fallbackTopLevelDomain release];
     [super dealloc];
 }
@@ -95,6 +99,7 @@
 #pragma mark Managing Behaviour
 
 @synthesize useDisplayNameForFileURLs = _useDisplayNameForFileURLs;
+@synthesize defaultScheme = _defaultScheme;
 @synthesize fallbackTopLevelDomain = _fallbackTopLevelDomain;
 
 #pragma mark Textual Representation of Cell Content
@@ -128,7 +133,7 @@
 
 #pragma mark Object Equivalent to Textual Representation
 
-+ (NSURL *)URLFromString:(NSString *)string fallbackScheme:(NSString *)fallbackScheme;
++ (NSURL *)URLFromString:(NSString *)string defaultScheme:(NSString *)fallbackScheme;
 {
 	//  Tries to interpret the string as a complete URL. If there is no scheme specified, try it as an email address. If that doesn't seem reasonable, combine with fallbackScheme
 
@@ -195,7 +200,7 @@
     
     if ([string length] > 0)
     {
-        result = [KSURLFormatter URLFromString:string fallbackScheme:@"http"];
+        result = [KSURLFormatter URLFromString:string defaultScheme:[self defaultScheme]];
         
         
         // Does the URL have no useful resource specified? If so, generate nil URL
