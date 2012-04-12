@@ -92,6 +92,7 @@
 - (void)dealloc
 {
     [_defaultScheme release];
+    [_allowedSchemes release];
     [_fallbackTopLevelDomain release];
     [super dealloc];
 }
@@ -100,6 +101,16 @@
 
 @synthesize useDisplayNameForFileURLs = _useDisplayNameForFileURLs;
 @synthesize defaultScheme = _defaultScheme;
+
+@synthesize allowedSchemes = _allowedSchemes;
+- (void)setAllowedSchemes:(NSArray *)schemes;
+{
+    if (schemes) NSParameterAssert([schemes count] > 0);
+    
+    schemes = [schemes copy];
+    [_allowedSchemes release]; _allowedSchemes = schemes;
+}
+
 @synthesize fallbackTopLevelDomain = _fallbackTopLevelDomain;
 
 #pragma mark Textual Representation of Cell Content
@@ -240,6 +251,29 @@
                                        [result host],
                                        [self fallbackTopLevelDomain]];
                 result = [NSURL URLWithString:urlString];
+            }
+        }
+        
+        
+        // Make sure the scheme is allowed
+        NSArray *allowedSchemes = [self allowedSchemes];
+        if (allowedSchemes)
+        {
+            NSString *scheme = [result scheme];
+            if (scheme && ![allowedSchemes containsObject:[result scheme]])
+            {
+                // Look for the best matching scheme based on the assumption that the URL was simply pasted in missing a small number of initial characters
+                for (NSString *aScheme in allowedSchemes)
+                {
+                    if ([aScheme hasSuffix:scheme])
+                    {
+                        result = [result ks_URLWithScheme:aScheme];
+                        return result;
+                    }
+                }
+                
+                // Nothing matched? Alright, go for the first one then
+                result = [result ks_URLWithScheme:[allowedSchemes objectAtIndex:0]];
             }
         }
     }
