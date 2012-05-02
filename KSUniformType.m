@@ -188,7 +188,7 @@
 
 + (id)bestGuessUniformTypeForURL:(NSURL *)url;
 {
-    return [[[self alloc] initWithIdentifier:[self typeOfFileAtURL:url]] autorelease];
+    return [self uniformTypeWithIdentifier:[self typeOfFileAtURL:url]];
 }
 
 - (id)initWithIdentifier:(NSString *)uti;
