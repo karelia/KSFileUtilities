@@ -216,7 +216,7 @@
 
 #pragma mark Mailto: URLs
 
-+ (NSURL *)ks_mailtoURLWithEmailAddress:(NSString *)address;
++ (NSURL *)ks_mailtoURLWithEmailAddress:(NSString *)address headerLines:(NSDictionary *)headers;
 {
     NSScanner *s = [NSScanner scannerWithString:address];
     if ([s scanUpToString:@"(" intoString:&address])
@@ -225,7 +225,18 @@
                    [NSCharacterSet whitespaceAndNewlineCharacterSet]];	// take out whitespace
     }
     
-	return [self URLWithString:[@"mailto:" stringByAppendingString:[address stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    NSString *string = [@"mailto:" stringByAppendingString:[address stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    if (headers)
+    {
+        NSString *query = [self ks_queryWithParameters:headers];
+        if ([query length])
+        {
+            string = [string stringByAppendingFormat:@"?%@", query];
+        }
+    }
+    
+	return [self URLWithString:string];
 }
 
 #pragma mark Query Dictionary
