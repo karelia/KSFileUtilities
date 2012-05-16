@@ -225,7 +225,7 @@
                    [NSCharacterSet whitespaceAndNewlineCharacterSet]];	// take out whitespace
     }
     
-	return [self URLWithString:[@"mailto:" stringByAppendingString:address]];
+	return [self URLWithString:[@"mailto:" stringByAppendingString:[address stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
 }
 
 #pragma mark Query Dictionary
