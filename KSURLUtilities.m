@@ -30,6 +30,9 @@
 #import "KSPathUtilities.h"
 
 
+NSString *KSURLMailtoScheme = @"mailto";
+
+
 @implementation NSURL (KSPathUtilities)
 
 #pragma mark Scheme
@@ -225,7 +228,10 @@
                    [NSCharacterSet whitespaceAndNewlineCharacterSet]];	// take out whitespace
     }
     
-    NSString *string = [@"mailto:" stringByAppendingString:[address stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSString *string = [NSString stringWithFormat:
+                        @"%@:%@",
+                        KSURLMailtoScheme,
+                        [address stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     if (headers)
     {

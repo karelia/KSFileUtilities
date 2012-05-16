@@ -27,6 +27,9 @@
 #import <Cocoa/Cocoa.h>
 
 
+extern NSString *KSURLMailtoScheme;
+
+
 @interface NSURL (KSPathUtilities)
 
 #pragma mark Scheme
