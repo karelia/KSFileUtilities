@@ -202,6 +202,12 @@
     return self;
 }
 
+- (void)dealloc;
+{
+    [_identifier release];
+    [super dealloc];
+}
+
 #pragma mark Properties
 
 @synthesize identifier = _identifier;
