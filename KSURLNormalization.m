@@ -170,18 +170,29 @@
 // Convert scheme and host to lower case.
 - (NSURL *)ks_URLByLowercasingSchemeAndHost
 {
+    // If both scheme and host are already lowercase, nothing need be done
+    NSString *scheme = [self scheme];
+    NSString *host = [self host];
+    
+    NSCharacterSet *uppercase = [NSCharacterSet uppercaseLetterCharacterSet];
+    
+    if ([scheme rangeOfCharacterFromSet:uppercase].location == NSNotFound &&
+        [scheme rangeOfCharacterFromSet:uppercase].location == NSNotFound)
+    {
+        return self;
+    }
+    
+    
     NSRange rScheme = [self ks_replacementRangeOfURLPart:ks_URLPartScheme];
     NSRange rHost = [self ks_replacementRangeOfURLPart:ks_URLPartHost];
-    NSString *schemeLower = [[self scheme] lowercaseString];
-    NSString *hostLower = (rHost.length > 0) ? [[self host] lowercaseString] : @"";
     NSString *abs = [self absoluteString];
-    if ([schemeLower length])
+    if ([scheme length])
     {
-        abs = [abs stringByReplacingCharactersInRange:rScheme withString:schemeLower];
+        abs = [abs stringByReplacingCharactersInRange:rScheme withString:[scheme lowercaseString]];
     }
-    if ([hostLower length])
+    if ([host length])
     {
-        abs = [abs stringByReplacingCharactersInRange:rHost withString:hostLower];
+        abs = [abs stringByReplacingCharactersInRange:rHost withString:[host lowercaseString]];
     }
     NSURL *correctedURL = [NSURL URLWithString:abs];
     return correctedURL;
