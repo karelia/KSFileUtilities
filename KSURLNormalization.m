@@ -13,14 +13,15 @@
 - (NSURL *)ks_normalizedURL
 {
     NSURL *norm = self;
+    norm = [norm ks_URLByRemovingDuplicateSlashes];
+    norm = [norm ks_URLByRemovingDotSegments];
+    norm = [norm ks_URLByRemovingDuplicateSlashes];
     norm = [norm ks_URLByLowercasingSchemeAndHost];
     norm = [norm ks_URLByUppercasingEscapes];
     norm = [norm ks_URLByAddingTrailingSlashToDirectory];
     norm = [norm ks_URLByRemovingDefaultPort];
-    norm = [norm ks_URLByRemovingDotSegments];
     norm = [norm ks_URLByRemovingDirectoryIndex];
     norm = [norm ks_URLByRemovingFragment];
-    norm = [norm ks_URLByRemovingDuplicateSlashes];
     return norm;
 }
 
@@ -29,6 +30,7 @@
 {
     // Determine correct range for replacing the specified URL part INCLUDING DELIMITERS.
     // Note that if the URL part is not found, the range length is 0, but the range location is NOT NSNotFound, but rather the location that the indicated URL part could be inserted.
+    // NOTE: Duplicate "/" must be removed from URL before finding the path's (and later URL element's) range is guaranteed correct!
     NSString *scheme = [[self scheme] lowercaseString];
     NSString *templateSchemePart = @"://";
     NSString *realSchemePart = @"";
@@ -43,7 +45,7 @@
         port = [NSString stringWithFormat:@"%d", [[self port] intValue]];
     }
     NSString *portDelimiter = @":";
-    NSString *path = [self path];
+    NSString *path = [self path];   // updated later
     NSString *parameterString = [self parameterString];
     NSString *parameterDelimiter = @";";
     NSString *query = [self query];
@@ -114,18 +116,25 @@
         {
             rPart.location += ([port length] + [portDelimiter length]);
         }
-        // If the URL has a trailing "/" in the path, NSURL's path method drops it. So check the next character in the URL if there is one.
-        NSString *abs = [self absoluteString];
-        NSRange rMayBeSlash = NSMakeRange(rPart.location + [path length], 1);
-        if (rMayBeSlash.location < [abs length])
+        
+        // NOTE: Duplicate "/" must be removed from URL before finding the path's (and later URL element's) range is guaranteed correct!
+        
+        // There are 2 problems with NSURL's path method: first it drops trailing "/" characters, second it percent-unescapes the path.
+        // We have to work around those issues here.
+        // Get the length of un-escaped path by comparing the length of complete URL to URL with path stripped.
+        NSInteger urlLength = [[self absoluteString] length];
+        NSURL *rootPathURL = [[self copy] autorelease];
+        NSArray *pathComponents = [rootPathURL pathComponents];
+        NSInteger cnt = [pathComponents count];
+        for (NSInteger i = cnt; i > 1; i--)
         {
-            NSString *testSlash = [abs substringWithRange:rMayBeSlash];
-            if ([testSlash isEqualToString:@"/"])
-            {
-                path = [path stringByAppendingString:@"/"];
-            }
+            rootPathURL = [rootPathURL URLByDeletingLastPathComponent];
         }
-        rPart.length = [path length];
+        // At this point, the path of rootPathURL is "/" or "".
+        NSInteger rootPathURLLength = [[rootPathURL absoluteString] length];
+        rPart.length = urlLength - rootPathURLLength + [[rootPathURL path] length];
+        // Replace path with corrected version.
+        path = [[self absoluteString] substringWithRange:rPart];
     }
     if (anURLPart >= ks_URLPartParameterString)
     {
@@ -233,6 +242,10 @@
         return self;
     }
     NSRange rPath = [self ks_replacementRangeOfURLPart:ks_URLPartPath];
+    if (rPath.length == 0 && [[self host] length] == 0)
+    {   // No need for trailing slash.
+        return self;
+    }
     NSString *abs = [self absoluteString];
     if ([abs length] == 0)
     {
@@ -364,16 +377,27 @@
 // Remove duplicate slashes.
 - (NSURL *)ks_URLByRemovingDuplicateSlashes
 {
-    NSRange rPath = [self ks_replacementRangeOfURLPart:ks_URLPartPath];
-    NSString *abs = [self absoluteString];
-    NSString *goodPath = [abs substringWithRange:rPath];
-    while ([goodPath rangeOfString:@"//"].location != NSNotFound) 
+    // Replace all duplicate slashes ("//") except if preceeded by ":"
+    NSMutableString *abs = [[[self absoluteString] mutableCopy] autorelease];
+    NSRange schemeSlashesRange = [abs rangeOfString:@"://"];
+    NSRange replaceRange;
+    if (NSNotFound == schemeSlashesRange.location)
     {
-        goodPath = [goodPath stringByReplacingOccurrencesOfString:@"//" withString:@"/"];
+        replaceRange = NSMakeRange(0, [abs length]);
     }
-    abs = [abs stringByReplacingCharactersInRange:rPath withString:goodPath];
-    NSURL *correctedURL = [NSURL URLWithString:abs];
-    return correctedURL;
+    else 
+    {
+        NSInteger start = schemeSlashesRange.location + schemeSlashesRange.length;
+        replaceRange = NSMakeRange(start, [abs length] - start);
+    }
+    while ([abs replaceOccurrencesOfString:@"//" withString:@"/" options:0 range:replaceRange])
+    {
+        NSInteger start = schemeSlashesRange.location + schemeSlashesRange.length;
+        replaceRange = NSMakeRange(start, [abs length] - start);
+    }
+    
+    NSURL *cleanedURL = [NSURL URLWithString:abs];
+    return cleanedURL;
 }
 
 
