@@ -310,18 +310,22 @@
 {
     // Check whether a "directory index" page specified in URL.
     NSString *lastPathComponent = [self lastPathComponent];
-    NSArray *defaultsArray = [NSArray arrayWithObjects:
-        @"index.html",
-        @"index.htm",
-        @"index.php",
-        @"index.asp",
-        @"index.aspx",
-        @"index.cfm",
-        @"default.htm",
-        @"default.asp",
-        @"default.aspx",
-        nil
-    ];
+    
+    static NSArray *defaultsArray;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        defaultsArray = [[NSArray alloc] initWithObjects:
+                         @"index.html",
+                         @"index.htm",
+                         @"index.php",
+                         @"index.asp",
+                         @"index.aspx",
+                         @"index.cfm",
+                         @"default.htm",
+                         @"default.asp",
+                         @"default.aspx",
+                         nil];
+    });
     
     for (NSString *defPage in defaultsArray)
     {
