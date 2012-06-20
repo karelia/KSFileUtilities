@@ -308,13 +308,6 @@
 // Remove common directory index filenames.
 - (NSURL *)ks_URLByRemovingDirectoryIndex
 {
-    // No doc specified in URL, early return.
-    NSString *pathExt = [self pathExtension];
-    if ([pathExt length] == 0)
-    {   // No page specified at all. 
-        return self;
-    }
-    
     // Check whether a "directory index" page specified in URL.
     NSString *lastPathComponent = [self lastPathComponent];
     BOOL removeDefaultPage = NO;
