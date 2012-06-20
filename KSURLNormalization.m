@@ -310,7 +310,7 @@
 {
     // No doc specified in URL, early return.
     NSString *pathExt = [self pathExtension];
-    if (!pathExt || [pathExt length] == 0)
+    if ([pathExt length] == 0)
     {   // No page specified at all. 
         return self;
     }
