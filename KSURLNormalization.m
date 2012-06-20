@@ -362,14 +362,28 @@
 // Remove duplicate slashes.
 - (NSURL *)ks_URLByRemovingDuplicateSlashes
 {
-    NSRange rPath = [self ks_replacementRangeOfURLPart:ks_URLPartPath];
+    // CFURLCopyStrictPath leaves out the first slash, so the resulting path is likely relative, making it safe to call -stringByStandardizingPath on
+    CFStringRef path = CFURLCopyStrictPath((CFURLRef)self, NULL);
+    if (!path) return self;
+    
+    // Deal with any leading slash such as from http://example.com//foo/
+    NSString *standardized = (NSString *)path;
+    while ([standardized isAbsolutePath]) standardized = [standardized substringFromIndex:1];
+    
+    standardized = [standardized stringByStandardizingPath];
+    
+    // Pop back on the directory indicator
+    if (CFURLHasDirectoryPath((CFURLRef)self)) standardized = [standardized stringByAppendingString:@"/"];
+    
+    BOOL changed = ![standardized isEqualToString:(NSString *)path];
+    CFRelease(path);
+    
+    if (!changed) return self;
+    
     NSString *abs = [self absoluteString];
-    NSString *goodPath = [abs substringWithRange:rPath];
-    while ([goodPath rangeOfString:@"//"].location != NSNotFound) 
-    {
-        goodPath = [goodPath stringByReplacingOccurrencesOfString:@"//" withString:@"/"];
-    }
-    abs = [abs stringByReplacingCharactersInRange:rPath withString:goodPath];
+    NSRange rPath = [self ks_replacementRangeOfURLPart:ks_URLPartPath];
+    
+    abs = [abs stringByReplacingCharactersInRange:rPath withString:standardized];
     NSURL *correctedURL = [NSURL URLWithString:abs];
     return correctedURL;
 }
