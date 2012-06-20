@@ -331,11 +331,7 @@
     {
         if ([defPage caseInsensitiveCompare:lastPathComponent] == NSOrderedSame)
         {
-            NSRange rPath = [self ks_replacementRangeOfURLPart:ks_URLPartPath];
-            NSString *abs = [self absoluteString];
-            NSString *correctedStr = [abs stringByReplacingOccurrencesOfString:lastPathComponent withString:@"" options:NSBackwardsSearch range:rPath];
-            NSURL *correctedURL = [NSURL URLWithString:correctedStr];
-            return correctedURL;
+            return [self URLByDeletingLastPathComponent];
         }
     }
     
