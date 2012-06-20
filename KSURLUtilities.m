@@ -38,9 +38,17 @@ NSString *KSURLMailtoHeaderSubject = @"subject";
 
 #pragma mark Scheme
 
-- (NSURL *)ks_URLWithScheme:(NSString *)scheme;
+- (NSURL *)ks_URLWithScheme:(NSString *)newScheme;
 {
-    NSString *string = [[NSString alloc] initWithFormat:@"%@:%@", scheme, [self resourceSpecifier]];
+    NSString *scheme = [self scheme];
+    if (!scheme) return nil;
+
+    // -resourceSpecifier is supposed to give me everything after the scheme's colon, but for file:///path URLs, it just returns /path. Work around by deducing when resource specifier truly starts. Also found CFURLCopyResourceSpecifier() returns NULL for such URLs, against its documentation
+    NSString *string = [[NSString alloc] initWithFormat:
+                        @"%@:%@",
+                        newScheme,
+                        [[self absoluteString] substringFromIndex:[scheme length] + 1]];    // should be safe since a colon was needed to know scheme
+    
     NSURL *result = [[self class] URLWithString:string];
     [string release];
     return result;
