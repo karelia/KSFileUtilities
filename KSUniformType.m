@@ -188,7 +188,7 @@
 
 + (id)bestGuessUniformTypeForURL:(NSURL *)url;
 {
-    return [[[self alloc] initWithIdentifier:[self typeOfFileAtURL:url]] autorelease];
+    return [self uniformTypeWithIdentifier:[self typeOfFileAtURL:url]];
 }
 
 - (id)initWithIdentifier:(NSString *)uti;
@@ -200,6 +200,12 @@
     }
     
     return self;
+}
+
+- (void)dealloc;
+{
+    [_identifier release];
+    [super dealloc];
 }
 
 #pragma mark Properties

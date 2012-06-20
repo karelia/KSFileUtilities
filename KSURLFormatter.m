@@ -37,12 +37,11 @@
 + (NSURL *)URLFromString:(NSString *)string;
 {
     // Encode the URL string
-    CFStringEncoding encoding = CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding);
     CFStringRef escapedString = CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                         (CFStringRef)string,
                                                                         (CFStringRef)@"%+#",
                                                                         NULL,
-                                                                        encoding);
+                                                                        kCFStringEncodingUTF8);
     
     
     // If we're still left with a valid string, turn it into a URL

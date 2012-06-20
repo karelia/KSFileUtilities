@@ -109,8 +109,14 @@
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             BOOL result = [fileManager linkItemAtURL:originalURL toURL:URL error:outError];
             
-            if (!result)    // linking will fail on filesystems that don't support it, and across partitions
+            if (!result)
             {
+                // Linking might fail because:
+                // - The destination URL already exists
+                // - It's an external filesystem which doesn't support hardlinks
+                // - Attempted to link across filesystems
+                //
+                // If so, can just fall back to copying, which will handle all but the first problem
                 result = [fileManager copyItemAtURL:originalURL toURL:URL error:outError];
             }
             [fileManager release];

@@ -27,6 +27,10 @@
 #import <Cocoa/Cocoa.h>
 
 
+extern NSString *KSURLMailtoScheme;
+extern NSString *KSURLMailtoHeaderSubject;
+
+
 @interface NSURL (KSPathUtilities)
 
 #pragma mark Scheme
@@ -72,7 +76,8 @@
 #pragma mark Mailto: URLs
 // Handles plain addresses, plus: foo@example.com (Foo)
 // May return nil if the address isn't valid
-+ (NSURL *)ks_mailtoURLWithEmailAddress:(NSString *)email;
+// KSURLMailtoHeaderSubject is a common key for the header lines dictionary
++ (NSURL *)ks_mailtoURLWithEmailAddress:(NSString *)address headerLines:(NSDictionary *)headers;
 
 
 #pragma mark Queries
