@@ -310,7 +310,6 @@
 {
     // Check whether a "directory index" page specified in URL.
     NSString *lastPathComponent = [self lastPathComponent];
-    BOOL removeDefaultPage = NO;
     NSArray *defaultsArray = [NSArray arrayWithObjects:
         @"index.html",
         @"index.htm",
@@ -323,24 +322,20 @@
         @"default.aspx",
         nil
     ];
+    
     for (NSString *defPage in defaultsArray)
     {
         if ([defPage caseInsensitiveCompare:lastPathComponent] == NSOrderedSame)
         {
-            removeDefaultPage = YES;
-            break;
+            NSRange rPath = [self ks_replacementRangeOfURLPart:ks_URLPartPath];
+            NSString *abs = [self absoluteString];
+            NSString *correctedStr = [abs stringByReplacingOccurrencesOfString:lastPathComponent withString:@"" options:NSBackwardsSearch range:rPath];
+            NSURL *correctedURL = [NSURL URLWithString:correctedStr];
+            return correctedURL;
         }
     }
-    if (!removeDefaultPage)
-    {
-        return self;
-    }
     
-    NSRange rPath = [self ks_replacementRangeOfURLPart:ks_URLPartPath];
-    NSString *abs = [self absoluteString];
-    NSString *correctedStr = [abs stringByReplacingOccurrencesOfString:lastPathComponent withString:@"" options:NSBackwardsSearch range:rPath];
-    NSURL *correctedURL = [NSURL URLWithString:correctedStr];
-    return correctedURL;
+    return self;
 }
 
 
