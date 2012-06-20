@@ -316,7 +316,7 @@
     }
     
     // Check whether a "directory index" page specified in URL.
-    NSString *lastPathComponent = [[self lastPathComponent] lowercaseString];
+    NSString *lastPathComponent = [self lastPathComponent];
     BOOL removeDefaultPage = NO;
     NSArray *defaultsArray = [NSArray arrayWithObjects:
         @"index.html",
@@ -332,7 +332,7 @@
     ];
     for (NSString *defPage in defaultsArray)
     {
-        if ([defPage isEqualToString:lastPathComponent])
+        if ([defPage caseInsensitiveCompare:lastPathComponent] == NSOrderedSame)
         {
             removeDefaultPage = YES;
             break;
@@ -345,7 +345,6 @@
     
     NSRange rPath = [self ks_replacementRangeOfURLPart:ks_URLPartPath];
     NSString *abs = [self absoluteString];
-    lastPathComponent = [self lastPathComponent];   // preserve case
     NSString *correctedStr = [abs stringByReplacingOccurrencesOfString:lastPathComponent withString:@"" options:NSBackwardsSearch range:rPath];
     NSURL *correctedURL = [NSURL URLWithString:correctedStr];
     return correctedURL;
