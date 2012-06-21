@@ -12,7 +12,7 @@
 #pragma mark Normalizations that preserve semantics.
 - (NSURL *)ks_URLByLowercasingSchemeAndHost;
 - (NSURL *)ks_URLByUppercasingEscapes;
-//- (NSURL *)ks_URLByUnescapingUnreservedCharacters;
+- (NSURL *)ks_URLByUnescapingUnreservedCharactersInPath;
 - (NSURL *)ks_URLByAddingTrailingSlashToDirectory;
 - (NSURL *)ks_URLByRemovingDefaultPort;
 - (NSURL *)ks_URLByRemovingDotSegments;

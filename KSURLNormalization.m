@@ -15,11 +15,12 @@
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     NSURL *norm = self;
-    norm = [norm ks_URLByRemovingDuplicateSlashes];
+    norm = [norm ks_URLByRemovingDuplicateSlashes]; // must be 1st!
     norm = [norm ks_URLByRemovingDotSegments];
     norm = [norm ks_URLByRemovingDuplicateSlashes];
     norm = [norm ks_URLByLowercasingSchemeAndHost];
     norm = [norm ks_URLByUppercasingEscapes];
+    norm = [norm ks_URLByUnescapingUnreservedCharactersInPath];
     norm = [norm ks_URLByAddingTrailingSlashToDirectory];
     norm = [norm ks_URLByRemovingDefaultPort];
     norm = [norm ks_URLByRemovingDirectoryIndex];
@@ -259,7 +260,23 @@
 
 
 // Decode percent-encoded octets of unreserved characters.
-//- (NSURL *)ks_URLByUnescapingUnreservedCharacters;
+- (NSURL *)ks_URLByUnescapingUnreservedCharactersInPath
+{
+    NSString *abs = [self absoluteString];
+    NSRange pathRange = [self ks_replacementRangeOfURLPart:ks_URLPartPath];
+    NSString *rawPath = [abs substringWithRange:pathRange];
+    
+    // Transform only very limited characters: "!"
+    // All reserved characters per RFC 3986: @" !*'();:@&=+$,/?#[]"
+    // Since only 1 character, do this manually to avoid possible issues with unicode chars being unencoded.
+    NSString *unescapedPath = [rawPath stringByReplacingOccurrencesOfString:@"%21" withString:@"!"];
+    
+    if ([unescapedPath isEqualToString:rawPath]) return self;
+    
+    NSString *unescapedURLString = [abs stringByReplacingCharactersInRange:pathRange withString:unescapedPath];
+    NSURL *unescapedURL = [NSURL URLWithString:unescapedURLString];
+    return unescapedURL;
+}
 
 
 // Add trailing "/".

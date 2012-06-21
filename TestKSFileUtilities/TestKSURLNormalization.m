@@ -40,6 +40,11 @@
     NSURL *in11 = [NSURL URLWithString:@"http://www.karelia.com"];
     NSURL *in12 = [NSURL URLWithString:@"http://www.karelia.com/#"];
     NSURL *in13 = [NSURL URLWithString:@"http://www.karelia.com/index.html#"];
+    NSURL *in14 = [NSURL URLWithString:@"http://username:password@www.karelia.com:8888/sandvox;parameter1=arg1;parameter2=arg2?queryparm1=queryarg1&queryparm2=queryarg2#anchor1"];
+    NSURL *in15 = [NSURL URLWithString:@"http://www.karelia.com/folder%20one%2bone%3dtwo/index.html"];
+    NSURL *in16 = [NSURL URLWithString:@"http://www.karelia.com/%5bobjectivec%5d/index.html"];
+    NSURL *in17 = [NSURL URLWithString:@"http://www.karelia.com/whee!/index.html"];
+    NSURL *in18 = [NSURL URLWithString:@"http://www.karelia.com/whee%21/index.html"];
     
     NSURL *can1 = [NSURL URLWithString:@"http://username:password@www.karelia.com/sandvox/page.html;parameter1=arg1;parameter2=arg2?queryparm1=%AA%BB%CC%DD&queryparm2=queryarg2"];
     NSURL *can2 = [NSURL URLWithString:@"http://username:password@www.karelia.com/sandvox/;parameter1=arg1;parameter2=arg2?queryparm1=queryarg1&queryparm2=queryarg2"];
@@ -49,11 +54,16 @@
     NSURL *can6 = [NSURL URLWithString:@"http://username:password@www.karelia.com:8888/level1/;parameter1=arg1;parameter2=arg2?queryparm1=queryarg1&queryparm2=queryarg2"];
     NSURL *can7 = [NSURL URLWithString:@""];
     NSURL *can8 = [NSURL URLWithString:@"mailto:test@example.com"];
-    NSURL *can9 = [NSURL URLWithString:@"http://web.mac.com/sactobob/BobsPlace/Garys_Big_6-Oh%21.ht"];
-    NSURL *can10 = [NSURL URLWithString:@"http://web.mac.com/sactobob/BobsPlace/Garys_Big_6-Oh%21/"];
+    NSURL *can9 = [NSURL URLWithString:@"http://web.mac.com/sactobob/BobsPlace/Garys_Big_6-Oh!.ht"];
+    NSURL *can10 = [NSURL URLWithString:@"http://web.mac.com/sactobob/BobsPlace/Garys_Big_6-Oh!/"];
     NSURL *can11 = [NSURL URLWithString:@"http://www.karelia.com/"];
     NSURL *can12 = [NSURL URLWithString:@"http://www.karelia.com/"];
     NSURL *can13 = [NSURL URLWithString:@"http://www.karelia.com/"];
+    NSURL *can14 = [NSURL URLWithString:@"http://username:password@www.karelia.com:8888/sandvox/;parameter1=arg1;parameter2=arg2?queryparm1=queryarg1&queryparm2=queryarg2"];
+    NSURL *can15 = [NSURL URLWithString:@"http://www.karelia.com/folder%20one%2Bone%3Dtwo/"];
+    NSURL *can16 = [NSURL URLWithString:@"http://www.karelia.com/%5Bobjectivec%5D/"];
+    NSURL *can17 = [NSURL URLWithString:@"http://www.karelia.com/whee!/"];
+    NSURL *can18 = [NSURL URLWithString:@"http://www.karelia.com/whee!/"];
 
     NSURL *out1 = [in1 ks_normalizedURL];
     NSURL *out2 = [in2 ks_normalizedURL];
@@ -68,6 +78,11 @@
     NSURL *out11 = [in11 ks_normalizedURL];
     NSURL *out12 = [in12 ks_normalizedURL];
     NSURL *out13 = [in13 ks_normalizedURL];
+    NSURL *out14 = [in14 ks_normalizedURL];
+    NSURL *out15 = [in15 ks_normalizedURL];
+    NSURL *out16 = [in16 ks_normalizedURL];
+    NSURL *out17 = [in17 ks_normalizedURL];
+    NSURL *out18 = [in18 ks_normalizedURL];
     
     STAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
     STAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
@@ -82,6 +97,11 @@
     STAssertTrue([[out11 absoluteString] isEqualToString:[can11 absoluteString]], @"out11 failed");
     STAssertTrue([[out12 absoluteString] isEqualToString:[can12 absoluteString]], @"out12 failed");
     STAssertTrue([[out13 absoluteString] isEqualToString:[can13 absoluteString]], @"out13 failed");
+    STAssertTrue([[out14 absoluteString] isEqualToString:[can14 absoluteString]], @"out14 failed");
+    STAssertTrue([[out15 absoluteString] isEqualToString:[can15 absoluteString]], @"out15 failed");
+    STAssertTrue([[out16 absoluteString] isEqualToString:[can16 absoluteString]], @"out16 failed");
+    STAssertTrue([[out17 absoluteString] isEqualToString:[can17 absoluteString]], @"out17 failed");
+    STAssertTrue([[out18 absoluteString] isEqualToString:[can18 absoluteString]], @"out18 failed");
 }
 
 
@@ -198,6 +218,38 @@
     NSURL *out4 = [in4 ks_URLByUppercasingEscapes];
     NSURL *out5 = [in5 ks_URLByUppercasingEscapes];
     NSURL *out6 = [in6 ks_URLByUppercasingEscapes];
+    STAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
+    STAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
+    STAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
+    STAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
+    STAssertTrue([[out5 absoluteString] isEqualToString:[can5 absoluteString]], @"out5 failed");
+    STAssertTrue([[out6 absoluteString] isEqualToString:[can6 absoluteString]], @"out6 failed");
+}
+
+
+- (void)test_ks_URLByUnescapingUnreservedCharactersInPath
+{
+    NSURL *in1 =  [NSURL URLWithString:@"http://username:password@www.karelia.com:8888/sandvox;parameter1=arg1;parameter2=arg2?queryparm1=queryarg1&queryparm2=queryarg2#anchor1"];
+    NSURL *in2 =  [NSURL URLWithString:@"http://www.karelia.com/folder%20one%2bone%3dtwo/index.html"];
+    NSURL *in3 =  [NSURL URLWithString:@"http://www.karelia.com/%5bobjectivec%5d/index.html"];
+    NSURL *in4 =  [NSURL URLWithString:@"http://www.karelia.com/whee!/index.html"];
+    NSURL *in5 =  [NSURL URLWithString:@"http://www.karelia.com/whee%21/index.html"];
+    NSURL *in6 =  [NSURL URLWithString:@"http://www.karelia.com/#objectivec%23/index.html"];
+
+    NSURL *can1 = [NSURL URLWithString:@"http://username:password@www.karelia.com:8888/sandvox;parameter1=arg1;parameter2=arg2?queryparm1=queryarg1&queryparm2=queryarg2#anchor1"];
+    NSURL *can2 = [NSURL URLWithString:@"http://www.karelia.com/folder%20one%2bone%3dtwo/index.html"];
+    NSURL *can3 = [NSURL URLWithString:@"http://www.karelia.com/%5bobjectivec%5d/index.html"];
+    NSURL *can4 = [NSURL URLWithString:@"http://www.karelia.com/whee!/index.html"];
+    NSURL *can5 = [NSURL URLWithString:@"http://www.karelia.com/whee!/index.html"];
+    NSURL *can6 = [NSURL URLWithString:@"http://www.karelia.com/#objectivec%23/index.html"];
+
+    NSURL *out1 = [in1 ks_URLByUnescapingUnreservedCharactersInPath];
+    NSURL *out2 = [in2 ks_URLByUnescapingUnreservedCharactersInPath];
+    NSURL *out3 = [in3 ks_URLByUnescapingUnreservedCharactersInPath];
+    NSURL *out4 = [in4 ks_URLByUnescapingUnreservedCharactersInPath];
+    NSURL *out5 = [in5 ks_URLByUnescapingUnreservedCharactersInPath];
+    NSURL *out6 = [in6 ks_URLByUnescapingUnreservedCharactersInPath];
+
     STAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
     STAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
     STAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
