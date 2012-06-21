@@ -393,30 +393,58 @@
 // Remove duplicate slashes.
 - (NSURL *)ks_URLByRemovingDuplicateSlashes
 {
-    // CFURLCopyStrictPath leaves out the first slash, so the resulting path is likely relative, making it safe to call -stringByStandardizingPath on
-    CFStringRef path = CFURLCopyStrictPath((CFURLRef)self, NULL);
-    if (!path) return self;
+    // Replace all duplicate slashes ("//") except if preceeded by ":"
     
-    // Deal with any leading slash such as from http://example.com//foo/
-    NSString *standardized = (NSString *)path;
-    while ([standardized isAbsolutePath]) standardized = [standardized substringFromIndex:1];
+    // NOTE: This method does not depend on the -ks_replacementRangeOfURLPart: method. This is required because all the URL ranges for the path and later URL components depend on this method being called on the URL first.
+    NSMutableString *abs = [[[self absoluteString] mutableCopy] autorelease];
+    NSRange schemeSlashesRange = [abs rangeOfString:@"://"];
+    NSRange replaceRange;
+    if (NSNotFound == schemeSlashesRange.location)
+    {
+        replaceRange = NSMakeRange(0, [abs length]);
+    }
+    else 
+    {
+        NSInteger start = schemeSlashesRange.location + schemeSlashesRange.length;
+        replaceRange = NSMakeRange(start, [abs length] - start);
+    }
+    while ([abs replaceOccurrencesOfString:@"//" withString:@"/" options:0 range:replaceRange])
+    {
+        NSInteger start = schemeSlashesRange.location + schemeSlashesRange.length;
+        replaceRange = NSMakeRange(start, [abs length] - start);
+    }
     
-    standardized = [standardized stringByStandardizingPath];
-    
-    // Pop back on the directory indicator
-    if (CFURLHasDirectoryPath((CFURLRef)self)) standardized = [standardized stringByAppendingString:@"/"];
-    
-    BOOL changed = ![standardized isEqualToString:(NSString *)path];
-    CFRelease(path);
-    
-    if (!changed) return self;
-    
-    NSString *abs = [self absoluteString];
-    NSRange rPath = [self ks_replacementRangeOfURLPart:ks_URLPartPath];
-    
-    abs = [abs stringByReplacingCharactersInRange:rPath withString:standardized];
-    NSURL *correctedURL = [NSURL URLWithString:abs];
-    return correctedURL;
+    NSURL *cleanedURL = [NSURL URLWithString:abs];
+    return cleanedURL;
+        
+//    // CFURLCopyStrictPath leaves out the first slash, so the resulting path is likely relative, making it safe to call -stringByStandardizingPath on
+//    CFStringRef path = CFURLCopyStrictPath((CFURLRef)self, NULL);
+//    if (!path) return self;
+//    
+//    // Deal with any leading slash such as from http://example.com//foo/
+//    NSString *standardized = (NSString *)path;
+//    while ([standardized isAbsolutePath]) standardized = [standardized substringFromIndex:1];
+//    
+//    standardized = [standardized stringByStandardizingPath];
+//    
+//    // Pop back on the directory indicator
+//    if (CFURLHasDirectoryPath((CFURLRef)self)) standardized = [standardized stringByAppendingString:@"/"];
+//    
+//    BOOL changed = ![standardized isEqualToString:(NSString *)path];
+//    CFRelease(path);
+//    
+//    if (!changed) return self;
+//    
+//    // Prepend the "/" that CFURLCopyStrictPath removed.
+//    standardized = [NSString stringWithFormat:@"/%@", standardized];
+//    
+//    NSString *abs = [self absoluteString];
+//    // The following line is our problem: ks_replacementRangeOfURLPart: for URL parts >= path are not valid until duplicate "/" characters have been removed.
+//    NSRange rPath = [self ks_replacementRangeOfURLPart:ks_URLPartPath];
+//    
+//    abs = [abs stringByReplacingCharactersInRange:rPath withString:standardized];
+//    NSURL *correctedURL = [NSURL URLWithString:abs];
+//    return correctedURL;
 }
 
 
