@@ -174,6 +174,18 @@
         {
             rPart.length = [fragment length] + [fragmentDelimiter length];
         }
+        else
+        {
+            NSString *abs = [self absoluteString];
+            if (rPart.location < [abs length])
+            {
+                NSString *maybeFragmentDelimiter = [abs substringWithRange:NSMakeRange(rPart.location, 1)];
+                if ([maybeFragmentDelimiter isEqualToString:fragmentDelimiter])
+                {
+                    rPart.length = 1;
+                }
+            }
+        }
     }
 
     return rPart;
