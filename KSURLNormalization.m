@@ -12,6 +12,8 @@
 
 - (NSURL *)ks_normalizedURL
 {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
     NSURL *norm = self;
     norm = [norm ks_URLByRemovingDuplicateSlashes];
     norm = [norm ks_URLByRemovingDotSegments];
@@ -22,7 +24,11 @@
     norm = [norm ks_URLByRemovingDefaultPort];
     norm = [norm ks_URLByRemovingDirectoryIndex];
     norm = [norm ks_URLByRemovingFragment];
-    return norm;
+    [norm retain];
+    
+    [pool drain];
+    
+    return [norm autorelease];
 }
 
 
