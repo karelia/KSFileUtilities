@@ -192,7 +192,7 @@
     NSCharacterSet *uppercase = [NSCharacterSet uppercaseLetterCharacterSet];
     
     if ([scheme rangeOfCharacterFromSet:uppercase].location == NSNotFound &&
-        [scheme rangeOfCharacterFromSet:uppercase].location == NSNotFound)
+        [host rangeOfCharacterFromSet:uppercase].location == NSNotFound)
     {
         return self;
     }
