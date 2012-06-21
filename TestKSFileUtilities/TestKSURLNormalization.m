@@ -38,6 +38,8 @@
     NSURL *in9 = [NSURL URLWithString:@"http://web.mac.com/sactobob/BobsPlace/Garys_Big_6-Oh%21.ht#0"];
     NSURL *in10 = [NSURL URLWithString:@"http://web.mac.com/sactobob/BobsPlace/Garys_Big_6-Oh%21#0"];
     NSURL *in11 = [NSURL URLWithString:@"http://www.karelia.com"];
+    NSURL *in12 = [NSURL URLWithString:@"http://www.karelia.com/#"];
+    NSURL *in13 = [NSURL URLWithString:@"http://www.karelia.com/index.html#"];
     
     NSURL *can1 = [NSURL URLWithString:@"http://username:password@www.karelia.com/sandvox/page.html;parameter1=arg1;parameter2=arg2?queryparm1=%AA%BB%CC%DD&queryparm2=queryarg2"];
     NSURL *can2 = [NSURL URLWithString:@"http://username:password@www.karelia.com/sandvox/;parameter1=arg1;parameter2=arg2?queryparm1=queryarg1&queryparm2=queryarg2"];
@@ -50,6 +52,8 @@
     NSURL *can9 = [NSURL URLWithString:@"http://web.mac.com/sactobob/BobsPlace/Garys_Big_6-Oh%21.ht"];
     NSURL *can10 = [NSURL URLWithString:@"http://web.mac.com/sactobob/BobsPlace/Garys_Big_6-Oh%21/"];
     NSURL *can11 = [NSURL URLWithString:@"http://www.karelia.com/"];
+    NSURL *can12 = [NSURL URLWithString:@"http://www.karelia.com/"];
+    NSURL *can13 = [NSURL URLWithString:@"http://www.karelia.com/"];
 
     NSURL *out1 = [in1 ks_normalizedURL];
     NSURL *out2 = [in2 ks_normalizedURL];
@@ -62,6 +66,8 @@
     NSURL *out9 = [in9 ks_normalizedURL];
     NSURL *out10 = [in10 ks_normalizedURL];
     NSURL *out11 = [in11 ks_normalizedURL];
+    NSURL *out12 = [in12 ks_normalizedURL];
+    NSURL *out13 = [in13 ks_normalizedURL];
     
     STAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
     STAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
@@ -74,6 +80,8 @@
     STAssertTrue([[out9 absoluteString] isEqualToString:[can9 absoluteString]], @"out9 failed");
     STAssertTrue([[out10 absoluteString] isEqualToString:[can10 absoluteString]], @"out10 failed");
     STAssertTrue([[out11 absoluteString] isEqualToString:[can11 absoluteString]], @"out11 failed");
+    STAssertTrue([[out12 absoluteString] isEqualToString:[can12 absoluteString]], @"out12 failed");
+    STAssertTrue([[out13 absoluteString] isEqualToString:[can13 absoluteString]], @"out13 failed");
 }
 
 
