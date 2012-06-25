@@ -214,7 +214,7 @@
         
         
         // Does the URL have no useful resource specified? If so, generate nil URL
-        if (result && ![[result scheme] isEqualToString:@"mailto"])
+        if (result && ![[result scheme] isEqualToString:@"mailto"] && ![result isFileURL])
         {
             NSString *resource = [result resourceSpecifier];
             if ([resource length] == 0 ||
@@ -240,7 +240,7 @@
         
         
         // Did the user not enter a top-level domain? We'll guess for them
-        if (result && [self fallbackTopLevelDomain])
+        if (result && ![result isFileURL] && [self fallbackTopLevelDomain])
         {
             if ([[result ks_domains] count] == 1)
             {
