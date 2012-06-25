@@ -45,6 +45,8 @@
     NSURL *in16 = [NSURL URLWithString:@"http://www.karelia.com/%5bobjectivec%5d/index.html"];
     NSURL *in17 = [NSURL URLWithString:@"http://www.karelia.com/whee!/index.html"];
     NSURL *in18 = [NSURL URLWithString:@"http://www.karelia.com/whee%21/index.html"];
+	NSURL *in19 = [NSURL URLWithString:@"file:///Users/foo/Desktop/index.html"];
+	NSURL *in20 = [NSURL URLWithString:@"file://localhost/Users/foo/Desktop/index.html"];
     
     NSURL *can1 = [NSURL URLWithString:@"http://username:password@www.karelia.com/sandvox/page.html;parameter1=arg1;parameter2=arg2?queryparm1=%AA%BB%CC%DD&queryparm2=queryarg2"];
     NSURL *can2 = [NSURL URLWithString:@"http://username:password@www.karelia.com/sandvox/;parameter1=arg1;parameter2=arg2?queryparm1=queryarg1&queryparm2=queryarg2"];
@@ -64,6 +66,8 @@
     NSURL *can16 = [NSURL URLWithString:@"http://www.karelia.com/%5Bobjectivec%5D/"];
     NSURL *can17 = [NSURL URLWithString:@"http://www.karelia.com/whee!/"];
     NSURL *can18 = [NSURL URLWithString:@"http://www.karelia.com/whee!/"];
+	NSURL *can19 = [NSURL URLWithString:@"file:///Users/foo/Desktop/index.html"];
+	NSURL *can20 = [NSURL URLWithString:@"file://localhost/Users/foo/Desktop/index.html"];
 
     NSURL *out1 = [in1 ks_normalizedURL];
     NSURL *out2 = [in2 ks_normalizedURL];
@@ -83,6 +87,8 @@
     NSURL *out16 = [in16 ks_normalizedURL];
     NSURL *out17 = [in17 ks_normalizedURL];
     NSURL *out18 = [in18 ks_normalizedURL];
+    NSURL *out19 = [in19 ks_normalizedURL];
+    NSURL *out20 = [in20 ks_normalizedURL];
     
     STAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
     STAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
@@ -102,6 +108,8 @@
     STAssertTrue([[out16 absoluteString] isEqualToString:[can16 absoluteString]], @"out16 failed");
     STAssertTrue([[out17 absoluteString] isEqualToString:[can17 absoluteString]], @"out17 failed");
     STAssertTrue([[out18 absoluteString] isEqualToString:[can18 absoluteString]], @"out18 failed");
+    STAssertTrue([[out19 absoluteString] isEqualToString:[can19 absoluteString]], @"out19 failed");
+    STAssertTrue([[out20 absoluteString] isEqualToString:[can20 absoluteString]], @"out20 failed");
 }
 
 
