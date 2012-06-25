@@ -21,10 +21,13 @@
     norm = [norm ks_URLByLowercasingSchemeAndHost];
     norm = [norm ks_URLByUppercasingEscapes];
     norm = [norm ks_URLByUnescapingUnreservedCharactersInPath];
-    norm = [norm ks_URLByAddingTrailingSlashToDirectory];
+	norm = [norm ks_URLByAddingTrailingSlashToDirectory];
     norm = [norm ks_URLByRemovingDefaultPort];
-    norm = [norm ks_URLByRemovingDirectoryIndex];
-    norm = [norm ks_URLByRemovingFragment];
+	if (![norm isFileURL])
+	{
+		norm = [norm ks_URLByRemovingDirectoryIndex];
+	}
+	norm = [norm ks_URLByRemovingFragment];
     [norm retain];
     
     [pool drain];

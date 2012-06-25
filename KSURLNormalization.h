@@ -2,6 +2,8 @@
 // Normalization of URLs based on 
 //  http://en.wikipedia.org/wiki/URL_normalization
 
+// For file:// URLs, we don't strip off the index file name (e.g. index.html)
+
 /*  Example of an URL containing all valid parts.
     http://username:password@www.karelia.com:8888/sandvox/index.html;parameter1=arg1;parameter2=arg2?queryparm1=queryarg1&queryparm2=queryarg2#anchor1
  
