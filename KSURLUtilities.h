@@ -29,7 +29,7 @@
 
 extern NSString *KSURLMailtoScheme;
 extern NSString *KSURLMailtoHeaderSubject;
-
+extern NSString *KSURLMailtoHeaderBody;
 
 @interface NSURL (KSPathUtilities)
 

@@ -32,6 +32,7 @@
 
 NSString *KSURLMailtoScheme = @"mailto";
 NSString *KSURLMailtoHeaderSubject = @"subject";
+NSString *KSURLMailtoHeaderBody = @"body";
 
 
 @implementation NSURL (KSPathUtilities)
