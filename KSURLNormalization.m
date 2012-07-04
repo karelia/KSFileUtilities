@@ -69,7 +69,7 @@
         rPart.location += 0;
         rPart.length = [scheme length];
     }
-    if (anURLPart >= ks_URLPartSchemePart)
+    if (anURLPart > ks_URLPartScheme)
     {
         rPart.location += [scheme length];
         

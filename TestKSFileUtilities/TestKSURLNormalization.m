@@ -118,7 +118,6 @@
     NSURL *theWorks = [NSURL URLWithString:@"http://username:password@www.karelia.com:8888/sandvox/index.html;parameter1=arg1;parameter2=arg2?queryparm1=queryarg1&queryparm2=queryarg2#anchor1"];
 
     NSRange rScheme          = [theWorks ks_replacementRangeOfURLPart:ks_URLPartScheme];
-    NSRange rSchemePart      = [theWorks ks_replacementRangeOfURLPart:ks_URLPartSchemePart];
     NSRange rUserAndPassword = [theWorks ks_replacementRangeOfURLPart:ks_URLPartUserAndPassword];
     NSRange rHost            = [theWorks ks_replacementRangeOfURLPart:ks_URLPartHost];
     NSRange rPort            = [theWorks ks_replacementRangeOfURLPart:ks_URLPartPort];
@@ -131,7 +130,6 @@
 //0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
 //http://username:password@www.karelia.com:8888/sandvox/index.html;parameter1=arg1;parameter2=arg2?queryparm1=queryarg1&queryparm2=queryarg2#anchor1"];
     NSRange ckrScheme          = (NSRange){0,4};
-    NSRange ckrSchemePart      = (NSRange){4,3};
     NSRange ckrUserAndPassword = (NSRange){7,18};
     NSRange ckrHost            = (NSRange){25,15};
     NSRange ckrPort            = (NSRange){40,5};
@@ -141,7 +139,6 @@
     NSRange ckrFragment        = (NSRange){138,8};
 
     STAssertTrue(rScheme.location == ckrScheme.location && rScheme.length == ckrScheme.length, @"rScheme failed.");
-    STAssertTrue(rSchemePart.location == ckrSchemePart.location && rSchemePart.length == ckrSchemePart.length, @"rSchemePart failed.");
     STAssertTrue(rUserAndPassword.location == ckrUserAndPassword.location && rUserAndPassword.length == ckrUserAndPassword.length, @"rUserAndPassword failed.");
     STAssertTrue(rHost.location == ckrHost.location && rHost.length == ckrHost.length, @"rHost failed.");
     STAssertTrue(rPort.location == ckrPort.location && rPort.length == ckrPort.length, @"rPort failed.");
@@ -153,7 +150,6 @@
     
     NSURL *empty = [NSURL URLWithString:@""];
     NSRange e_rScheme          = [empty ks_replacementRangeOfURLPart:ks_URLPartScheme];
-    NSRange e_rSchemePart      = [empty ks_replacementRangeOfURLPart:ks_URLPartSchemePart];
     NSRange e_rUserAndPassword = [empty ks_replacementRangeOfURLPart:ks_URLPartUserAndPassword];
     NSRange e_rHost            = [empty ks_replacementRangeOfURLPart:ks_URLPartHost];
     NSRange e_rPort            = [empty ks_replacementRangeOfURLPart:ks_URLPartPort];
@@ -163,7 +159,6 @@
     NSRange e_rFragment        = [empty ks_replacementRangeOfURLPart:ks_URLPartFragment];
 
     NSRange e_ckrScheme          = (NSRange){0,0};
-    NSRange e_ckrSchemePart      = (NSRange){0,0};
     NSRange e_ckrUserAndPassword = (NSRange){0,0};
     NSRange e_ckrHost            = (NSRange){0,0};
     NSRange e_ckrPort            = (NSRange){0,0};
@@ -173,7 +168,6 @@
     NSRange e_ckrFragment        = (NSRange){0,0};
     
     STAssertTrue(e_rScheme.location == e_ckrScheme.location && e_rScheme.length == e_ckrScheme.length, @"e_rScheme failed.");
-    STAssertTrue(e_rSchemePart.location == e_ckrSchemePart.location && e_rSchemePart.length == e_ckrSchemePart.length, @"e_rSchemePart failed.");
     STAssertTrue(e_rUserAndPassword.location == e_ckrUserAndPassword.location && e_rUserAndPassword.length == e_ckrUserAndPassword.length, @"e_rUserAndPassword failed.");
     STAssertTrue(e_rHost.location == e_ckrHost.location && e_rHost.length == e_ckrHost.length, @"e_rHost failed.");
     STAssertTrue(e_rPort.location == e_ckrPort.location && e_rPort.length == e_ckrPort.length, @"e_rPort failed.");

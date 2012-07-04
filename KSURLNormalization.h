@@ -57,7 +57,6 @@
 typedef enum  
 {
     ks_URLPartScheme = 10,
-    ks_URLPartSchemePart = 20,
     ks_URLPartUserAndPassword = 30,
     //ks_URLPartPassword = 40,
     ks_URLPartHost = 50,
