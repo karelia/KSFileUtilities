@@ -256,7 +256,7 @@
     
     _basePath = [basePath copy];
     _suffix = suffix;
-    _storage = [[basePath ks_stringWithPathSuffix:[NSString stringWithFormat:@"-%u", suffix]] copy];
+    _storage = [[basePath ks_stringWithPathSuffix:[NSString stringWithFormat:@"-%lu", (unsigned long) suffix]] copy];
     
     return self;
 }
