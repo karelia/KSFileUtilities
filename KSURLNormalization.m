@@ -86,7 +86,7 @@
             rPart.length = [realSchemePart length];
         }
     }
-    if (anURLPart >= ks_URLPartUserAndPassword)
+    if (anURLPart >= ks_URLPartUserAndPassword || anURLPart == ks_URLPartPath)
     {
         rPart.location += [realSchemePart length];
         rPart.length = 0;
@@ -99,7 +99,7 @@
             rPart.length += ([password length] + [passwordDelimiter length]);
         }
     }
-    if (anURLPart >= ks_URLPartHost)
+    if (anURLPart >= ks_URLPartHost || anURLPart == ks_URLPartPath)
     {
         if (user && [user length])
         {
@@ -111,7 +111,7 @@
         }
         rPart.length = [host length];
     }
-    if (anURLPart >= ks_URLPartPort)
+    if (anURLPart >= ks_URLPartPort || anURLPart == ks_URLPartPath)
     {
         rPart.location += [host length];
         rPart.length = 0;
@@ -120,7 +120,7 @@
             rPart.length = [port length] + [portDelimiter length];
         }
     }
-    if (anURLPart >= ks_URLPartPath)
+    if (anURLPart >= ks_URLPartParameterString || anURLPart == ks_URLPartPath)
     {
         if (port && [port length])
         {

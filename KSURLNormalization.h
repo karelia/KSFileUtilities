@@ -56,15 +56,15 @@
 
 typedef enum  
 {
-    ks_URLPartScheme = 10,
-    ks_URLPartUserAndPassword = 30,
-    //ks_URLPartPassword = 40,
-    ks_URLPartHost = 50,
-    ks_URLPartPort = 60,
-    ks_URLPartPath = 70,
-    ks_URLPartParameterString = 80,
-    ks_URLPartQuery = 90,
-    ks_URLPartFragment = 100
+    ks_URLPartScheme = kCFURLComponentScheme,
+    ks_URLPartPath = kCFURLComponentPath,
+    ks_URLPartUserAndPassword = kCFURLComponentPassword - 1,
+    //ks_URLPartPassword = kCFURLComponentPassword,
+    ks_URLPartHost = kCFURLComponentHost,
+    ks_URLPartPort = kCFURLComponentPort,
+    ks_URLPartParameterString = kCFURLComponentParameterString,
+    ks_URLPartQuery = kCFURLComponentQuery,
+    ks_URLPartFragment = kCFURLComponentFragment
 } ks_URLPart;
 
 
