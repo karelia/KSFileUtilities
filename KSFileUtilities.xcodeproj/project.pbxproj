@@ -31,7 +31,6 @@
 		801978D414FEDE0B008F41E3 /* TestKSURLNormalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSURLNormalization.m; sourceTree = "<group>"; };
 		801978D614FEDE26008F41E3 /* KSURLNormalization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLNormalization.h; sourceTree = SOURCE_ROOT; };
 		801978D714FEDE26008F41E3 /* KSURLNormalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSURLNormalization.m; sourceTree = SOURCE_ROOT; };
-		801978D814FEDE26008F41E3 /* KSURLNormalizationPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLNormalizationPrivate.h; sourceTree = SOURCE_ROOT; };
 		EE0F599613897980006045D3 /* KSPathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPathUtilities.h; sourceTree = SOURCE_ROOT; };
 		EE0F599713897980006045D3 /* KSPathUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPathUtilities.m; sourceTree = SOURCE_ROOT; };
 		EE0F59A913897B20006045D3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/WebKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -88,7 +87,6 @@
 				EE0F599713897980006045D3 /* KSPathUtilities.m */,
 				801978D614FEDE26008F41E3 /* KSURLNormalization.h */,
 				801978D714FEDE26008F41E3 /* KSURLNormalization.m */,
-				801978D814FEDE26008F41E3 /* KSURLNormalizationPrivate.h */,
 			);
 			name = KSFileUtilities;
 			path = TestKSFileUtilities;

@@ -1,7 +1,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
-#import "KSURLNormalization.h"
-#import "KSURLNormalizationPrivate.h"
+#import "../KSURLNormalization.m"
 
 
 @interface TestKSURLNormalization : SenTestCase
