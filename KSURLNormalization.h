@@ -54,20 +54,6 @@
 #import <Foundation/Foundation.h>
 
 
-typedef enum  
-{
-    ks_URLPartScheme = kCFURLComponentScheme,
-    ks_URLPartPath = kCFURLComponentPath,
-    ks_URLPartUserAndPassword = kCFURLComponentPassword - 1,
-    //ks_URLPartPassword = kCFURLComponentPassword,
-    ks_URLPartHost = kCFURLComponentHost,
-    ks_URLPartPort = kCFURLComponentPort,
-    ks_URLPartParameterString = kCFURLComponentParameterString,
-    ks_URLPartQuery = kCFURLComponentQuery,
-    ks_URLPartFragment = kCFURLComponentFragment
-} ks_URLPart;
-
-
 @interface NSURL (KSURLNormalization)
 
 - (NSURL *)ks_normalizedURL;
