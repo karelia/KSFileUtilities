@@ -39,12 +39,18 @@
     
     
     // Get NSURL to see if it agrees with the result
+    // Whenever dealing with paths, NSURL always produces a URL with at least some kind of path component:
+    //  e.g. http://example.com/ rather than http://example.com
+    // This test needs to compensate by making sure the URLs to be tested match that
     NSURL *nsurlsOpinion = [[[NSURL URLWithString:result relativeToURL:b] absoluteURL] standardizedURL];    // gotta do absoluteURL first apparently
-    STAssertEqualObjects([nsurlsOpinion absoluteString], [a absoluteString],
+    if (![[nsurlsOpinion path] length]) nsurlsOpinion = [nsurlsOpinion ks_hostURL];
+    NSURL *urlWithPathAsNeeded = a; if (![[a path] length]) urlWithPathAsNeeded = [a ks_hostURL];
+    
+    STAssertEqualObjects([nsurlsOpinion absoluteString], [urlWithPathAsNeeded absoluteString],
                          @"(\'%@\' relative to \'%@\')",
                          result,
                          b,
-                         [a absoluteString],
+                         [urlWithPathAsNeeded absoluteString],
                          nsurlsOpinion);
     
     
