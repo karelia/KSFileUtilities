@@ -249,7 +249,7 @@
                                        [result scheme],
                                        [result host],
                                        [self fallbackTopLevelDomain]];
-                result = [NSURL URLWithString:urlString];
+                result = [self URLFromString:urlString];
             }
         }
         
