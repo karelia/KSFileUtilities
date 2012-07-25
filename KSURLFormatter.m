@@ -167,7 +167,7 @@
         {
             result = [NSURL URLWithString:[NSString stringWithFormat:@"mailto:%@", string]];
         }
-        else
+		else if (![[result scheme] isEqualToString:@"file"])
         {
             result = [self URLFromString:[NSString stringWithFormat:
                                                    @"%@://%@",
@@ -214,7 +214,7 @@
         
         
         // Does the URL have no useful resource specified? If so, generate nil URL
-        if (result && ![[result scheme] isEqualToString:@"mailto"])
+        if (result && ![[result scheme] isEqualToString:@"mailto"] && ![result isFileURL])
         {
             NSString *resource = [result resourceSpecifier];
             if ([resource length] == 0 ||
@@ -240,7 +240,7 @@
         
         
         // Did the user not enter a top-level domain? We'll guess for them
-        if (result && [self fallbackTopLevelDomain])
+        if (result && ![result isFileURL] && [self fallbackTopLevelDomain])
         {
             if ([[result ks_domains] count] == 1)
             {
@@ -249,7 +249,7 @@
                                        [result scheme],
                                        [result host],
                                        [self fallbackTopLevelDomain]];
-                result = [NSURL URLWithString:urlString];
+                result = [self URLFromString:urlString];
             }
         }
         
