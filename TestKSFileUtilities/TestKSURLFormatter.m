@@ -48,4 +48,11 @@
     [self testAllowedSchemesWithString:@"test://example.com/" expectedURLString:@"http://example.com/"];
 }
 
+- (void)testPercentEncoding
+{
+    [self testAllowedSchemesWithString:@"test://test test.com/" expectedURLString:@"http://test%20test.com/"];
+    [self testAllowedSchemesWithString:@"test://test test/" expectedURLString:@"http://test%20test.com/"];
+    [self testAllowedSchemesWithString:@"test test/" expectedURLString:@"http://test%20test.com/"];
+}
+
 @end
