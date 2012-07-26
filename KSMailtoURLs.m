@@ -44,4 +44,20 @@ NSString *KSURLMailtoHeaderBody = @"body";
 	return [self URLWithString:string];
 }
 
+- (NSDictionary *)ks_mailHeaderLines;
+{
+    if (![[self scheme] isEqualToString:KSURLMailtoScheme]) return nil;
+    
+    NSString *urlString = [self absoluteString];
+    NSRange queryIndicatorRange = [urlString rangeOfString:@"?"];
+    
+    if (queryIndicatorRange.location != NSNotFound)
+    {
+        NSString *query = [urlString substringFromIndex:NSMaxRange(queryIndicatorRange)];
+        return [NSURL ks_parametersOfQuery:query];
+    }
+    
+    return nil;
+}
+
 @end

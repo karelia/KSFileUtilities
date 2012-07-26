@@ -21,4 +21,7 @@ extern NSString *KSURLMailtoHeaderBody;
 // KSURLMailtoHeaderSubject is a common key for the header lines dictionary
 + (NSURL *)ks_mailtoURLWithEmailAddress:(NSString *)address headerLines:(NSDictionary *)headers;
 
+// Nil if its not a mailto URL or has no header lines
+- (NSDictionary *)ks_mailHeaderLines;
+
 @end
