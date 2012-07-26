@@ -116,7 +116,7 @@
                 // - It's an external filesystem which doesn't support hardlinks
                 // - Attempted to link across filesystems
                 //
-                // If so, can just fall back to copying, which will handle all but the first problem
+                // If so, can just fall back to copying, which will handle all situations, except: destination already existing, and that fails fast on copying anyway
                 result = [fileManager copyItemAtURL:originalURL toURL:URL error:outError];
             }
             [fileManager release];
