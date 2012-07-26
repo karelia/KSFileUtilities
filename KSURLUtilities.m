@@ -30,11 +30,6 @@
 #import "KSPathUtilities.h"
 
 
-NSString *KSURLMailtoScheme = @"mailto";
-NSString *KSURLMailtoHeaderSubject = @"subject";
-NSString *KSURLMailtoHeaderBody = @"body";
-
-
 @implementation NSURL (KSPathUtilities)
 
 #pragma mark Scheme
@@ -225,34 +220,6 @@ NSString *KSURLMailtoHeaderBody = @"body";
     }
     
     return result;
-}
-
-#pragma mark Mailto: URLs
-
-+ (NSURL *)ks_mailtoURLWithEmailAddress:(NSString *)address headerLines:(NSDictionary *)headers;
-{
-    NSScanner *s = [NSScanner scannerWithString:address];
-    if ([s scanUpToString:@"(" intoString:&address])
-    {
-        address = [address stringByTrimmingCharactersInSet:
-                   [NSCharacterSet whitespaceAndNewlineCharacterSet]];	// take out whitespace
-    }
-    
-    NSString *string = [NSString stringWithFormat:
-                        @"%@:%@",
-                        KSURLMailtoScheme,
-                        [address stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
-    if (headers)
-    {
-        NSString *query = [self ks_queryWithParameters:headers];
-        if ([query length])
-        {
-            string = [string stringByAppendingFormat:@"?%@", query];
-        }
-    }
-    
-	return [self URLWithString:string];
 }
 
 #pragma mark Query Dictionary
