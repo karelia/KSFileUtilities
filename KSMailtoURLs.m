@@ -8,7 +8,7 @@
 
 #import "KSMailtoURLs.h"
 
-#import "KSURLUtilities.h"
+#import "KSURLQueryUtilities.h"
 
 
 NSString *KSURLMailtoScheme = @"mailto";
