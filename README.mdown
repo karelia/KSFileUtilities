@@ -29,6 +29,11 @@ An `NSFormatter` subclass for a variety of URL display and input tasks.
 - Host URLs have a slash appended to them. e.g. `http://example.com` is displayed/interpreted as `http://example.com/`
 - Convenience `+URLFromString:` method that takes care of unescaped characters
 
+URL Normalization
+=================
+
+The KSURLNormalization category implements normalization as documented by [Wikipedia](http://en.wikipedia.org/wiki/URL_normalization).
+
 Relative Strings
 ================
 
