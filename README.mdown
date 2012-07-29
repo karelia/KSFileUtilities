@@ -1,3 +1,5 @@
+KSFileUtilities contains a variety of useful methods for handling URLs, paths and other aspects of file management. Here's a selection of them grouped by purpose:
+
 Relative Strings
 ================
 
