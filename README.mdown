@@ -20,6 +20,15 @@ There are also APIs for creating/deriving new URLs from a dictionary:
 	                       path:(NSString *)path
 	            queryParameters:(NSDictionary *)parameters;
 
+KSURLFormatter
+==============
+
+An `NSFormatter` subclass for a variety of URL display and input tasks.
+
+- Non-complete URLs like `example` and `example.com` generate full `http://example.com/` URL
+- Host URLs have a slash appended to them. e.g. `http://example.com` is displayed/interpreted as `http://example.com/`
+- Convenience `+URLFromString:` method that takes care of unescaped characters
+
 Relative Strings
 ================
 
@@ -90,15 +99,6 @@ On occasion there is a need to try to find the best available filename/path for 
 	…
 
 More information on the implementation and use of this method is on [Mike's blog](http://www.mikeabdullah.net/incrementing-paths.html)
-
-KSURLFormatter
-==============
-
-A basic `NSFormatter` subclass for handling URLs.
-
-- Non-complete URLs like `example` and `example.com` generate full `http://example.com/` URL
-- Host URLs have a slash appended to them. e.g. `http://example.com` is displayed/interpreted as `http://example.com/`
-- Convenience `+URLFromString:` method that takes care of unescaped characters
 
 KSWebLocation
 =============
