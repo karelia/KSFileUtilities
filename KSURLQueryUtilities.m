@@ -120,24 +120,18 @@
  
  RFC2396:  Within a query component, the characters ";", "/", "?", ":", "@", "&", "=", "+", ",", and "$" are reserved.
  
+ Changed to NOT convert space into + ... while this is fine for web parameters, it doesn't work on mail clients reliably (e.g. mailto:foo@bar.com?subject=Hi+There+Mom)
  
  */
 
 - (NSString *)ks_stringByAddingQueryComponentPercentEscapes;
 {
-    CFStringRef firstPass = CFURLCreateStringByAddingPercentEscapes(NULL,
+    CFStringRef converted = CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                     (CFStringRef)self,
-                                                                    CFSTR(" "),
+                                                                    NULL,
                                                                     CFSTR(";/?:@&=+,$%"),
                                                                     kCFStringEncodingUTF8);
-    
-    NSMutableString *result = [(NSString *)firstPass mutableCopy];
-    CFRelease(firstPass);
-    [result replaceOccurrencesOfString:@" "
-                            withString:@"+"
-                               options:NSLiteralSearch
-                                 range:NSMakeRange(0, [result length])];
-    
+    NSString *result = NSMakeCollectable(converted);
     return [result autorelease];
 }
 
