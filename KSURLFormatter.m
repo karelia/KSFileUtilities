@@ -80,11 +80,11 @@
 
 - (id)init
 {
-    [super init];
-    
-    _defaultScheme = [@"http" retain];
-    _fallbackTopLevelDomain = [@"com" retain];
-    
+    if (self = [super init])
+    {
+        _defaultScheme = [@"http" retain];
+        _fallbackTopLevelDomain = [@"com" retain];
+    }
     return self;
 }
 
