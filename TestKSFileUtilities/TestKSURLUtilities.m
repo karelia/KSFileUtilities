@@ -25,7 +25,7 @@
 #define URL(string) [NSURL URLWithString:string]
 #define RELURL(string, base) [NSURL URLWithString:string relativeToURL:base]
 
-- (void)checkURL:(NSURL *)a relativeToURL:(NSURL *)b againstExpectedResult:(NSString *)expectedResult checkByAppendingToURLToo:(BOOL)testAppending;
+- (void)checkURL:(NSURL *)a relativeToURL:(NSURL *)b againstExpectedResult:(NSString *)expectedResult confirmWithRelativeNSURL:(BOOL)testNSURL checkByAppendingToURLToo:(BOOL)testAppending;
 {
     // Regular
     NSString *result = [a ks_stringRelativeToURL:b];
@@ -39,19 +39,22 @@
     
     
     // Get NSURL to see if it agrees with the result
-    // Whenever dealing with paths, NSURL always produces a URL with at least some kind of path component:
-    //  e.g. http://example.com/ rather than http://example.com
-    // This test needs to compensate by making sure the URLs to be tested match that
-    NSURL *nsurlsOpinion = [[[NSURL URLWithString:result relativeToURL:b] absoluteURL] standardizedURL];    // gotta do absoluteURL first apparently
-    if (![[nsurlsOpinion path] length]) nsurlsOpinion = [nsurlsOpinion ks_hostURL];
-    NSURL *urlWithPathAsNeeded = a; if (![[a path] length]) urlWithPathAsNeeded = [a ks_hostURL];
-    
-    STAssertEqualObjects([nsurlsOpinion absoluteString], [urlWithPathAsNeeded absoluteString],
-                         @"(\'%@\' relative to \'%@\')",
-                         result,
-                         b,
-                         [urlWithPathAsNeeded absoluteString],
-                         nsurlsOpinion);
+    if (testNSURL)
+    {
+        // Whenever dealing with paths, NSURL always produces a URL with at least some kind of path component:
+        //  e.g. http://example.com/ rather than http://example.com
+        // This test needs to compensate by making sure the URLs to be tested match that
+        NSURL *nsurlsOpinion = [[[NSURL URLWithString:result relativeToURL:b] absoluteURL] standardizedURL];    // gotta do absoluteURL first apparently
+        if (![[nsurlsOpinion path] length]) nsurlsOpinion = [nsurlsOpinion ks_hostURL];
+        NSURL *urlWithPathAsNeeded = a; if (![[a path] length]) urlWithPathAsNeeded = [a ks_hostURL];
+        
+        STAssertEqualObjects([nsurlsOpinion absoluteString], [urlWithPathAsNeeded absoluteString],
+                             @"(\'%@\' relative to \'%@\')",
+                             result,
+                             b,
+                             [urlWithPathAsNeeded absoluteString],
+                             nsurlsOpinion);
+    }
     
     
     // A trailing
@@ -60,7 +63,7 @@
         NSURL *aTrailing = [NSURL URLWithString:[a.relativeString stringByAppendingString:@"/"] relativeToURL:a.baseURL];
         //NSURL *bTrailing = [NSURL URLWithString:[b.relativeString stringByAppendingString:@"/"] relativeToURL:b.baseURL];
         
-        [self checkURL:aTrailing relativeToURL:b againstExpectedResult:[expectedResult stringByAppendingString:@"/"] checkByAppendingToURLToo:NO];
+        [self checkURL:aTrailing relativeToURL:b againstExpectedResult:[expectedResult stringByAppendingString:@"/"] confirmWithRelativeNSURL:testNSURL checkByAppendingToURLToo:NO];
         
         
         // Percent encoding, but not for root URLs
@@ -72,6 +75,7 @@
             [self checkURL:aWithCrazyEncoding
              relativeToURL:b
      againstExpectedResult:[expectedResult stringByAppendingString:encodedSlash]
+  confirmWithRelativeNSURL:testNSURL
   checkByAppendingToURLToo:YES];
         }
     }
@@ -83,7 +87,7 @@
  */
 - (void)checkURL:(NSURL *)a relativeToURL:(NSURL *)b againstExpectedResult:(NSString *)expectedResult;
 {
-    [self checkURL:a relativeToURL:b againstExpectedResult:expectedResult checkByAppendingToURLToo:![a ks_hasDirectoryPath]];
+    [self checkURL:a relativeToURL:b againstExpectedResult:expectedResult confirmWithRelativeNSURL:YES checkByAppendingToURLToo:![a ks_hasDirectoryPath]];
 }
 
 - (void)testURLRelativeToURL
@@ -102,10 +106,15 @@
     [self checkURL:URL(@"http://example.com/foo") relativeToURL:URL(@"http://example.com/foo")  againstExpectedResult:@"foo"];
     
     // somewhat of a special case:
-    [self checkURL:URL(@"http://example.com/foo") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@"../foo" checkByAppendingToURLToo:NO];
-    [self checkURL:URL(@"http://example.com/foo/") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@"./" checkByAppendingToURLToo:NO];
+    [self checkURL:URL(@"http://example.com/foo") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@"../foo" confirmWithRelativeNSURL:YES checkByAppendingToURLToo:NO];
+    [self checkURL:URL(@"http://example.com/foo/") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@"./" confirmWithRelativeNSURL:YES checkByAppendingToURLToo:NO];
     [self checkURL:URL(@"http://example.com/foo%2F") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@"../foo%2F"];
     
+    
+    // Scheme and domain should be case-insensitive
+    [self checkURL:URL(@"http://eXample.com") relativeToURL:URL(@"httP://ExamPle.com")  againstExpectedResult:@"." confirmWithRelativeNSURL:NO checkByAppendingToURLToo:YES];
+    [self checkURL:URL(@"hTtp://eXample.com") relativeToURL:URL(@"httP://ExamPle.com/")  againstExpectedResult:@"." confirmWithRelativeNSURL:NO checkByAppendingToURLToo:YES];
+    [self checkURL:URL(@"hTtp://eXample.com/foo") relativeToURL:URL(@"httP://ExamPle.com/foo")  againstExpectedResult:@"foo" confirmWithRelativeNSURL:NO checkByAppendingToURLToo:YES];
     
     
     // Diving in

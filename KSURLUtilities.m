@@ -245,8 +245,9 @@
 	}
 	
 	
-	// If the scheme, host or port differs, there is no possible relative path.
-    if (![[self scheme] isEqualToString:[URL scheme]] || ![[self host] isEqualToString:[URL host]])
+	// If the scheme, host or port differs, there is no possible relative path. Schemes and domains are considered to be case-insensitive. http://en.wikipedia.org/wiki/URL_normalization
+    if ([[self scheme] caseInsensitiveCompare:[URL scheme]] != NSOrderedSame ||
+        [[self host] caseInsensitiveCompare:[URL host]] != NSOrderedSame)
 	{
 		NSString *result = [self absoluteString];
 		return result;
