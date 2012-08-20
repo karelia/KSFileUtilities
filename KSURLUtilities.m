@@ -355,34 +355,39 @@ NSString *KSURLMailtoHeaderSubject = @"subject";
 
 - (NSString *)ks_stringRelativeToURL:(NSURL *)URL
 {
+    
+#define BAIL return [self absoluteString];
+    
     // If the base URL is nil then no comparison is needed
-	if (!URL)
-	{
-		NSString *result = [self absoluteString];
-		return result;
-	}
+	if (!URL) BAIL;
 	
 	
 	// URLs not compliant with RFC 1808 cannot be interpreted
-	if (![self ks_canBeDecomposed] || ![URL ks_canBeDecomposed])
-	{
-		return [self absoluteString];
-	}
+	if (![self ks_canBeDecomposed] || ![URL ks_canBeDecomposed]) BAIL;
 	
 	
 	// If the scheme, host or port differs, there is no possible relative path. Schemes and domains are considered to be case-insensitive. http://en.wikipedia.org/wiki/URL_normalization
-    if ([[self scheme] caseInsensitiveCompare:[URL scheme]] != NSOrderedSame ||
-        [[self host] caseInsensitiveCompare:[URL host]] != NSOrderedSame)
-	{
-		NSString *result = [self absoluteString];
-		return result;
-	}
+    NSString *myHost = [self host];
+    if (!myHost) BAIL;
+    
+    NSString *otherHost = [URL host];
+    if (!otherHost) BAIL;
+    
+    if ([myHost caseInsensitiveCompare:otherHost] != NSOrderedSame) BAIL;
+    
+    NSString *myScheme = [self scheme];
+    if (!myScheme) BAIL;
+    
+    NSString *otherScheme = [URL scheme];
+    if (!otherScheme) BAIL;
+    
+    if ([myScheme caseInsensitiveCompare:otherScheme] != NSOrderedSame) BAIL;
     
     NSNumber *myPort = [self port];
     NSNumber *aPort = [URL port];
     if (aPort != myPort && ![myPort isEqual:aPort]) // -isEqualToNumber: throws when passed nil
     {
-        return [self absoluteString];
+        BAIL;
     }
 	
 	
