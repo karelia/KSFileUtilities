@@ -108,7 +108,7 @@
 	}
 	
 	NSString *adjustedOtherPath = aPath;
-	if (![adjustedOtherPath isEqualToString:@"/"])
+	if (![adjustedOtherPath hasSuffix:@"/"])
 	{
 		adjustedOtherPath = [adjustedOtherPath stringByAppendingString:@"/"];
 	}
