@@ -140,6 +140,12 @@
     [self checkPath:@"foo/bar" relativeToDirectory:@"foo/baz" againstExpectedResult:@"../bar"];
 }
 
+- (void)testIsSubpath;
+{
+    STAssertTrue([@"/foo/bar/baz.html" ks_isSubpathOfPath:@"/foo"], @"/foo/bar/baz.html is a subpath of of /foo");
+    STAssertTrue([@"/foo/bar/baz.html" ks_isSubpathOfPath:@"/foo/"], @"/foo/bar/baz.html is a subpath of of /foo/");
+}
+
 - (void)testStringByIncrementingPath;
 {
     NSString *path = @"foo/bar.png//";
