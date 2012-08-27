@@ -173,17 +173,25 @@
     
     
     // How do you get from the directory path, to commonDir?
-    NSString *otherDifferingPath = [dirPath substringFromIndex:[commonDir length]];
-	NSArray *hopsUpArray = [otherDifferingPath componentsSeparatedByString:@"/"];
-    
-	for (NSString *aComponent in hopsUpArray)
+    NSRange searchRange; searchRange.location = [commonDir length]; searchRange.length = [dirPath length] - searchRange.location;
+    while (searchRange.length > 0)
     {
-        if ([aComponent length] && ![aComponent isEqualToString:@"."])
+        NSRange slashRange = [dirPath rangeOfString:@"/" options:NSLiteralSearch range:searchRange];
+        if (slashRange.location == NSNotFound) slashRange.location = NSMaxRange(searchRange);   // for end of string
+        NSRange componentRange = NSMakeRange(searchRange.location, slashRange.location - searchRange.location);
+        
+        if (componentRange.length > 0)
         {
-            NSAssert(![aComponent isEqualToString:@".."], @".. unsupported");  
-            if ([result length]) [result appendString:@"/"];
-            [result appendString:@".."];
+            // Ignore components which just specify current directory
+            if ([dirPath compare:@"." options:NSLiteralSearch range:componentRange] != NSOrderedSame)
+            {
+                NSAssert([dirPath compare:@".." options:NSLiteralSearch range:componentRange] != NSOrderedSame, @".. unsupported");
+                if ([result length]) [result appendString:@"/"];
+                [result appendString:@".."];
+            }
         }
+        
+        searchRange = NSMakeRange(NSMaxRange(slashRange), NSMaxRange(searchRange) - NSMaxRange(slashRange));
     }
     
     
