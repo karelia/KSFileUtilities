@@ -183,9 +183,13 @@
         if (componentRange.length > 0)
         {
             // Ignore components which just specify current directory
-            if ([dirPath compare:@"." options:NSLiteralSearch range:componentRange] != NSOrderedSame)
+            if (componentRange.length > 1 || [dirPath compare:@"." options:NSLiteralSearch range:componentRange] != NSOrderedSame)
             {
-                NSAssert([dirPath compare:@".." options:NSLiteralSearch range:componentRange] != NSOrderedSame, @".. unsupported");
+                if (componentRange.length == 2)
+                {
+                    NSAssert([dirPath compare:@".." options:NSLiteralSearch range:componentRange] != NSOrderedSame, @".. unsupported");
+                }
+                
                 if ([result length]) [result appendString:@"/"];
                 [result appendString:@".."];
             }
