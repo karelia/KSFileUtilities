@@ -166,7 +166,7 @@
 
 - (BOOL)ks_hasDirectoryPath
 {
-    BOOL result = CFURLHasDirectoryPath((CFURLRef)[self absoluteURL]);
+    BOOL result = CFURLHasDirectoryPath((CFURLRef)self);
     return result;
 }
 
