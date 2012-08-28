@@ -142,4 +142,22 @@
     [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/foo%2F/") againstExpectedResult:@"../../foo/bar"];
 }
 
+- (void)testURLHasDirectoryPath;
+{
+    STAssertFalse([[NSURL URLWithString:@"http://example.com/foo"] ks_hasDirectoryPath], @"No trailing slash");
+    STAssertTrue([[NSURL URLWithString:@"http://example.com/foo/"] ks_hasDirectoryPath], @"Trailing slash");
+    
+    STAssertFalse([[NSURL URLWithString:@"http://example.com"] ks_hasDirectoryPath], @"No trailing slash");
+    STAssertTrue([[NSURL URLWithString:@"http://example.com/"] ks_hasDirectoryPath], @"Trailing slash");
+    
+    STAssertFalse([[NSURL URLWithString:@"foo" relativeToURL:[NSURL URLWithString:@"http://example.com/"]] ks_hasDirectoryPath], @"No trailing slash");
+    STAssertTrue([[NSURL URLWithString:@"foo/" relativeToURL:[NSURL URLWithString:@"http://example.com/"]] ks_hasDirectoryPath], @"Trailing slash");
+    
+    STAssertFalse([[NSURL URLWithString:@"bar" relativeToURL:[NSURL URLWithString:@"http://example.com/foo/"]] ks_hasDirectoryPath], @"No trailing slash");
+    STAssertTrue([[NSURL URLWithString:@"bar/" relativeToURL:[NSURL URLWithString:@"http://example.com/foo"]] ks_hasDirectoryPath], @"Trailing slash");
+    
+    STAssertFalse([[NSURL URLWithString:@"#anchor" relativeToURL:[NSURL URLWithString:@"http://example.com/foo"]] ks_hasDirectoryPath], @"No trailing slash");
+    STAssertTrue([[NSURL URLWithString:@"#anchor" relativeToURL:[NSURL URLWithString:@"http://example.com/foo/"]] ks_hasDirectoryPath], @"Trailing slash");
+}
+
 @end
