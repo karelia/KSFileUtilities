@@ -63,7 +63,7 @@
 // An empty array is not permitted
 @property(nonatomic, copy) NSArray *allowedSchemes;
 
-// If the URL's host does not have a top-level domain specified, and this is non-nil, it is substituted in. Defaults is "com"
+// If the URL's host does not have a top-level domain specified, and this is non-nil, it is substituted in. Default is "com"
 @property(nonatomic, copy) NSString *fallbackTopLevelDomain;
 
 
