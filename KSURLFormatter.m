@@ -76,6 +76,23 @@
 	return OK;
 }
 
++ (BOOL)isLikelyEmailAddress:(NSString *)address;
+{
+    BOOL result = [self isValidEmailAddress:address];
+    if (result)
+    {
+        NSURL *URL = [[NSURL alloc] initWithString:address];
+        if (URL)
+        {
+            // Account for strings like http://example.com/@foo which seem to be technically valid as an email address, but unlikely to be one
+            if ([URL scheme]) result = NO;
+            [URL release];
+        }
+    }
+    
+    return result;
+}
+
 #pragma mark Init & Dealloc
 
 - (id)init
@@ -163,7 +180,7 @@
         (![result host]))                                   // e.g. foo.com:8888
 	{
         // if it looks like an email address, use mailto:
-        if ([self isValidEmailAddress:string])
+        if ([self isLikelyEmailAddress:string])
         {
             result = [NSURL URLWithString:[NSString stringWithFormat:@"mailto:%@", string]];
         }

@@ -49,6 +49,7 @@
 + (NSURL *)URLFromString:(NSString *)string;
 
 + (BOOL)isValidEmailAddress:(NSString *)address;
++ (BOOL)isLikelyEmailAddress:(NSString *)address;   // much the same as above, but ignores some rarities
 
 
 #pragma mark Managing Behavior
