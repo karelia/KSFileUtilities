@@ -55,4 +55,9 @@
     [self testAllowedSchemesWithString:@"test test/" expectedURLString:@"http://test%20test.com/"];
 }
 
+- (void)testLikelyEmailAddress
+{
+    STAssertFalse([KSURLFormatter isLikelyEmailAddress:@"http://example.com@foo.com"], @"It's a *valid* email address, but more likely to be a URL");
+}
+
 @end
