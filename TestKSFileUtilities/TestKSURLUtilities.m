@@ -143,7 +143,8 @@
     
     
     // Crashed at one point
-    [self checkURL:URL(@"") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@""];
+    STAssertEqualObjects([URL(@"") ks_stringRelativeToURL:URL(@"http://example.com/foo/")], nil,
+                         nil);
 }
 
 - (void)testURLHasDirectoryPath;
