@@ -243,7 +243,12 @@
 	
 	// If the scheme, host or port differs, there is no possible relative path. Schemes and domains are considered to be case-insensitive. http://en.wikipedia.org/wiki/URL_normalization
     NSString *myHost = [self host];
-    if (!myHost) BAIL;
+    if (!myHost)
+    {
+        // If self is an empty URL, there's no way to get to it. Falls through to here; return nil
+        NSString *result = [self absoluteString];
+        return ([result length] ? result : nil);
+    }
     
     NSString *otherHost = [URL host];
     if (!otherHost) BAIL;

@@ -79,6 +79,7 @@
 
 
 #pragma mark Relative URLs
+// These methods return nil if the receiver can't be reached by a relative string. In practice, to my knowledge that only happens for a URL from an empty string (@"")
 - (NSString *)ks_stringRelativeToURL:(NSURL *)URL;
 - (NSURL *)ks_URLRelativeToURL:(NSURL *)URL;
 
