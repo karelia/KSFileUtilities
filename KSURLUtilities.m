@@ -412,6 +412,26 @@
 	
 }
 
+#pragma mark Security-Scoped Bookmarks
+
+- (void)ks_accessSecurityScopedResourceUsingBlock:(void (^)(BOOL started))block;
+{
+    BOOL started = NO;
+    if ([self respondsToSelector:@selector(startAccessingSecurityScopedResource)])
+    {
+        started = [self startAccessingSecurityScopedResource];
+    }
+    
+    @try
+    {
+        block(started);
+    }
+    @finally
+    {
+        if (started) [self stopAccessingSecurityScopedResource];
+    }
+}
+
 @end
 
 

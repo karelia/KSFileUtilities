@@ -84,6 +84,13 @@
 - (NSURL *)ks_URLRelativeToURL:(NSURL *)URL;
 
 
+#pragma mark Security-Scoped Bookmarks
+// Automatically:
+// * stops access to the resource at the end of the block, even if an exception is thrown
+// * runs the block pre-10.7.3. On those older OS releases, the value of 'started' is undefined
+- (void)ks_accessSecurityScopedResourceUsingBlock:(void (^)(BOOL started))block;
+
+
 @end
 
 
