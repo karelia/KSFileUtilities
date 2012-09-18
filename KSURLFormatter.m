@@ -48,6 +48,25 @@
     NSURL *result = nil;
     if (escapedString)
     {
+        // Any hashes after first # needs to be escaped. e.g. Apple's dev docs hand out URLs like this
+        NSRange range = [(NSString *)escapedString rangeOfString:@"#"];
+        if (range.location != NSNotFound)
+        {
+            NSRange postFragmentRange = NSMakeRange(NSMaxRange(range), [(NSString *)escapedString length] - NSMaxRange(range));
+            range = [(NSString *)escapedString rangeOfString:@"#" options:0 range:postFragmentRange];
+            
+            if (range.location != NSNotFound)
+            {
+                NSString *extraEscapedString = [(NSString *)escapedString stringByReplacingOccurrencesOfString:@"#"
+                                                                                                    withString:@"%23"   // not ideal, encoding ourselves
+                                                                                                       options:0
+                                                                                                         range:postFragmentRange];
+                
+                CFRelease(escapedString);
+                return [NSURL URLWithString:extraEscapedString];
+            }
+        }
+        
         result = [NSURL URLWithString:(NSString *)escapedString];
         CFRelease(escapedString);
     }
