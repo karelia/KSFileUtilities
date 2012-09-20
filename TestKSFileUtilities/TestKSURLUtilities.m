@@ -140,6 +140,10 @@
     [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/")        againstExpectedResult:@"../foo/bar"];
     [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/foo%2F")  againstExpectedResult:@"../foo/bar"];
     [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/foo%2F/") againstExpectedResult:@"../../foo/bar"];
+    
+    
+    // Crashed at one point
+    [self checkURL:URL(@"") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@""];
 }
 
 - (void)testURLHasDirectoryPath;
