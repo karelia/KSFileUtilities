@@ -55,6 +55,16 @@
     [self testAllowedSchemesWithString:@"test test/" expectedURLString:@"http://test%20test.com/"];
 }
 
+- (void)testDoubleFragment;
+{
+    KSURLFormatter *formatter = [[KSURLFormatter alloc] init];
+    
+    NSURL *URL = [formatter URLFromString:@"http://example.com/path#fragment#fake"];
+    STAssertEqualObjects([URL absoluteString], @"http://example.com/path#fragment%23fake", nil);
+    
+    [formatter release];
+}
+
 - (void)testValidEmailAddress
 {
     // Test from http://pgregg.com/projects/php/code/showvalidemail.php
