@@ -97,6 +97,11 @@
 
 - (BOOL)ks_writeToURL:(NSURL *)URL options:(NSFileWrapperWritingOptions)options originalParentDirectoryURL:(NSURL *)originalParentDirectory error:(NSError **)outError;
 {
+    return [self ks_writeToURL:URL options:options originalParentDirectoryURL:originalParentDirectory copyIfLinkingFails:YES error:outError];
+}
+
+- (BOOL)ks_writeToURL:(NSURL *)URL options:(NSFileWrapperWritingOptions)options originalParentDirectoryURL:(NSURL *)originalParentDirectory copyIfLinkingFails:(BOOL)fallbackToCopy error:(NSError **)outError;
+{
     NSString *filename = [self filename];
     NSURL *originalURL = (filename ? [originalParentDirectory URLByAppendingPathComponent:filename] : nil);
     
@@ -109,11 +114,11 @@
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             BOOL result = [fileManager linkItemAtURL:originalURL toURL:URL error:outError];
             
-            if (!result)
+            if (!result && fallbackToCopy)
             {
                 // Linking might fail because:
                 // - The destination URL already exists
-                // - It's an external filesystem which doesn't support hardlinks
+                // - It's an external filesystem which doesn't support hardlinks. #190275
                 // - Attempted to link across filesystems
                 //
                 // If so, can just fall back to copying, which will handle all situations, except: destination already existing, and that fails fast on copying anyway

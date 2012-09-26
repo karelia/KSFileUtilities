@@ -38,6 +38,13 @@
 // Tries to construct a wrapper from the link's destination
 - (NSFileWrapper *)ks_symbolicLinkDestinationFileWrapper;
 
+
+#pragma mark Writing
+
+// Simulates the behaviour NSFileWrapper gives you when writing a package, whereby files inside are hardlinked if possible. This method allows you to write an individual file and have it hard linked if possible
 - (BOOL)ks_writeToURL:(NSURL *)URL options:(NSFileWrapperWritingOptions)options originalParentDirectoryURL:(NSURL *)originalParentDirectory error:(NSError **)outError;
+
+// Just the like the above but very specialist allowing you to give up should hard linking fail, and not bother spending time doing a full copy
+- (BOOL)ks_writeToURL:(NSURL *)URL options:(NSFileWrapperWritingOptions)options originalParentDirectoryURL:(NSURL *)originalParentDirectory copyIfLinkingFails:(BOOL)fallbackToCopy error:(NSError **)outError;
 
 @end
