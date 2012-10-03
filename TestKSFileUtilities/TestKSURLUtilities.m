@@ -165,4 +165,10 @@
     STAssertTrue([[NSURL URLWithString:@"#anchor" relativeToURL:[NSURL URLWithString:@"http://example.com/foo/"]] ks_hasDirectoryPath], @"Trailing slash");
 }
 
+- (void)testIsFileURL;
+{
+    STAssertTrue([URL(@"file:///example.png") isFileURL], nil);
+    STAssertTrue([URL(@"fIlE:///example.png") isFileURL], nil);
+}
+
 @end
