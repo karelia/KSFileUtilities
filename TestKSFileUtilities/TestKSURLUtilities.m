@@ -164,4 +164,13 @@
     STAssertTrue([[NSURL URLWithString:@"#anchor" relativeToURL:[NSURL URLWithString:@"http://example.com/foo/"]] ks_hasDirectoryPath], @"Trailing slash");
 }
 
+- (void)testIsSubpath;
+{
+    STAssertTrue([URL(@"http://example.com/foo/bar/baz.html") ks_isSubpathOfURL:URL(@"http://example.com/foo")], nil);
+    STAssertTrue([URL(@"http://example.com/foo/bar/baz.html") ks_isSubpathOfURL:URL(@"http://example.com/foo/")], nil);
+    STAssertFalse([URL(@"http://example.com/foo/bar/baz.html") ks_isSubpathOfURL:URL(@"http://example.com/fo")], nil);
+    STAssertTrue([URL(@"http://example.com/foo/bar/baz.html") ks_isSubpathOfURL:URL(@"http://example.com/")], nil);
+    STAssertTrue([URL(@"http://example.com/foo/bar/baz.html") ks_isSubpathOfURL:URL(@"http://example.com")], nil);
+}
+
 @end
