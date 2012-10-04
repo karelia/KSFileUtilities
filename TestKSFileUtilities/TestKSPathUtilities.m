@@ -144,6 +144,7 @@
 {
     STAssertTrue([@"/foo/bar/baz.html" ks_isSubpathOfPath:@"/foo"], @"/foo/bar/baz.html is a subpath of of /foo");
     STAssertTrue([@"/foo/bar/baz.html" ks_isSubpathOfPath:@"/foo/"], @"/foo/bar/baz.html is a subpath of of /foo/");
+    STAssertFalse([@"/foo/bar/baz.html" ks_isSubpathOfPath:@"/fo"], nil);
 }
 
 - (void)testStringByIncrementingPath;
