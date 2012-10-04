@@ -175,6 +175,20 @@
     // Scheme and host should be case insensitive
     STAssertTrue([URL(@"HTtp://example.com/foo/bar/baz.html") ks_isSubpathOfURL:URL(@"hTtP://example.com/foo/")], nil);
     STAssertTrue([URL(@"http://eXaMPle.COm/foo/bar/baz.html") ks_isSubpathOfURL:URL(@"http://ExamPle.cOm/foo/")], nil);
+    
+    // Treat items as being subpaths of themselves
+    STAssertTrue([URL(@"http://example.com/foo/bar/baz.html") ks_isSubpathOfURL:URL(@"http://example.com/foo/bar/baz.html")], nil);
+    STAssertTrue([URL(@"http://example.com/foo/bar/baz.html/") ks_isSubpathOfURL:URL(@"http://example.com/foo/bar/baz.html")], nil);
+    STAssertTrue([URL(@"http://example.com/foo/bar/baz.html") ks_isSubpathOfURL:URL(@"http://example.com/foo/bar/baz.html/")], nil);
+    STAssertTrue([URL(@"http://example.com/foo/bar/baz.html/") ks_isSubpathOfURL:URL(@"http://example.com/foo/bar/baz.html/")], nil);
+    STAssertTrue([URL(@"http://example.com/foo") ks_isSubpathOfURL:URL(@"http://example.com/foo")], nil);
+    STAssertTrue([URL(@"http://example.com/foo/") ks_isSubpathOfURL:URL(@"http://example.com/foo")], nil);
+    STAssertTrue([URL(@"http://example.com/foo") ks_isSubpathOfURL:URL(@"http://example.com/foo/")], nil);
+    STAssertTrue([URL(@"http://example.com/foo/") ks_isSubpathOfURL:URL(@"http://example.com/foo/")], nil);
+    STAssertTrue([URL(@"http://example.com") ks_isSubpathOfURL:URL(@"http://example.com")], nil);
+    STAssertTrue([URL(@"http://example.com/") ks_isSubpathOfURL:URL(@"http://example.com")], nil);
+    STAssertTrue([URL(@"http://example.com") ks_isSubpathOfURL:URL(@"http://example.com/")], nil);
+    STAssertTrue([URL(@"http://example.com/") ks_isSubpathOfURL:URL(@"http://example.com/")], nil);
 }
 
 @end
