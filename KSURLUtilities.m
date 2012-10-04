@@ -206,7 +206,7 @@
         {
             NSString *myHost = [self host];
             NSString *otherHost = [aURL host];
-            if (myHost && otherHost && [myHost isEqualToString:otherHost])
+            if (myHost && otherHost && [myHost compare:otherHost options:NSCaseInsensitiveSearch] == NSOrderedSame)
             {
                 NSString *myPath = [[self standardizedURL] path];
                 NSString *otherPath = [[aURL standardizedURL] path];
