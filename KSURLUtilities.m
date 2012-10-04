@@ -202,7 +202,7 @@
     {
         NSString *scheme = [self scheme];
         NSString *otherScheme = [aURL scheme];
-        if (scheme && otherScheme && [scheme isEqualToString:otherScheme])
+        if (scheme && otherScheme && [scheme compare:otherScheme options:NSCaseInsensitiveSearch] == NSOrderedSame)
         {
             NSString *myHost = [self host];
             NSString *otherHost = [aURL host];
