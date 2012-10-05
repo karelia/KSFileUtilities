@@ -150,6 +150,11 @@
 {
     STAssertEqualObjects([URL(@"http://example.com") ks_URLWithHost:@"test.net"], URL(@"http://test.net"), nil);
     STAssertEqualObjects([URL(@"http://example.com/") ks_URLWithHost:@"test.net"], URL(@"http://test.net/"), nil);
+
+    STAssertEqualObjects([URL(@"file:///example.png") ks_URLWithHost:@"example.com"], URL(@"file://example.com/example.png"), nil);
+    STAssertEqualObjects([URL(@"file:///") ks_URLWithHost:@"example.com"], URL(@"file://example.com/"), nil);
+    STAssertEqualObjects([URL(@"test:///example.png") ks_URLWithHost:@"example.com"], URL(@"test://example.com/example.png"), nil);
+    STAssertEqualObjects([URL(@"test:///") ks_URLWithHost:@"example.com"], URL(@"test://example.com/"), nil);
 }
 
 - (void)testURLHasDirectoryPath;

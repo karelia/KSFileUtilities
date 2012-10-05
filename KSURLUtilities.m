@@ -84,6 +84,13 @@
     CFURLRef absolute = CFURLCopyAbsoluteURL((CFURLRef)self);
     CFRange range = CFURLGetByteRangeForComponent(absolute, kCFURLComponentHost, NULL);
     
+    // file:/// type URLs have no host, but can be handled by inserting host before start of path
+    if (range.location == kCFNotFound)
+    {
+        range = CFURLGetByteRangeForComponent(absolute, kCFURLComponentPath, NULL);
+        range.length = 0;
+    }
+    
     if (range.location != kCFNotFound)
     {
         // Grab data
