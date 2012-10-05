@@ -76,6 +76,36 @@
 	return result;
 }
 
+- (NSURL *)ks_URLWithHost:(NSString *)host;
+{
+    NSParameterAssert(host);
+    
+    NSURL *result = nil;
+    CFURLRef absolute = CFURLCopyAbsoluteURL((CFURLRef)self);
+    CFRange range = CFURLGetByteRangeForComponent(absolute, kCFURLComponentHost, NULL);
+    
+    if (range.location != kCFNotFound)
+    {
+        // Grab data
+        CFIndex length = CFURLGetBytes(absolute, NULL, 0);
+        NSMutableData *data = [[NSMutableData alloc] initWithLength:length];
+        length = CFURLGetBytes(absolute, [data mutableBytes], [data length]);
+        NSAssert(length == [data length], @"CFURLGetBytes() lied to us!");
+        
+        // Replace the host
+        NSData *hostData = [host dataUsingEncoding:NSASCIIStringEncoding];
+        [data replaceBytesInRange:NSMakeRange(range.location, range.length) withBytes:[hostData bytes] length:[hostData length]];
+        
+        // Create final URL
+        result = NSMakeCollectable(CFURLCreateWithBytes(NULL, [data bytes], [data length], kCFStringEncodingASCII, NULL));
+        [result autorelease];
+        [data release];
+    }
+    
+    CFRelease(absolute);
+    return result;
+}
+
 #pragma mark Paths
 
 /*	These two methods operate very similarly to -initWithString:relativeToURL:

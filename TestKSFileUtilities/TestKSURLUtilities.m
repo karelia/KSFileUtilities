@@ -146,6 +146,12 @@
     [self checkURL:URL(@"") relativeToURL:URL(@"http://example.com/foo/") againstExpectedResult:@""];
 }
 
+- (void)testHostSwapping;
+{
+    STAssertEqualObjects([URL(@"http://example.com") ks_URLWithHost:@"test.net"], URL(@"http://test.net"), nil);
+    STAssertEqualObjects([URL(@"http://example.com/") ks_URLWithHost:@"test.net"], URL(@"http://test.net/"), nil);
+}
+
 - (void)testURLHasDirectoryPath;
 {
     STAssertFalse([[NSURL URLWithString:@"http://example.com/foo"] ks_hasDirectoryPath], @"No trailing slash");
