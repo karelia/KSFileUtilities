@@ -153,8 +153,12 @@
 
     STAssertEqualObjects([URL(@"file:///example.png") ks_URLWithHost:@"example.com"], URL(@"file://example.com/example.png"), nil);
     STAssertEqualObjects([URL(@"file:///") ks_URLWithHost:@"example.com"], URL(@"file://example.com/"), nil);
-    STAssertEqualObjects([URL(@"test:///example.png") ks_URLWithHost:@"example.com"], URL(@"test://example.com/example.png"), nil);
-    STAssertEqualObjects([URL(@"test:///") ks_URLWithHost:@"example.com"], URL(@"test://example.com/"), nil);
+    STAssertEqualObjects([URL(@"test:///example.png#fragment") ks_URLWithHost:@"example.com"], URL(@"test://example.com/example.png#fragment"), nil);
+    STAssertEqualObjects([URL(@"test:///#fragment") ks_URLWithHost:@"example.com"], URL(@"test://example.com/#fragment"), nil);
+
+    STAssertEqualObjects([URL(@"test://") ks_URLWithHost:@"example.com"], URL(@"test://example.com"), nil);
+    STAssertEqualObjects([URL(@"test://#fragment") ks_URLWithHost:@"example.com"], URL(@"test://example.com#fragment"), nil);
+    STAssertEqualObjects([URL(@"test://joe@:1234#fragment") ks_URLWithHost:@"example.com"], URL(@"test://joe@example.com:1234#fragment"), nil);
 }
 
 - (void)testURLHasDirectoryPath;
