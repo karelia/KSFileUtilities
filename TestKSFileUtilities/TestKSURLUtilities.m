@@ -159,6 +159,9 @@
     STAssertEqualObjects([URL(@"test://") ks_URLWithHost:@"example.com"], URL(@"test://example.com"), nil);
     STAssertEqualObjects([URL(@"test://#fragment") ks_URLWithHost:@"example.com"], URL(@"test://example.com#fragment"), nil);
     STAssertEqualObjects([URL(@"test://joe@:1234#fragment") ks_URLWithHost:@"example.com"], URL(@"test://joe@example.com:1234#fragment"), nil);
+
+    // I'm not convinced about this one. The URL test:example.com/ doesn't recognise example.com as the host
+    STAssertEqualObjects([URL(@"test:/") ks_URLWithHost:@"example.com"], URL(@"test:example.com/"), nil);
 }
 
 - (void)testURLHasDirectoryPath;
