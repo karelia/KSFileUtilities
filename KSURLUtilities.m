@@ -82,13 +82,14 @@
     
     NSURL *result = nil;
     CFURLRef absolute = CFURLCopyAbsoluteURL((CFURLRef)self);
-    CFRange range = CFURLGetByteRangeForComponent(absolute, kCFURLComponentHost, NULL);
     
-    // file:/// type URLs have no host, but can be handled by inserting host before start of path
+    CFRange rangeIncludingSeparators;
+    CFRange range = CFURLGetByteRangeForComponent(absolute, kCFURLComponentHost, &rangeIncludingSeparators);
+    
+    // If there isn't an existing hostname, CFURL helpfully tells us where it would go
     if (range.location == kCFNotFound)
     {
-        range = CFURLGetByteRangeForComponent(absolute, kCFURLComponentPath, NULL);
-        range.length = 0;
+        range = rangeIncludingSeparators;
     }
     
     if (range.location != kCFNotFound)
