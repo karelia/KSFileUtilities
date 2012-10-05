@@ -37,6 +37,7 @@
 - (NSURL *)ks_hostURL;
 - (NSArray *)ks_domains;
 - (BOOL)ks_hasNetworkLocation; // checks for a host with 2+ domains
+- (NSURL *)ks_URLWithHost:(NSString *)host; // swaps out host for a new one
 
 
 #pragma mark Paths
