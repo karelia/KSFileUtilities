@@ -92,6 +92,10 @@
 - (void)ks_accessSecurityScopedResourceUsingBlock:(void (^)(BOOL started))block;
 
 
+#pragma mark Components
+- (NSURL *)ks_URLByReplacingComponent:(CFURLComponentType)component withString:(NSString *)string;
+
+
 @end
 
 

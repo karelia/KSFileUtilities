@@ -54,7 +54,8 @@
 
 - (NSURL *)ks_hostURL;		// returns a URL like "http://launch.karelia.com/"
 {
-	NSURL *result = [[NSURL URLWithString:@"/" relativeToURL:self] absoluteURL];
+    // TODO: maintains anything after the path like fragments or queries. That's probably not ideal, so instead just take a substring up to the start of the path
+	NSURL *result = [self ks_URLByReplacingComponent:kCFURLComponentPath withString:@"/"];
     return result;
 }
 
@@ -78,32 +79,7 @@
 
 - (NSURL *)ks_URLWithHost:(NSString *)host;
 {
-    NSParameterAssert(host);
-    
-    NSURL *result = nil;
-    CFURLRef absolute = CFURLCopyAbsoluteURL((CFURLRef)self);
-    CFRange range = CFURLGetByteRangeForComponent(absolute, kCFURLComponentHost, NULL);
-    
-    if (range.location != kCFNotFound)
-    {
-        // Grab data
-        CFIndex length = CFURLGetBytes(absolute, NULL, 0);
-        NSMutableData *data = [[NSMutableData alloc] initWithLength:length];
-        length = CFURLGetBytes(absolute, [data mutableBytes], [data length]);
-        NSAssert(length == [data length], @"CFURLGetBytes() lied to us!");
-        
-        // Replace the host
-        NSData *hostData = [host dataUsingEncoding:NSASCIIStringEncoding];
-        [data replaceBytesInRange:NSMakeRange(range.location, range.length) withBytes:[hostData bytes] length:[hostData length]];
-        
-        // Create final URL
-        result = NSMakeCollectable(CFURLCreateWithBytes(NULL, [data bytes], [data length], kCFStringEncodingASCII, NULL));
-        [result autorelease];
-        [data release];
-    }
-    
-    CFRelease(absolute);
-    return result;
+    return [self ks_URLByReplacingComponent:kCFURLComponentHost withString:host];
 }
 
 #pragma mark Paths
@@ -129,6 +105,9 @@
 		}
 	}
 	
+    // Work around 10.6 bug by effectively "faulting in" the base URL
+    if ([path isAbsolutePath] && [baseURL isFileURL]) [baseURL absoluteString];
+    
 	return [self URLWithString:URLString relativeToURL:baseURL];
 }
 
@@ -388,6 +367,7 @@
 	NSString *relativeString = [self ks_stringRelativeToURL:URL];
 	if (relativeString)
 	{
+        // The 10.6 file URL bug can't kick in here because -ks_stringRelativeToURL: will have done enough to "fault it in"
 		result = [NSURL URLWithString:relativeString relativeToURL:URL];
 	}
 	
@@ -460,6 +440,46 @@
     {
         if (started) [self stopAccessingSecurityScopedResource];
     }
+}
+
+#pragma mark Components
+
+- (NSURL *)ks_URLByReplacingComponent:(CFURLComponentType)component withString:(NSString *)string;
+{
+    NSParameterAssert(string);
+    
+    NSURL *result = nil;
+    CFURLRef absolute = CFURLCopyAbsoluteURL((CFURLRef)self);
+    
+    CFRange rangeIncludingSeparators;
+    CFRange range = CFURLGetByteRangeForComponent(absolute, component, &rangeIncludingSeparators);
+    
+    // If there isn't an existing hostname, CFURL helpfully tells us where it would go
+    if (range.location == kCFNotFound)
+    {
+        range = rangeIncludingSeparators;
+    }
+    
+    if (range.location != kCFNotFound)
+    {
+        // Grab data
+        CFIndex length = CFURLGetBytes(absolute, NULL, 0);
+        NSMutableData *data = [[NSMutableData alloc] initWithLength:length];
+        length = CFURLGetBytes(absolute, [data mutableBytes], [data length]);
+        NSAssert(length == [data length], @"CFURLGetBytes() lied to us!");
+        
+        // Replace the host
+        NSData *hostData = [string dataUsingEncoding:NSASCIIStringEncoding];
+        [data replaceBytesInRange:NSMakeRange(range.location, range.length) withBytes:[hostData bytes] length:[hostData length]];
+        
+        // Create final URL
+        result = NSMakeCollectable(CFURLCreateWithBytes(NULL, [data bytes], [data length], kCFStringEncodingASCII, NULL));
+        [result autorelease];
+        [data release];
+    }
+    
+    CFRelease(absolute);
+    return result;
 }
 
 @end
