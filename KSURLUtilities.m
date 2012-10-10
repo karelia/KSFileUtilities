@@ -54,7 +54,8 @@
 
 - (NSURL *)ks_hostURL;		// returns a URL like "http://launch.karelia.com/"
 {
-	NSURL *result = [[NSURL URLWithString:@"/" relativeToURL:self] absoluteURL];
+    // TODO: maintains anything after the path like fragments or queries. That's probably not ideal, so instead just take a substring up to the start of the path
+	NSURL *result = [self ks_URLByReplacingComponent:kCFURLComponentPath withString:@"/"];
     return result;
 }
 
