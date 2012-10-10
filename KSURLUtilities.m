@@ -78,40 +78,7 @@
 
 - (NSURL *)ks_URLWithHost:(NSString *)host;
 {
-    NSParameterAssert(host);
-    
-    NSURL *result = nil;
-    CFURLRef absolute = CFURLCopyAbsoluteURL((CFURLRef)self);
-    
-    CFRange rangeIncludingSeparators;
-    CFRange range = CFURLGetByteRangeForComponent(absolute, kCFURLComponentHost, &rangeIncludingSeparators);
-    
-    // If there isn't an existing hostname, CFURL helpfully tells us where it would go
-    if (range.location == kCFNotFound)
-    {
-        range = rangeIncludingSeparators;
-    }
-    
-    if (range.location != kCFNotFound)
-    {
-        // Grab data
-        CFIndex length = CFURLGetBytes(absolute, NULL, 0);
-        NSMutableData *data = [[NSMutableData alloc] initWithLength:length];
-        length = CFURLGetBytes(absolute, [data mutableBytes], [data length]);
-        NSAssert(length == [data length], @"CFURLGetBytes() lied to us!");
-        
-        // Replace the host
-        NSData *hostData = [host dataUsingEncoding:NSASCIIStringEncoding];
-        [data replaceBytesInRange:NSMakeRange(range.location, range.length) withBytes:[hostData bytes] length:[hostData length]];
-        
-        // Create final URL
-        result = NSMakeCollectable(CFURLCreateWithBytes(NULL, [data bytes], [data length], kCFStringEncodingASCII, NULL));
-        [result autorelease];
-        [data release];
-    }
-    
-    CFRelease(absolute);
-    return result;
+    return [self ks_URLByReplacingComponent:kCFURLComponentHost withString:host];
 }
 
 #pragma mark Paths
@@ -443,6 +410,46 @@
 	( ([self user] == [anotherURL user]) || [[self user] isEqual:[anotherURL user]] )
 	;
 	
+}
+
+#pragma mark Components
+
+- (NSURL *)ks_URLByReplacingComponent:(CFURLComponentType)component withString:(NSString *)string;
+{
+    NSParameterAssert(string);
+    
+    NSURL *result = nil;
+    CFURLRef absolute = CFURLCopyAbsoluteURL((CFURLRef)self);
+    
+    CFRange rangeIncludingSeparators;
+    CFRange range = CFURLGetByteRangeForComponent(absolute, component, &rangeIncludingSeparators);
+    
+    // If there isn't an existing hostname, CFURL helpfully tells us where it would go
+    if (range.location == kCFNotFound)
+    {
+        range = rangeIncludingSeparators;
+    }
+    
+    if (range.location != kCFNotFound)
+    {
+        // Grab data
+        CFIndex length = CFURLGetBytes(absolute, NULL, 0);
+        NSMutableData *data = [[NSMutableData alloc] initWithLength:length];
+        length = CFURLGetBytes(absolute, [data mutableBytes], [data length]);
+        NSAssert(length == [data length], @"CFURLGetBytes() lied to us!");
+        
+        // Replace the host
+        NSData *hostData = [string dataUsingEncoding:NSASCIIStringEncoding];
+        [data replaceBytesInRange:NSMakeRange(range.location, range.length) withBytes:[hostData bytes] length:[hostData length]];
+        
+        // Create final URL
+        result = NSMakeCollectable(CFURLCreateWithBytes(NULL, [data bytes], [data length], kCFStringEncodingASCII, NULL));
+        [result autorelease];
+        [data release];
+    }
+    
+    CFRelease(absolute);
+    return result;
 }
 
 @end

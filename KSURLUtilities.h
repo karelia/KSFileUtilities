@@ -84,6 +84,10 @@
 - (NSURL *)ks_URLRelativeToURL:(NSURL *)URL;
 
 
+#pragma mark Components
+- (NSURL *)ks_URLByReplacingComponent:(CFURLComponentType)component withString:(NSString *)string;
+
+
 @end
 
 
