@@ -105,6 +105,9 @@
 		}
 	}
 	
+    // Work around 10.6 bug by effectively "faulting in" the base URL
+    if ([path isAbsolutePath] && [baseURL isFileURL]) [baseURL absoluteString];
+    
 	return [self URLWithString:URLString relativeToURL:baseURL];
 }
 
@@ -359,6 +362,7 @@
 	NSString *relativeString = [self ks_stringRelativeToURL:URL];
 	if (relativeString)
 	{
+        // The 10.6 file URL bug can't kick in here because -ks_stringRelativeToURL: will have done enough to "fault it in"
 		result = [NSURL URLWithString:relativeString relativeToURL:URL];
 	}
 	
