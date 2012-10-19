@@ -83,6 +83,12 @@
 
 @synthesize fileURL = _fileURL;
 
+- (id)copyWithZone:(NSZone *)zone;
+{
+    // Immutable
+    return [self retain];
+}
+
 @end
 
 

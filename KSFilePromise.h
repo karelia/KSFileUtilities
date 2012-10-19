@@ -12,7 +12,7 @@
 @class KSFilePromiseDestination;
 
 
-@interface KSFilePromise : NSObject
+@interface KSFilePromise : NSObject <NSCopying>
 {
   @private
     NSURL                       *_fileURL;
