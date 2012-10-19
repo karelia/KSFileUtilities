@@ -53,7 +53,7 @@
     
     if (self = [self init])
     {
-        _fileURL = [[destination destinationURL] URLByAppendingPathComponent:name];
+        _fileURL = [[[destination destinationURL] URLByAppendingPathComponent:name] copy];
         _destination = [destination retain];    // when last promise for this destination is dealloced, so will the destination be
         
         // Could also disable sudden termination until file is dealt with, but if associated with a document that now has unsaved changes, that itself does the same job, so there should be no need
