@@ -101,9 +101,24 @@
     {
         NSURL *docURL = [doc fileURL];
         if (!docURL) docURL = [doc autosavedContentsFileURL];
-        if (!docURL) docURL = [NSURL fileURLWithPath:@"/" isDirectory:YES]; // FIXME: Root dir seems an odd choice for fallback
         
         NSError *error;
+        if (!docURL)
+        {
+            // For completely unsaved docs, chances are they'll be going into NSAutosavedInformationDirectory next
+            docURL = [[NSFileManager defaultManager] URLForDirectory:NSAutosavedInformationDirectory
+                                                            inDomain:NSUserDomainMask
+                                                   appropriateForURL:nil
+                                                              create:NO
+                                                               error:&error];
+            
+            if (!docURL)
+            {
+                NSLog(@"Failed to retrieve autosave directory's lcoation: %@", error);
+                docURL = [NSURL fileURLWithPath:NSHomeDirectory() isDirectory:YES];
+            }
+        }
+        
         _destinationURL = [[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory
                                                                  inDomain:NSUserDomainMask
                                                         appropriateForURL:docURL
