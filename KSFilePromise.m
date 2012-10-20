@@ -8,6 +8,8 @@
 
 #import "KSFilePromise.h"
 
+#import "KSUniformType.h"
+
 
 @interface KSFilePromiseDestination : NSObject
 {
@@ -25,6 +27,8 @@
 
 
 @implementation KSFilePromise
+
+#pragma mark Lifecycle
 
 + (NSArray *)promisesFromDraggingInfo:(id<NSDraggingInfo>)info forDocument:(NSDocument *)doc;
 {
@@ -79,7 +83,30 @@
     [super dealloc];
 }
 
+#pragma mark Pasteboard Introspection
+
++ (BOOL)canReadFilePromiseConformingToTypes:(NSArray *)types fromPasteboard:(NSPasteboard *)pasteboard;
+{
+    if ([pasteboard canReadItemWithDataConformingToTypes:[NSArray arrayWithObject:(NSString *)kPasteboardTypeFilePromiseContent]])
+    {
+        for (NSPasteboardItem *anItem in [pasteboard pasteboardItems])
+        {
+            NSString *type = [anItem stringForType:(NSString *)kPasteboardTypeFilePromiseContent];
+            if ([KSUniformType type:type conformsToOneOfTypes:types])
+            {
+                return YES;
+            }
+        }
+    }
+    
+    return NO;
+}
+
+#pragma mark Properties
+
 @synthesize fileURL = _fileURL;
+
+#pragma mark NSCopying
 
 - (id)copyWithZone:(NSZone *)zone;
 {

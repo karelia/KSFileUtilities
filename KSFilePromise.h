@@ -27,6 +27,8 @@
 // Do NOT attempt to alloc/init KSFilePromise instances yourself
 + (NSArray *)promisesFromDraggingInfo:(id <NSDraggingInfo>)info forDocument:(NSDocument *)doc;
 
++ (BOOL)canReadFilePromiseConformingToTypes:(NSArray *)types fromPasteboard:(NSPasteboard *)pasteboard;
+
 @property(nonatomic, readonly) NSURL *fileURL;
 
 @end
