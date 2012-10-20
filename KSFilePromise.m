@@ -114,6 +114,11 @@
         {
             _destinationURL = [_destinationURL copy];
             [[NSProcessInfo processInfo] disableSuddenTermination];
+            
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(appWillTerminate:)
+                                                         name:NSApplicationWillTerminateNotification
+                                                       object:NSApp];
         }
         else
         {
@@ -124,23 +129,37 @@
     return self;
 }
 
+- (void)close;
+{
+    if ([self destinationURL])
+    {
+        // Cleanup the directory
+        NSFileManager *manager = [[NSFileManager alloc] init];
+        
+        NSError *error;
+        if (![manager removeItemAtURL:[self destinationURL] error:&error])
+        {
+            NSLog(@"File promise temp directory deletion failed: %@", error);
+        }
+        
+        [manager release];
+        [[NSProcessInfo processInfo] enableSuddenTermination];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSApplicationWillTerminateNotification object:NSApp];
+        [_destinationURL release]; _destinationURL = nil;
+    }
+}
+
 - (void)dealloc;
 {
-    // Cleanup the directory
-    NSFileManager *manager = [[NSFileManager alloc] init];
-    
-    NSError *error;
-    if (![manager removeItemAtURL:[self destinationURL] error:&error])
-    {
-        NSLog(@"File promise temp directory deletion failed: %@", error);
-    }
-    
-    [manager release];
-    [[NSProcessInfo processInfo] enableSuddenTermination];
-    
+    [self close];
     [super dealloc];
 }
 
 @synthesize destinationURL = _destinationURL;
+
+- (void)appWillTerminate:(NSNotification *)notification;
+{
+    [self close];
+}
 
 @end
