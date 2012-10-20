@@ -22,6 +22,7 @@
 // Loads file promises from the drag info
 // Underlying file is automatically deleted when KSFilePromise instance is deallocated
 // The document is used to generate a temporary directory to place the files in
+// Sudden termination is disabled for as long as any promises are in existence. An unsaved doc also has this effect, but unless saving the doc immediately disposes of the promises, there's some overlap time where KSFilePromise needs to keep sudden termination disabled
 // Do NOT attempt to alloc/init KSFilePromise instances yourself
 + (NSArray *)promisesFromDraggingInfo:(id <NSDraggingInfo>)info forDocument:(NSDocument *)doc;
 
