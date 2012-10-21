@@ -105,6 +105,11 @@ On occasion there is a need to try to find the best available filename/path for 
 
 More information on the implementation and use of this method is on [Mike's blog](http://www.mikeabdullah.net/incrementing-paths.html)
 
+KSFilePromise
+=============
+
+Simplifies handling file promises from drag & drop in a document-based application. KSFilePromise instances are created from NSDraggingInfo, and take responsibility for management of the received file.
+
 KSWebLocation
 =============
 
