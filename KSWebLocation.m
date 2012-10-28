@@ -32,12 +32,12 @@
 
 @implementation KSWebLocation
 
-+ (id)webLocationWithURL:(NSURL *)URL;
++ (instancetype)webLocationWithURL:(NSURL *)URL;
 {
     return [self webLocationWithURL:URL title:nil];
 }
 
-+ (id)webLocationWithURL:(NSURL *)URL title:(NSString *)title
++ (instancetype)webLocationWithURL:(NSURL *)URL title:(NSString *)title
 {
 	return [[[self alloc] initWithURL:URL title:title] autorelease];
 }
@@ -219,7 +219,7 @@
 
 @implementation KSWebLocation (WeblocFiles)
 
-+ (id)webLocationWithContentsOfWeblocFile:(NSURL *)weblocURL
++ (instancetype)webLocationWithContentsOfWeblocFile:(NSURL *)weblocURL
 {
 	return [[[self alloc] initWithContentsOfWeblocFile:weblocURL] autorelease];
 }

@@ -29,9 +29,9 @@
 
 #pragma mark Creating a KSUniformType Instance
 
-+ (id)uniformTypeWithFilenameExtension:(NSString *)extension;
-+ (id)bestGuessUniformTypeForURL:(NSURL *)url;
-+ (id)uniformTypeWithIdentifier:(NSString *)identifier; // lenient and handles nil identifier by returning nil
++ (instancetype)uniformTypeWithFilenameExtension:(NSString *)extension;
++ (instancetype)bestGuessUniformTypeForURL:(NSURL *)url;
++ (instancetype)uniformTypeWithIdentifier:(NSString *)identifier; // lenient and handles nil identifier by returning nil
 
 // KSUniformType returns the right to return nil should the identifier be unsuitable (a la NSURL). This doesn't happen at present though
 // Designated initializer
