@@ -67,20 +67,32 @@
 - (void)dealloc;
 {
     // Delete underlying file
-    NSFileManager *manager = [[NSFileManager alloc] init];
+    [[self class] tryToDeleteFilePromiseURL:[self fileURL] destination:_destination retryInterval:2];
     
-    NSError *error;
-    if (![manager removeItemAtURL:[self fileURL] error:&error])
-    {
-        NSLog(@"File promise deletion failed: %@", error);
-    }
-    
-    [manager release];
     [_fileURL release];
-    
     [_destination release]; // if we were last reference to it, the directory is automatically deleted
     
     [super dealloc];
+}
+
++ (void)tryToDeleteFilePromiseURL:(NSURL *)url destination:(KSFilePromiseDestination *)destination retryInterval:(int64_t)delayInSeconds;
+{
+    NSFileManager *manager = [[NSFileManager alloc] init];
+    
+    NSError *error;
+    if (![manager removeItemAtURL:url error:&error])
+    {
+        NSLog(@"File promise deletion failed: %@", error);
+        NSLog(@"Maybe the file hasn't arrived yet, or will become removable soon. Retrying later");
+        
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
+            [self tryToDeleteFilePromiseURL:url
+                                destination:destination
+                              retryInterval:(2 * delayInSeconds)];    // keep extending to minimise interruptions
+        });
+    }
 }
 
 #pragma mark Pasteboard Introspection
