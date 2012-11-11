@@ -333,7 +333,7 @@ static NSValueTransformer *_transformer;
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _transformer = [[NSValueTransformer valueTransformerForName:@"KSEncodeIDN"] retain];
+        _transformer = [[NSValueTransformer valueTransformerForName:@"KSEncodeURLString"] retain];
     });
     
     return _transformer;

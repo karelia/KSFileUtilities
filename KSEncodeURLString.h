@@ -1,5 +1,5 @@
 //
-//  KSEncodeIDN.h
+//  KSEncodeURLString
 //  Sandvox
 //
 //  Created by Mike on 10/11/2012.
@@ -12,6 +12,6 @@
 #import <WebKit/WebKit.h>
 
 
-@interface KSEncodeIDN : NSValueTransformer
+@interface KSEncodeURLString : NSValueTransformer
 
 @end

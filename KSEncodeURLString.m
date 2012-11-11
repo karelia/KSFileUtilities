@@ -1,15 +1,15 @@
 //
-//  KSEncodeIDN.m
+//  KSEncodeURLString
 //  Sandvox
 //
 //  Created by Mike on 10/11/2012.
 //  Copyright (c) 2012 Karelia Software. All rights reserved.
 //
 
-#import "KSEncodeIDN.h"
+#import "KSEncodeURLString.h"
 
 
-@implementation KSEncodeIDN
+@implementation KSEncodeURLString
 
 + (Class)transformedValueClass { return [NSURL class]; }
 
