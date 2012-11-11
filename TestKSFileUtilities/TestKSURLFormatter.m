@@ -58,6 +58,8 @@
 - (void)testInternationalizedDomainName
 {
     [self testAllowedSchemesWithString:@"http://exämple.com" expectedURLString:@"http://xn--exmple-cua.com/"];
+    [self testAllowedSchemesWithString:@"exämple.com" expectedURLString:@"http://xn--exmple-cua.com/"];
+    [self testAllowedSchemesWithString:@"exämple" expectedURLString:@"http://xn--exmple-cua.com/"];
 }
 
 - (void)testDoubleFragment;
