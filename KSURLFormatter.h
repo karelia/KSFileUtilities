@@ -69,8 +69,15 @@
 
 
 #pragma mark Conversion
+
 - (NSURL *)URLFromString:(NSString *)string;    // convenience
 @property(nonatomic) BOOL generatesURLStrings;  // defaults to NO, so that NSURL objects are generated
+
+// For optimum behaviour, KSURLFormatter can hand off to a value transformer for the basic string => URL transformation
+// By default, KSEncodeURLString is used *if available* (i.e. you need to compile it into your app and link against WebKit, or provide your own of the same name)
+// If you supply a custom transformer it must accept strings as input, and output URLs. It should return anything that can't be clearly interpreted as a full URL. e.g. @"example.com" should come back as nil for the formatter to handle
++ (NSValueTransformer *)encodeStringValueTransformer;
++ (void)setEncodeStringValueTransformer:(NSValueTransformer *)transformer;
 
 
 @end

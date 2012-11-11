@@ -29,6 +29,12 @@ An `NSFormatter` subclass for a variety of URL display and input tasks.
 - Host URLs have a slash appended to them. e.g. `http://example.com` is displayed/interpreted as `http://example.com/`
 - Convenience `+URLFromString:` method that takes care of unescaped characters
 
+`KSURLFormatter` can handle Internationalized Domain Names if it has a suitable backend. For Mac OS X projects, you can include `KSEncodeURLString.*` and link against `WebKit.framework` to get this for free. For other projects, supply your own by one of:
+
+* Call `+[KSURLFormatter setEncodeStringValueTransformer:]`
+* Call `+[NSValueTransformer setValueTransformer:forName:]` before `+encodeStringValueTransformer` is called
+* Name your custom class `KSEncodeURLString`
+
 URL Normalization
 =================
 
