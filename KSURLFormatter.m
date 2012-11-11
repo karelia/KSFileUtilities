@@ -74,8 +74,6 @@
     return result;
 }
 
-#pragma mark Mailto URLs
-
 + (BOOL)isValidEmailAddress:(NSString *)address;
 {
     // for now, just validate that syntactically it it at least _@_.__

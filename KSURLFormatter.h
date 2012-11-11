@@ -48,8 +48,6 @@
  "*/
 + (NSURL *)URLFromString:(NSString *)string;
 
-
-#pragma mark Mailto URLs
 + (BOOL)isValidEmailAddress:(NSString *)address;
 + (BOOL)isLikelyEmailAddress:(NSString *)address;   // much the same as above, but ignores some rarities
 
