@@ -48,6 +48,14 @@
  "*/
 + (NSURL *)URLFromString:(NSString *)string;
 
+
+#pragma mark Internationalized Domain Names
+// By default, KSEncodeIDN is used if available. If you supply a custom transformer it must accept strings as input, and output URLs
++ (NSValueTransformer *)IDNValueTransformer;
++ (void)setIDNValueTransformer:(NSValueTransformer *)transformer;
+
+
+#pragma mark Mailto URLs
 + (BOOL)isValidEmailAddress:(NSString *)address;
 + (BOOL)isLikelyEmailAddress:(NSString *)address;   // much the same as above, but ignores some rarities
 

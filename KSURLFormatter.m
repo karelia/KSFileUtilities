@@ -36,6 +36,10 @@
 
 + (NSURL *)URLFromString:(NSString *)string;
 {
+    // Hand off to the value transformer
+    NSURL *result = [[self IDNValueTransformer] transformedValue:string];
+    if (result) return result;
+    
     // Encode the URL string
     CFStringRef escapedString = CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                         (CFStringRef)string,
@@ -45,7 +49,7 @@
     
     
     // If we're still left with a valid string, turn it into a URL
-    NSURL *result = nil;
+    result = nil;
     if (escapedString)
     {
         // Any hashes after first # needs to be escaped. e.g. Apple's dev docs hand out URLs like this
@@ -73,6 +77,35 @@
     
     return result;
 }
+
+#pragma mark Internationalized Domain Names
+
+static NSValueTransformer *_transformer;
+
++ (NSValueTransformer *)IDNValueTransformer;    // by default uses KSEncodeIDN if available
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _transformer = [[NSValueTransformer valueTransformerForName:@"KSEncodeIDN"] retain];
+    });
+    
+    return _transformer;
+}
+
++ (void)setIDNValueTransformer:(NSValueTransformer *)transformer;
+{
+    [self IDNValueTransformer]; // ensure initial search has run
+    
+    if (transformer != _transformer);
+    [_transformer release]; _transformer = [transformer retain];
+    
+    if (![[[transformer class] transformedValueClass] isSubclassOfClass:[NSURL class]])
+    {
+        NSLog(@"Internationalized Domain Name value transformer appears not to output URLs");
+    }
+}
+
+#pragma mark Mailto URLs
 
 + (BOOL)isValidEmailAddress:(NSString *)address;
 {
