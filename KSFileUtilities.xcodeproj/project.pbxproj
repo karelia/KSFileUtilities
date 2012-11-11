@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		27A60C0E1536E7F500EEE538 /* TestKSURLFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60C0D1536E7F500EEE538 /* TestKSURLFormatter.m */; };
 		27DA2577148E641100209E50 /* TestKSURLUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DA2576148E641100209E50 /* TestKSURLUtilities.m */; };
+		27F86FBF164FBA9D003608CC /* KSEncodeURLString.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F86FBE164FBA9D003608CC /* KSEncodeURLString.m */; };
 		801978D514FEDE0B008F41E3 /* TestKSURLNormalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 801978D414FEDE0B008F41E3 /* TestKSURLNormalization.m */; };
 		801978D914FEDE26008F41E3 /* KSURLNormalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 801978D714FEDE26008F41E3 /* KSURLNormalization.m */; };
 		EE0F59A313897980006045D3 /* KSPathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EE0F599713897980006045D3 /* KSPathUtilities.m */; };
@@ -28,6 +29,8 @@
 		27A60C0C1536E7F500EEE538 /* TestKSURLFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestKSURLFormatter.h; sourceTree = "<group>"; };
 		27A60C0D1536E7F500EEE538 /* TestKSURLFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSURLFormatter.m; sourceTree = "<group>"; };
 		27DA2576148E641100209E50 /* TestKSURLUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSURLUtilities.m; sourceTree = "<group>"; };
+		27F86FBD164FBA9D003608CC /* KSEncodeURLString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSEncodeURLString.h; sourceTree = SOURCE_ROOT; };
+		27F86FBE164FBA9D003608CC /* KSEncodeURLString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSEncodeURLString.m; sourceTree = SOURCE_ROOT; };
 		801978D414FEDE0B008F41E3 /* TestKSURLNormalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSURLNormalization.m; sourceTree = "<group>"; };
 		801978D614FEDE26008F41E3 /* KSURLNormalization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLNormalization.h; sourceTree = SOURCE_ROOT; };
 		801978D714FEDE26008F41E3 /* KSURLNormalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSURLNormalization.m; sourceTree = SOURCE_ROOT; };
@@ -75,6 +78,8 @@
 				EE43C84413898D7B008ABD16 /* KSFileWrapperExtensions.m */,
 				EE43C84513898D7B008ABD16 /* KSURLFormatter.h */,
 				EE43C84613898D7B008ABD16 /* KSURLFormatter.m */,
+				27F86FBD164FBA9D003608CC /* KSEncodeURLString.h */,
+				27F86FBE164FBA9D003608CC /* KSEncodeURLString.m */,
 				EE43C84713898D7B008ABD16 /* KSURLUtilities.h */,
 				EE43C84813898D7B008ABD16 /* KSURLUtilities.m */,
 				EE43C84913898D7B008ABD16 /* KSWebLocation.h */,
@@ -244,6 +249,7 @@
 				801978D514FEDE0B008F41E3 /* TestKSURLNormalization.m in Sources */,
 				801978D914FEDE26008F41E3 /* KSURLNormalization.m in Sources */,
 				27A60C0E1536E7F500EEE538 /* TestKSURLFormatter.m in Sources */,
+				27F86FBF164FBA9D003608CC /* KSEncodeURLString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
