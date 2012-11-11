@@ -55,6 +55,11 @@
     [self testAllowedSchemesWithString:@"test test/" expectedURLString:@"http://test%20test.com/"];
 }
 
+- (void)testInternationalizedDomainName
+{
+    [self testAllowedSchemesWithString:@"http://exämple.com" expectedURLString:@"http://xn--exmple-cua.com/"];
+}
+
 - (void)testDoubleFragment;
 {
     KSURLFormatter *formatter = [[KSURLFormatter alloc] init];
