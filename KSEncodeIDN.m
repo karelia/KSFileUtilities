@@ -18,7 +18,7 @@
     static NSPasteboard *pboard;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        pboard = [NSPasteboard pasteboardWithUniqueName];
+        pboard = [[NSPasteboard pasteboardWithUniqueName] retain];
     });
     
     [pboard clearContents];
