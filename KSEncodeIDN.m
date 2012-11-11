@@ -16,10 +16,7 @@
 - (id)transformedValue:(id)value;
 {
     static NSPasteboard *pboard;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        pboard = [[NSPasteboard pasteboardWithUniqueName] retain];
-    });
+    if (!pboard) pboard = [[NSPasteboard pasteboardWithUniqueName] retain];
     
     [pboard clearContents];
     [pboard writeObjects:@[value]];
