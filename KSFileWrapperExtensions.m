@@ -103,7 +103,17 @@
 - (BOOL)ks_writeToURL:(NSURL *)URL options:(NSFileWrapperWritingOptions)options originalParentDirectoryURL:(NSURL *)originalParentDirectory copyIfLinkingFails:(BOOL)fallbackToCopy error:(NSError **)outError;
 {
     NSString *filename = [self filename];
-    NSURL *originalURL = (filename ? [originalParentDirectory URLByAppendingPathComponent:filename] : nil);
+    
+    // The NSFileWrapper docs state:
+    //
+    //  The default implementation of this method attempts to avoid unnecessary I/O by writing hard links to regular files instead of actually writing out their contents when the contents have not changed. The child file wrappers must return accurate values when sent the filename method for this to work
+    //
+    // I'm assuming that to decide if "they've changed", NSFileWrapper is consulting its -matchesContentsOfURL: which looks purely at modification dates
+    // If that's all the system cares about then it'll get a false positive should a new wrapper have the same filename as an existing file in the package, and they share the same or similar mod date. Very very rare, but we have a customer for whom it happened
+    // Does NSFileWrapper then sacrifice a little possible efficiency by only doing hardlinking if the filenames match too? i.e. that the filename being written to is the same as the source? If so, that would avoid this fasle positive. On the downside it would make adjusting filenames for existing files inside the package impossible to do efficiently, but that's pronbably not a big deal
+    // I haven't devised a proper test of NSFileWrapper for this yet; just going to go ahead and do the filename check for now
+    
+    NSURL *originalURL = ([filename isEqualToString:[URL lastPathComponent]] ? [originalParentDirectory URLByAppendingPathComponent:filename] : nil);
     
     // NSFileWrapper won't create hardlinks when writing an individual file, so we try to do so ourselves when reasonable, for performance reasons
     if ([self isRegularFile])    
