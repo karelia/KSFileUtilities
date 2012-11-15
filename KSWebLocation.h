@@ -28,6 +28,12 @@
 #import <Foundation/Foundation.h>
 
 
+// Compatibility with old compilers
+#if !__has_feature(objc_instancetype)
+#define instancetype id
+#endif
+
+
 /* The NSPasteboardReading protocol enables instances of a class to be created from pasteboard data by using the -readObjectsForClasses:options: method of NSPasteboard.  The Cocoa framework classes NSString, NSAttributedString, NSURL, NSColor, NSSound, NSImage, and NSPasteboardItem implement this protocol.  The protocol can also be implemented by custom application classes for use with -readObjectsForClasses:options:
  */ 
 
