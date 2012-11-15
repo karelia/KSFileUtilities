@@ -29,7 +29,7 @@
 
 
 // Compatibility with old compilers
-#if !__has_feature(objc_instancetype)
+#if !(defined __has_feature && __has_feature(objc_instancetype))
 #define instancetype id
 #endif
 
