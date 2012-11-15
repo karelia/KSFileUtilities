@@ -210,10 +210,29 @@
     STAssertTrue([URL(@"http://example.com/") ks_isSubpathOfURL:URL(@"http://example.com/")], nil);
 }
 
+/*  Test some aspects of Foundation just to make sure they're as we expect
+ */
+
 - (void)testIsFileURL;
 {
     STAssertTrue([URL(@"file:///example.png") isFileURL], nil);
     STAssertTrue([URL(@"fIlE:///example.png") isFileURL], nil);
+}
+
+- (void)testNilURLStrings;
+{
+    // As far as I can tell, the behaviour of +URLWithString: changed in OS X 10.7
+#if (defined MAC_OS_X_VERSION_10_7 && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7)
+    STAssertNoThrow([NSURL URLWithString:nil], nil);
+#else
+    STAssertThrows([NSURL URLWithString:nil], nil);
+#endif
+    
+    // Other methods appear to still behave as they always have
+    STAssertThrows([[NSURL alloc] initWithString:nil], nil);
+    STAssertThrows([[NSURL alloc] initWithString:nil relativeToURL:nil], nil);
+    STAssertThrows([NSURL fileURLWithPath:nil], nil);
+    STAssertThrows([[NSURL alloc] initFileURLWithPath:nil], nil);
 }
 
 @end
