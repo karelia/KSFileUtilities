@@ -224,8 +224,12 @@
     // As far as I can tell, the behaviour of +URLWithString: changed in OS X 10.7
 #if (defined MAC_OS_X_VERSION_10_7 && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7)
     STAssertNoThrow([NSURL URLWithString:nil], nil);
+    STAssertNoThrow([NSURL URLWithString:nil relativeToURL:nil], nil);
+    STAssertNoThrow([NSURL URLWithString:nil relativeToURL:URL(@"http://example.com/")], nil);
 #else
     STAssertThrows([NSURL URLWithString:nil], nil);
+    STAssertThrows([NSURL URLWithString:nil relativeToURL:nil], nil);
+    STAssertThrows([NSURL URLWithString:nil relativeToURL:URL(@"http://example.com/")], nil);
 #endif
     
     // Other methods appear to still behave as they always have
