@@ -108,7 +108,7 @@ More information on the implementation and use of this method is on [Mike's blog
 KSFilePromise
 =============
 
-Simplifies handling file promises from drag & drop in a document-based application. KSFilePromise instances are created from NSDraggingInfo, and take responsibility for management of the received file.
+Simplifies handling file promises from drag & drop in a document-based application. KSFilePromise instances are created from `NSDraggingInfo`, and take responsibility for management of the received file.
 
 KSWebLocation
 =============
@@ -116,8 +116,8 @@ KSWebLocation
 A simple class that represents a URL, optionally with a title attached. Features:
 
 - Handles Web Location files (e.g. those created by dragging a URL from Safari)
-- NSCoding
-- NSCopying
+- `NSCoding`
+- `NSCopying``
 
 You can pull in the `WebKit.framework`-dependent KSWebLocationPasteboardAdditions too, to (unsurprisingly) gain support for reading and writing Web Locations from/to the pasteboard.
 
