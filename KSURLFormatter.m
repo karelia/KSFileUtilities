@@ -203,12 +203,18 @@
         {
             result = [NSURL URLWithString:[NSString stringWithFormat:@"mailto:%@", string]];
         }
-		else if (![result isFileURL])
+		else
         {
-            result = [self URLFromString:[NSString stringWithFormat:
-                                                   @"%@://%@",
-                                                   fallbackScheme,
-                                                   string]];
+            NSString *scheme = [result scheme];
+            
+            if (!scheme || (![result isFileURL] &&
+                            [scheme caseInsensitiveCompare:@"javascript"] != NSOrderedSame))
+            {
+                result = [self URLFromString:[NSString stringWithFormat:
+                                              @"%@://%@",
+                                              fallbackScheme,
+                                              string]];
+            }
         }
 	}
     
@@ -250,26 +256,31 @@
         
         
         // Does the URL have no useful resource specified? If so, generate nil URL
-        if (result && ![[result scheme] isEqualToString:@"mailto"] && ![result isFileURL])
+        if (result && ![result isFileURL])
         {
-            NSString *resource = [result resourceSpecifier];
-            if ([resource length] == 0 ||
-                [resource isEqualToString:@"/"] ||
-                [resource isEqualToString:@"//"])
+            NSString *scheme = [result scheme];
+            if ([scheme caseInsensitiveCompare:@"mailto"] != NSOrderedSame &&
+                [scheme caseInsensitiveCompare:@"javascript"] != NSOrderedSame)
             {
-                result = nil;
-            }
-            
-            
-            
-            // URLs should also really have a host and a path
-            if (result)
-            {
-                NSString *host = [result host];
-                NSString *path = [result path];
-                if (!host && !path && ![result fragment])
+                NSString *resource = [result resourceSpecifier];
+                if ([resource length] == 0 ||
+                    [resource isEqualToString:@"/"] ||
+                    [resource isEqualToString:@"//"])
                 {
                     result = nil;
+                }
+                
+                
+                
+                // URLs should also really have a host and a path
+                if (result)
+                {
+                    NSString *host = [result host];
+                    NSString *path = [result path];
+                    if (!host && !path && ![result fragment])
+                    {
+                        result = nil;
+                    }
                 }
             }
         }
