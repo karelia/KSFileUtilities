@@ -48,6 +48,17 @@
     [self testAllowedSchemesWithString:@"test://example.com/" expectedURLString:@"http://example.com/"];
 }
 
+- (void)testJavascriptURLs
+{
+    KSURLFormatter *formatter = [[KSURLFormatter alloc] init];
+    
+    NSString *string = @"javascript:test('foo','bar')";
+    NSURL *URL = [formatter URLFromString:string];
+    STAssertEqualObjects([URL absoluteString], string, nil);
+    
+    [formatter release];
+}
+
 - (void)testPercentEncoding
 {
     [self testAllowedSchemesWithString:@"test://test test.com/" expectedURLString:@"http://test%20test.com/"];
