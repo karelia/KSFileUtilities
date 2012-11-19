@@ -203,7 +203,7 @@
         {
             result = [NSURL URLWithString:[NSString stringWithFormat:@"mailto:%@", string]];
         }
-		else if (![[result scheme] isEqualToString:@"file"])
+		else if (![result isFileURL])
         {
             result = [self URLFromString:[NSString stringWithFormat:
                                                    @"%@://%@",
