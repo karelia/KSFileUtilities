@@ -28,6 +28,7 @@
 #import "KSURLFormatter.h"
 
 #import "KSURLUtilities.h"
+#import "NSURL+IFUnicodeURL.h"
 
 
 @implementation KSURLFormatter
@@ -165,7 +166,7 @@
     }
     else
     {
-        result = [URL absoluteString];
+        result = [URL unicodeAbsoluteString];
         
         // Append trailing slash if needed
         if ([URL ks_hasNetworkLocation] && [[URL path] isEqualToString:@""])
