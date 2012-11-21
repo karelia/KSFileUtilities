@@ -60,6 +60,15 @@
     [self testAllowedSchemesWithString:@"http://exämple.com" expectedURLString:@"http://xn--exmple-cua.com/"];
     [self testAllowedSchemesWithString:@"exämple.com" expectedURLString:@"http://xn--exmple-cua.com/"];
     [self testAllowedSchemesWithString:@"exämple" expectedURLString:@"http://xn--exmple-cua.com/"];
+    
+    // Go the other way
+    KSURLFormatter *formatter = [[KSURLFormatter alloc] init];
+    
+    STAssertEqualObjects([formatter stringForObjectValue:[NSURL URLWithString:@"http://xn--exmple-cua.com/"]],
+                         @"http://exämple.com/",
+                         nil);
+    
+    [formatter release];
 }
 
 - (void)testDoubleFragment;
