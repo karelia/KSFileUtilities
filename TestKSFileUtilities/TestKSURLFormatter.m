@@ -61,12 +61,34 @@
     [self testAllowedSchemesWithString:@"exämple.com" expectedURLString:@"http://xn--exmple-cua.com/"];
     [self testAllowedSchemesWithString:@"exämple" expectedURLString:@"http://xn--exmple-cua.com/"];
     
-    // Go the other way
+    
+    /* Go the other way
+     */
+    
     KSURLFormatter *formatter = [[KSURLFormatter alloc] init];
     
     STAssertEqualObjects([formatter stringForObjectValue:[NSURL URLWithString:@"http://xn--exmple-cua.com/"]],
                          @"http://exämple.com/",
                          nil);
+    
+    // Might as well test something plain for good measure
+    STAssertEqualObjects([formatter stringForObjectValue:[NSURL URLWithString:@"http://example.com/"]],
+                         @"http://example.com/",
+                         nil);
+    
+    // Invalid encodings should be left alone
+    STAssertEqualObjects([formatter stringForObjectValue:[NSURL URLWithString:@"http://xn--exmple-cub.com/"]],
+                         @"http://xn--exmple-cub.com/",
+                         nil);
+    
+    // Make sure subdomains aren't interfering
+    STAssertEqualObjects([formatter stringForObjectValue:[NSURL URLWithString:@"http://www.xn--exmple-cua.com/"]],
+                         @"http://www.exämple.com/",
+                         nil);
+    STAssertEqualObjects([formatter stringForObjectValue:[NSURL URLWithString:@"http://www.xn--exmple-cub.com/"]],
+                         @"http://www.xn--exmple-cub.com/",
+                         nil);
+    
     
     [formatter release];
 }
