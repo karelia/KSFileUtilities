@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27246F0F165BF184001B638E /* NSURL+IFUnicodeURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 27246F0E165BF184001B638E /* NSURL+IFUnicodeURL.m */; };
 		27A60C0E1536E7F500EEE538 /* TestKSURLFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60C0D1536E7F500EEE538 /* TestKSURLFormatter.m */; };
+		27A900FD165BFFD800D23C4B /* toxxx.c in Sources */ = {isa = PBXBuildFile; fileRef = 27A900FB165BFFD800D23C4B /* toxxx.c */; };
+		27A90100165C000B00D23C4B /* util.c in Sources */ = {isa = PBXBuildFile; fileRef = 27A900FE165C000B00D23C4B /* util.c */; };
+		27A90103165C003A00D23C4B /* nameprep.c in Sources */ = {isa = PBXBuildFile; fileRef = 27A90101165C003A00D23C4B /* nameprep.c */; };
+		27A90106165C005700D23C4B /* puny.c in Sources */ = {isa = PBXBuildFile; fileRef = 27A90104165C005600D23C4B /* puny.c */; };
 		27DA2577148E641100209E50 /* TestKSURLUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DA2576148E641100209E50 /* TestKSURLUtilities.m */; };
 		27F86FBF164FBA9D003608CC /* KSEncodeURLString.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F86FBE164FBA9D003608CC /* KSEncodeURLString.m */; };
 		801978D514FEDE0B008F41E3 /* TestKSURLNormalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 801978D414FEDE0B008F41E3 /* TestKSURLNormalization.m */; };
@@ -26,8 +31,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		27246F0D165BF184001B638E /* NSURL+IFUnicodeURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL+IFUnicodeURL.h"; path = "IFUnicodeURL/IFUnicodeURL/NSURL+IFUnicodeURL.h"; sourceTree = SOURCE_ROOT; };
+		27246F0E165BF184001B638E /* NSURL+IFUnicodeURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+IFUnicodeURL.m"; path = "IFUnicodeURL/IFUnicodeURL/NSURL+IFUnicodeURL.m"; sourceTree = SOURCE_ROOT; };
 		27A60C0C1536E7F500EEE538 /* TestKSURLFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestKSURLFormatter.h; sourceTree = "<group>"; };
 		27A60C0D1536E7F500EEE538 /* TestKSURLFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSURLFormatter.m; sourceTree = "<group>"; };
+		27A900FB165BFFD800D23C4B /* toxxx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = toxxx.c; path = IFUnicodeURL/IDNSDK/toxxx.c; sourceTree = "<group>"; };
+		27A900FC165BFFD800D23C4B /* toxxx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = toxxx.h; path = IFUnicodeURL/IDNSDK/toxxx.h; sourceTree = "<group>"; };
+		27A900FE165C000B00D23C4B /* util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = util.c; path = IFUnicodeURL/IDNSDK/util.c; sourceTree = "<group>"; };
+		27A900FF165C000B00D23C4B /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util.h; path = IFUnicodeURL/IDNSDK/util.h; sourceTree = "<group>"; };
+		27A90101165C003A00D23C4B /* nameprep.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = nameprep.c; path = IFUnicodeURL/IDNSDK/nameprep.c; sourceTree = "<group>"; };
+		27A90102165C003A00D23C4B /* nameprep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nameprep.h; path = IFUnicodeURL/IDNSDK/nameprep.h; sourceTree = "<group>"; };
+		27A90104165C005600D23C4B /* puny.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = puny.c; path = IFUnicodeURL/IDNSDK/puny.c; sourceTree = "<group>"; };
+		27A90105165C005700D23C4B /* puny.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = puny.h; path = IFUnicodeURL/IDNSDK/puny.h; sourceTree = "<group>"; };
 		27DA2576148E641100209E50 /* TestKSURLUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSURLUtilities.m; sourceTree = "<group>"; };
 		27F86FBD164FBA9D003608CC /* KSEncodeURLString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSEncodeURLString.h; sourceTree = SOURCE_ROOT; };
 		27F86FBE164FBA9D003608CC /* KSEncodeURLString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSEncodeURLString.m; sourceTree = SOURCE_ROOT; };
@@ -72,12 +87,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		27246F10165BF1D2001B638E /* IFUnicodeURL */ = {
+			isa = PBXGroup;
+			children = (
+				27246F0D165BF184001B638E /* NSURL+IFUnicodeURL.h */,
+				27246F0E165BF184001B638E /* NSURL+IFUnicodeURL.m */,
+				27A90101165C003A00D23C4B /* nameprep.c */,
+				27A90102165C003A00D23C4B /* nameprep.h */,
+				27A90104165C005600D23C4B /* puny.c */,
+				27A90105165C005700D23C4B /* puny.h */,
+				27A900FB165BFFD800D23C4B /* toxxx.c */,
+				27A900FC165BFFD800D23C4B /* toxxx.h */,
+				27A900FE165C000B00D23C4B /* util.c */,
+				27A900FF165C000B00D23C4B /* util.h */,
+			);
+			name = IFUnicodeURL;
+			path = ../IFUnicodeURL;
+			sourceTree = "<group>";
+		};
 		EE0F599213897956006045D3 /* KSFileUtilities */ = {
 			isa = PBXGroup;
 			children = (
 				EE43C84413898D7B008ABD16 /* KSFileWrapperExtensions.m */,
 				EE43C84513898D7B008ABD16 /* KSURLFormatter.h */,
 				EE43C84613898D7B008ABD16 /* KSURLFormatter.m */,
+				27246F10165BF1D2001B638E /* IFUnicodeURL */,
 				27F86FBD164FBA9D003608CC /* KSEncodeURLString.h */,
 				27F86FBE164FBA9D003608CC /* KSEncodeURLString.m */,
 				EE43C84713898D7B008ABD16 /* KSURLUtilities.h */,
@@ -250,6 +284,11 @@
 				801978D914FEDE26008F41E3 /* KSURLNormalization.m in Sources */,
 				27A60C0E1536E7F500EEE538 /* TestKSURLFormatter.m in Sources */,
 				27F86FBF164FBA9D003608CC /* KSEncodeURLString.m in Sources */,
+				27246F0F165BF184001B638E /* NSURL+IFUnicodeURL.m in Sources */,
+				27A900FD165BFFD800D23C4B /* toxxx.c in Sources */,
+				27A90100165C000B00D23C4B /* util.c in Sources */,
+				27A90103165C003A00D23C4B /* nameprep.c in Sources */,
+				27A90106165C005700D23C4B /* puny.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
