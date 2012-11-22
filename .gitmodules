@@ -1,0 +1,3 @@
+[submodule "IFUnicodeURL"]
+	path = IFUnicodeURL
+	url = git@github.com:karelia/IFUnicodeURL.git

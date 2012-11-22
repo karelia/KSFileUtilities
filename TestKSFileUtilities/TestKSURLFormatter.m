@@ -8,6 +8,7 @@
 
 #import "TestKSURLFormatter.h"
 #import "KSURLFormatter.h"
+#import "NSURL+IFUnicodeURL.h"
 
 
 @implementation TestKSURLFormatter
@@ -64,6 +65,44 @@
     [self testAllowedSchemesWithString:@"test://test test.com/" expectedURLString:@"http://test%20test.com/"];
     [self testAllowedSchemesWithString:@"test://test test/" expectedURLString:@"http://test%20test.com/"];
     [self testAllowedSchemesWithString:@"test test/" expectedURLString:@"http://test%20test.com/"];
+}
+
+- (void)testInternationalizedDomainName
+{
+    [self testAllowedSchemesWithString:@"http://exämple.com" expectedURLString:@"http://xn--exmple-cua.com/"];
+    [self testAllowedSchemesWithString:@"exämple.com" expectedURLString:@"http://xn--exmple-cua.com/"];
+    [self testAllowedSchemesWithString:@"exämple" expectedURLString:@"http://xn--exmple-cua.com/"];
+    
+    
+    /* Go the other way
+     */
+    
+    KSURLFormatter *formatter = [[KSURLFormatter alloc] init];
+    
+    STAssertEqualObjects([formatter stringForObjectValue:[NSURL URLWithString:@"http://xn--exmple-cua.com/"]],
+                         @"http://exämple.com/",
+                         nil);
+    
+    // Might as well test something plain for good measure
+    STAssertEqualObjects([formatter stringForObjectValue:[NSURL URLWithString:@"http://example.com/"]],
+                         @"http://example.com/",
+                         nil);
+    
+    // Invalid encodings should be left alone
+    STAssertEqualObjects([formatter stringForObjectValue:[NSURL URLWithString:@"http://xn--exmple-cub.com/"]],
+                         @"http://xn--exmple-cub.com/",
+                         nil);
+    
+    // Make sure subdomains aren't interfering
+    STAssertEqualObjects([formatter stringForObjectValue:[NSURL URLWithString:@"http://www.xn--exmple-cua.com/"]],
+                         @"http://www.exämple.com/",
+                         nil);
+    STAssertEqualObjects([formatter stringForObjectValue:[NSURL URLWithString:@"http://www.xn--exmple-cub.com/"]],
+                         @"http://www.xn--exmple-cub.com/",
+                         nil);
+    
+    
+    [formatter release];
 }
 
 - (void)testDoubleFragment;
@@ -126,6 +165,12 @@
 - (void)testLikelyEmailAddress
 {
     STAssertFalse([KSURLFormatter isLikelyEmailAddress:@"http://example.com@foo.com"], @"It's a *valid* email address, but more likely to be a URL");
+}
+
+- (void)testNilUnicodeURLString
+{
+    STAssertNil([NSURL URLWithUnicodeString:nil], nil);
+    STAssertThrows([[[NSURL alloc] initWithUnicodeString:nil] autorelease], nil);
 }
 
 @end

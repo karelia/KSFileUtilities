@@ -28,6 +28,7 @@
 #import "KSURLFormatter.h"
 
 #import "KSURLUtilities.h"
+#import "NSURL+IFUnicodeURL.h"
 
 
 @implementation KSURLFormatter
@@ -165,7 +166,7 @@
     }
     else
     {
-        result = [URL absoluteString];
+        result = [URL unicodeAbsoluteString];
         
         // Append trailing slash if needed
         if ([URL ks_hasNetworkLocation] && [[URL path] isEqualToString:@""])
@@ -179,12 +180,21 @@
 
 #pragma mark Object Equivalent to Textual Representation
 
++ (NSURL *)URLFromString:(NSString *)string useValueTransformerIfAvailable:(BOOL)useValueTransformer;
+{
+    NSURL *result = nil;
+    if (useValueTransformer) result = [[self encodeStringValueTransformer] transformedValue:string];
+    if (!result) result = [self URLFromString:string];
+    return result;
+}
+
 + (NSURL *)URLFromString:(NSString *)string defaultScheme:(NSString *)fallbackScheme;
 {
 	//  Tries to interpret the string as a complete URL. If there is no scheme specified, try it as an email address. If that doesn't seem reasonable, combine with fallbackScheme
 
     
-    NSURL *result = [self URLFromString:string];
+    // Use value transformer when possible. For some strings it will produce nothing, or it won't be available, so then fall back to our cruder routine
+    NSURL *result = [self URLFromString:string useValueTransformerIfAvailable:YES];
     
     
     // Allow fragment links as-is
@@ -213,7 +223,8 @@
                 result = [self URLFromString:[NSString stringWithFormat:
                                               @"%@://%@",
                                               fallbackScheme,
-                                              string]];
+                                              string]
+              useValueTransformerIfAvailable:YES];
             }
         }
 	}
@@ -328,5 +339,32 @@
 }
 
 @synthesize generatesURLStrings = _generateStrings;
+
+#pragma mark Value Transformer Backend
+
+static NSValueTransformer *_transformer;
+
++ (NSValueTransformer *)encodeStringValueTransformer;
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _transformer = [[NSValueTransformer valueTransformerForName:@"KSEncodeURLString"] retain];
+    });
+    
+    return _transformer;
+}
+
++ (void)setEncodeStringValueTransformer:(NSValueTransformer *)transformer;
+{
+    [self encodeStringValueTransformer]; // ensure initial search has run
+    
+    if (transformer != _transformer);
+    [_transformer release]; _transformer = [transformer retain];
+    
+    if (![[[transformer class] transformedValueClass] isSubclassOfClass:[NSURL class]])
+    {
+        NSLog(@"Internationalized Domain Name value transformer appears not to output URLs");
+    }
+}
 
 @end
