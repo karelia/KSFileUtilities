@@ -29,11 +29,13 @@ An `NSFormatter` subclass for a variety of URL display and input tasks.
 - Host URLs have a slash appended to them. e.g. `http://example.com` is displayed/interpreted as `http://example.com/`
 - Convenience `+URLFromString:` method that takes care of unescaped characters
 
-`KSURLFormatter` can handle Internationalized Domain Names if it has a suitable backend. For Mac OS X projects, you can include `KSEncodeURLString.*` and link against `WebKit.framework` to get this for free. For other projects, supply your own by one of:
+`KSURLFormatter` can encode Internationalized Domain Names if it has a suitable backend. For Mac OS X projects, you can include `KSEncodeURLString.*` and link against `WebKit.framework` to get this for free. For other projects, supply your own by one of:
 
 * Call `+[KSURLFormatter setEncodeStringValueTransformer:]`
 * Call `+[NSValueTransformer setValueTransformer:forName:]` before `+encodeStringValueTransformer` is called
 * Name your custom class `KSEncodeURLString`
+
+Decoding is performed by IFUnicodeURL. Make sure you handle its licensing appropriately — see the Licensing section of this document for details.
 
 URL Normalization
 =================
@@ -131,3 +133,97 @@ License
 =======
 
 Standard BSD. You know the drill.
+
+### IFUnicodeURL
+
+If using KSURLFormatter, it relies upon IFUnicodeURL which has the following license:
+
+Copyright 2010 Iconfactory, Inc. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are
+permitted provided that the following conditions are met:
+
+   1. Redistributions of source code must retain the above copyright notice, this list of
+      conditions and the following disclaimer.
+
+   2. Redistributions in binary form must reproduce the above copyright notice, this list
+      of conditions and the following disclaimer in the documentation and/or other materials
+      provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY Iconfactory, Inc. ``AS IS'' AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL Iconfactory, Inc. OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+The views and conclusions contained in the software and documentation are those of the
+authors and should not be interpreted as representing official policies, either expressed
+or implied, of Iconfactory, Inc.
+
+### IDN SDK
+
+And IFUnicodeURL in turn relies upon VeriSign's IDN SDK:
+
+/*************************************************************************/
+/*                                                                       */
+/* VeriSign XCode (encode/decode) IDN Library                            */
+/*                                                                       */
+/* A library for encoding / decoding of domain strings.                  */
+/*                                                                       */
+/* (c) VeriSign Inc., 2003, All rights reserved                          */
+/*                                                                       */
+/*************************************************************************/
+
+/*************************************************************************/
+/*                                                                       */
+/* Copyright (c) 2003, VeriSign Inc.                                     */
+/* All rights reserved.                                                  */
+/*                                                                       */
+/* Redistribution and use in source and binary forms, with or            */
+/* without modification, are permitted provided that the following       */
+/* conditions are met:                                                   */
+/*                                                                       */
+/*  1) Redistributions of source code must retain the above copyright    */
+/*     notice, this list of conditions and the following disclaimer.     */
+/*                                                                       */
+/*  2) Redistributions in binary form must reproduce the above copyright */
+/*     notice, this list of conditions and the following disclaimer in   */
+/*     the documentation and/or other materials provided with the        */
+/*     distribution.                                                     */
+/*                                                                       */
+/*  3) Neither the name of the VeriSign Inc. nor the names of its        */
+/*     contributors may be used to endorse or promote products derived   */
+/*     from this software without specific prior written permission.     */
+/*                                                                       */
+/* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS   */
+/* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT     */
+/* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS     */
+/* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE        */
+/* COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,   */
+/* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,  */
+/* BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS */
+/* OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED    */
+/* AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT           */
+/* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN     */
+/* ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE       */
+/* POSSIBILITY OF SUCH DAMAGE.                                           */
+/*                                                                       */
+/* This software is licensed under the BSD open source license. For more */
+/* information visit www.opensource.org.                                 */
+/*                                                                       */
+/*************************************************************************/
+
+/*************************************************************************/
+/*                                                                       */
+/* Authors:                                                              */
+/*                                                                       */
+/*  John Colosi (VeriSign)                                               */
+/*  Lihui Zhang (VeriSign)                                               */
+/*  Srikanth Veeramachaneni (VeriSign)                                   */
+/*  Jim Mathies (VeriSign)                                               */
+/*                                                                       */
+/*************************************************************************/
