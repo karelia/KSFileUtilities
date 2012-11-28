@@ -6,7 +6,7 @@
 #import "KSURLNormalization.h"
 
 
-typedef enum  
+typedef NS_ENUM(NSInteger, ks_URLPart)
 {
     ks_URLPartScheme = kCFURLComponentScheme,
     ks_URLPartPath = kCFURLComponentPath,
@@ -17,7 +17,7 @@ typedef enum
     ks_URLPartParameterString = kCFURLComponentParameterString,
     ks_URLPartQuery = kCFURLComponentQuery,
     ks_URLPartFragment = kCFURLComponentFragment
-} ks_URLPart;
+};
 
 
 @interface NSURL (KSURLNormalizationPrivate)
