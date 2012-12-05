@@ -8,7 +8,6 @@
 
 #import "TestKSURLFormatter.h"
 #import "KSURLFormatter.h"
-#import "NSURL+IFUnicodeURL.h"
 
 
 @implementation TestKSURLFormatter
@@ -154,12 +153,6 @@
 - (void)testLikelyEmailAddress
 {
     STAssertFalse([KSURLFormatter isLikelyEmailAddress:@"http://example.com@foo.com"], @"It's a *valid* email address, but more likely to be a URL");
-}
-
-- (void)testNilUnicodeURLString
-{
-    STAssertNil([NSURL URLWithUnicodeString:nil], nil);
-    STAssertThrows([[[NSURL alloc] initWithUnicodeString:nil] autorelease], nil);
 }
 
 @end
