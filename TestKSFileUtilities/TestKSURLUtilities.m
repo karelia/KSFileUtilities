@@ -254,4 +254,17 @@
 
 }
 
+- (void)testStandardizedURL;
+{
+    STAssertEqualObjects([URL(@"http://example.com/foo/../bar") standardizedURL], URL(@"http://example.com/bar"), nil);
+    STAssertEqualObjects([URL(@"http://example.com/foo/../bar/") standardizedURL], URL(@"http://example.com/bar/"), nil);
+    
+    // Throw in an extra slash though and the system can get quite confused. Some make sense:
+    STAssertEqualObjects([URL(@"http://example.com/foo/..//bar") standardizedURL], URL(@"http://example.com//bar"), nil);
+    STAssertEqualObjects([URL(@"http://example.com/foo/..//bar/") standardizedURL], URL(@"http://example.com//bar/"), nil);
+    
+    // But once you have the magic combo of two slashes *before* .. the result seems weird
+    STAssertEqualObjects([URL(@"http://example.com/foo//../bar") standardizedURL], URL(@"http://example.com/foo/bar"), nil);
+}
+
 @end
