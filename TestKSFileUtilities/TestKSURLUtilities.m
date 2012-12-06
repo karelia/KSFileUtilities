@@ -210,6 +210,8 @@
     STAssertTrue([URL(@"http://example.com/") ks_isSubpathOfURL:URL(@"http://example.com/")], nil);
 }
 
+#pragma mark Foundation
+
 /*  Test some aspects of Foundation just to make sure they're as we expect
  */
 
@@ -237,6 +239,19 @@
     STAssertThrows([[NSURL alloc] initWithString:nil relativeToURL:nil], nil);
     STAssertThrows([NSURL fileURLWithPath:nil], nil);
     STAssertThrows([[NSURL alloc] initFileURLWithPath:nil], nil);
+}
+
+- (void)testDeletingLastPathComponent;
+{
+    STAssertEqualObjects([URL(@"http://example.com/foo/bar") URLByDeletingLastPathComponent], URL(@"http://example.com/foo/"), nil);
+    STAssertEqualObjects([URL(@"http://example.com/foo/bar/") URLByDeletingLastPathComponent], URL(@"http://example.com/foo/"), nil);
+    
+    // But as soon as we introduce another slash, NSURL cocks it up, or maybe just hedges its bets
+    STAssertEqualObjects([URL(@"http://example.com/foo/bar//") URLByDeletingLastPathComponent], URL(@"http://example.com/foo/bar//../"), nil);
+    
+    // The CF-level API behaves the same
+    STAssertEqualObjects((NSURL *)CFURLCreateCopyDeletingLastPathComponent(NULL, (CFURLRef)URL(@"http://example.com/foo/bar//")), URL(@"http://example.com/foo/bar//../"), nil);
+
 }
 
 @end
