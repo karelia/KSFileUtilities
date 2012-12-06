@@ -251,7 +251,12 @@
     
     // The CF-level API behaves the same
     STAssertEqualObjects((NSURL *)CFURLCreateCopyDeletingLastPathComponent(NULL, (CFURLRef)URL(@"http://example.com/foo/bar//")), URL(@"http://example.com/foo/bar//../"), nil);
-
+    
+    
+    
+    // The behaviour makes some sense when faced with a root URL
+    STAssertEqualObjects([URL(@"http://example.com/") URLByDeletingLastPathComponent], URL(@"http://example.com/../"), nil);
+    STAssertEqualObjects([URL(@"http://example.com//") URLByDeletingLastPathComponent], URL(@"http://example.com//../"), nil);
 }
 
 - (void)testStandardizedURL;
