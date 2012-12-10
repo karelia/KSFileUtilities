@@ -272,4 +272,14 @@
     STAssertEqualObjects([URL(@"http://example.com/foo//../bar") standardizedURL], URL(@"http://example.com/foo/bar"), nil);
 }
 
+- (void)testParentDirectory;
+{
+    // Reassure myself NSURLParentDirectoryURLKey fails if the URL doesn't exist, unlike -URLByDeletingLastPathComponent
+    NSURL *home = [NSURL fileURLWithPath:NSHomeDirectory() isDirectory:YES];
+    NSURL *test = [home URLByAppendingPathComponent:@"test-file-with-unlikely-filename-0123456789"];
+    
+    NSURL *parent;
+    STAssertFalse([test getResourceValue:&parent forKey:NSURLParentDirectoryURLKey error:NULL], nil);
+}
+
 @end
