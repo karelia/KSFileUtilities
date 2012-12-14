@@ -282,4 +282,22 @@
     STAssertFalse([test getResourceValue:&parent forKey:NSURLParentDirectoryURLKey error:NULL], nil);
 }
 
+- (void)testMakingDirectoryURL;
+{
+    // URLByAppendingPathComponent:@"" only appends a trailing slash if there isn't one already (as far as I can tell)
+    STAssertEqualObjects([URL(@"http://example.com/test") URLByAppendingPathComponent:@""], URL(@"http://example.com/test/"), nil);
+    STAssertEqualObjects([URL(@"http://example.com/test/") URLByAppendingPathComponent:@""], URL(@"http://example.com/test/"), nil);
+    STAssertEqualObjects([URL(@"http://example.com/test//") URLByAppendingPathComponent:@""], URL(@"http://example.com/test//"), nil);
+    
+    // It's even nice enough to handle query etc.
+    STAssertEqualObjects([URL(@"http://example.com/test?foo=bar") URLByAppendingPathComponent:@""], URL(@"http://example.com/test/?foo=bar"), nil);
+    STAssertEqualObjects([URL(@"http://example.com/test/?foo=bar") URLByAppendingPathComponent:@""], URL(@"http://example.com/test/?foo=bar"), nil);
+    
+    // Handles host URLs too
+    STAssertEqualObjects([URL(@"http://example.com/") URLByAppendingPathComponent:@""], URL(@"http://example.com/"), nil);
+    STAssertEqualObjects([URL(@"http://example.com") URLByAppendingPathComponent:@""], URL(@"http://example.com/"), nil);
+    STAssertEqualObjects([URL(@"http://example.com?foo=bar") URLByAppendingPathComponent:@""], URL(@"http://example.com/?foo=bar"), nil);
+    STAssertEqualObjects([URL(@"http://example.com/?foo=bar") URLByAppendingPathComponent:@""], URL(@"http://example.com/?foo=bar"), nil);
+}
+
 @end
