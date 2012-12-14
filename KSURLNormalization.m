@@ -6,6 +6,10 @@
 #import "KSURLNormalization.h"
 
 
+#ifndef NS_ENUM
+#define NS_ENUM(_type, _name) _type _name; enum
+#endif
+
 typedef NS_ENUM(NSInteger, ks_URLPart)
 {
     ks_URLPartScheme = kCFURLComponentScheme,
