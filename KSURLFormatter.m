@@ -358,7 +358,7 @@ static NSValueTransformer *_transformer;
 {
     [self encodeStringValueTransformer]; // ensure initial search has run
     
-    if (transformer != _transformer);
+    if (transformer != _transformer) return;
     [_transformer release]; _transformer = [transformer retain];
     
     if (![[[transformer class] transformedValueClass] isSubclassOfClass:[NSURL class]])
