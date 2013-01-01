@@ -173,30 +173,17 @@
     
     
     // How do you get from the directory path, to commonDir?
-    NSRange searchRange; searchRange.location = dirSearchRange.location; searchRange.length = [dirPath length] - searchRange.location;
-    while (searchRange.length > 0)
-    {
-        NSRange slashRange = [dirPath rangeOfString:@"/" options:NSLiteralSearch range:searchRange];
-        if (slashRange.location == NSNotFound) slashRange.location = NSMaxRange(searchRange);   // for end of string
-        NSRange componentRange = NSMakeRange(searchRange.location, slashRange.location - searchRange.location);
+    [dirPath ks_enumeratePathComponentsInRange:dirSearchRange usingBlock:^(NSString *component, NSRange range, BOOL *stop) {
         
-        if (componentRange.length > 0)
-        {
-            // Ignore components which just specify current directory
-            if (componentRange.length > 1 || [dirPath compare:@"." options:NSLiteralSearch range:componentRange] != NSOrderedSame)
-            {
-                if (componentRange.length == 2)
-                {
-                    NSAssert([dirPath compare:@".." options:NSLiteralSearch range:componentRange] != NSOrderedSame, @".. unsupported");
-                }
-                
-                if ([result length]) [result appendString:@"/"];
-                [result appendString:@".."];
-            }
-        }
+        // Ignore components which just specify current directory
+        if ([component isEqualToString:@"."]) return;
         
-        searchRange = NSMakeRange(NSMaxRange(slashRange), NSMaxRange(searchRange) - NSMaxRange(slashRange));
-    }
+        
+        if (range.length == 2) NSAssert(![component isEqualToString:@".."], @".. unsupported");
+        
+        if ([result length]) [result appendString:@"/"];
+        [result appendString:@".."];
+    }];
     
     
     // And then navigating from commonDir, to self, is mostly a simple append
