@@ -226,6 +226,44 @@
 	return result;
 }
 
+- (void)ks_enumeratePathComponentsInRange:(NSRange)searchRange usingBlock:(void (^)(NSString *component, NSRange range, BOOL *stop))block;
+{
+    // Report absolute path's first component specially
+    if (searchRange.location == 0 && [self isAbsolutePath])
+    {
+        NSRange range = NSMakeRange(0, 1);
+        BOOL stop = NO;
+        block(@"/", range, &stop);
+        if (stop) return;
+    }
+    
+    do
+    {
+        NSRange slashRange = [self rangeOfString:@"/" options:NSLiteralSearch range:searchRange];
+        
+        if (slashRange.location != searchRange.location)
+        {
+            NSRange range = (slashRange.location == NSNotFound ?
+                             searchRange :
+                             NSMakeRange(searchRange.location, slashRange.location - searchRange.location));
+            
+            if (range.length == 0) return;
+            
+            NSString *component = [self substringWithRange:range];
+            BOOL stop = NO;
+            
+            block(component, range, &stop);
+            if (stop) return;
+            
+            // bump up slashRange so adjusting searchRange has correct effect
+            slashRange.length += range.length;
+        }
+        
+        searchRange.location += slashRange.length; searchRange.length -= slashRange.length;
+    }
+    while (searchRange.length);
+}
+
 #pragma mark POSIX
 
 /*  Trailing slashes are insignificant under the POSIX standard. If the receiver has a trailing
