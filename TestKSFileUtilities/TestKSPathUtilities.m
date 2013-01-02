@@ -138,6 +138,8 @@
     /*  Foo dir is in common
      */
     [self checkPath:@"foo/bar" relativeToDirectory:@"foo/baz" againstExpectedResult:@"../bar"];
+    [self checkPath:@"/foo/bar" relativeToDirectory:@"//foo/baz" againstExpectedResult:@"../bar"];
+    [self checkPath:@"//foo/bar" relativeToDirectory:@"/foo/baz" againstExpectedResult:@"../bar"];
 }
 
 - (void)testIsSubpath;
