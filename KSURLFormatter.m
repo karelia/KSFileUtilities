@@ -153,12 +153,12 @@
 
 - (NSString *)stringForObjectValue:(id)anObject
 {
-    if (!anObject) return nil;
-    if (![anObject isKindOfClass:[NSURL class]]) return [anObject description];
     if ([anObject isKindOfClass:[NSString class]])
     {
         anObject = [NSURL URLWithString:anObject];
     }
+    
+    if (![anObject isKindOfClass:[NSURL class]]) return [anObject description];
     
     NSURL *URL = anObject;
     
