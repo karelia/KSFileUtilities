@@ -179,7 +179,7 @@
         if ([component isEqualToString:@"."]) return;
         
         
-        if (range.length == 2) NSAssert(![component isEqualToString:@".."], @".. unsupported");
+        if (range.length == 2) NSAssert(![component isEqualToString:@".."], @".. unsupported: %@", dirPath);
         
         if ([result length]) [result appendString:@"/"];
         [result appendString:@".."];
