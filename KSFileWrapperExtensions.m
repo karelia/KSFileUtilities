@@ -47,7 +47,10 @@
             aWrapper = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:nil];
             [aWrapper setPreferredFilename:aComponent];
             [parentWrapper addFileWrapper:aWrapper];
+            
+#if ! __has_feature(objc_arc)
             [aWrapper release];
+#endif
         }
         
         parentWrapper = aWrapper;
