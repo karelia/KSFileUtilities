@@ -9,6 +9,8 @@
 #import "TestKSURLFormatter.h"
 #import "KSURLFormatter.h"
 
+#import <WebKit/WebKit.h>
+
 
 @implementation TestKSURLFormatter
 
@@ -68,6 +70,10 @@
 
 - (void)testInternationalizedDomainName
 {
+    // Have a strong suspicion WebKit isn't available to Jenkins
+    STAssertNotNil([WebView class], nil);
+    
+    
     [self testAllowedSchemesWithString:@"http://exämple.com" expectedURLString:@"http://xn--exmple-cua.com/"];
     [self testAllowedSchemesWithString:@"exämple.com" expectedURLString:@"http://xn--exmple-cua.com/"];
     [self testAllowedSchemesWithString:@"exämple" expectedURLString:@"http://xn--exmple-cua.com/"];
