@@ -70,21 +70,6 @@
 
 - (void)testInternationalizedDomainName
 {
-    // Encoding IDNs uses some fairly specialized machinery. Make sure it's actually available to the tester!
-    STAssertNotNil([WebView class], nil);
-    STAssertNotNil([NSPasteboard class], nil);
-    
-    NSPasteboard *pasteboard = [NSPasteboard pasteboardWithUniqueName];
-    STAssertNotNil(pasteboard, nil);
-    
-    [pasteboard writeObjects:@[@"test"]];
-    NSArray *objects = [pasteboard readObjectsForClasses:@[[NSString class]] options:nil];
-    STAssertNotNil(objects, nil);
-    STAssertTrue([objects count] > 0, nil);
-    STAssertEqualObjects(objects, @[@"test"], nil);
-    [pasteboard releaseGlobally];
-    
-    
     [self testAllowedSchemesWithString:@"http://exämple.com" expectedURLString:@"http://xn--exmple-cua.com/"];
     [self testAllowedSchemesWithString:@"exämple.com" expectedURLString:@"http://xn--exmple-cua.com/"];
     [self testAllowedSchemesWithString:@"exämple" expectedURLString:@"http://xn--exmple-cua.com/"];
