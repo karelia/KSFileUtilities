@@ -70,8 +70,13 @@
 
 - (void)testInternationalizedDomainName
 {
-    // Have a strong suspicion WebKit isn't available to Jenkins
+    // Encoding IDNs uses some fairly specialized machinery. Make sure it's actually available to the tester!
     STAssertNotNil([WebView class], nil);
+    STAssertNotNil([NSPasteboard class], nil);
+    
+    NSPasteboard *pasteboard = [NSPasteboard pasteboardWithUniqueName];
+    STAssertNotNil(pasteboard, nil);
+    [pasteboard releaseGlobally];
     
     
     [self testAllowedSchemesWithString:@"http://exämple.com" expectedURLString:@"http://xn--exmple-cua.com/"];
