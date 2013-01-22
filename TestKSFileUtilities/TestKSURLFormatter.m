@@ -76,6 +76,12 @@
     
     NSPasteboard *pasteboard = [NSPasteboard pasteboardWithUniqueName];
     STAssertNotNil(pasteboard, nil);
+    
+    [pasteboard writeObjects:@[@"test"]];
+    NSArray *objects = [pasteboard readObjectsForClasses:@[[NSString class]] options:nil];
+    STAssertNotNil(objects, nil);
+    STAssertTrue([objects count] > 0, nil);
+    STAssertEqualObjects(objects, @[@"test"], nil);
     [pasteboard releaseGlobally];
     
     
