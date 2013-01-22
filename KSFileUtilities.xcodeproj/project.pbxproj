@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		27246F0F165BF184001B638E /* NSURL+IFUnicodeURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 27246F0E165BF184001B638E /* NSURL+IFUnicodeURL.m */; };
+		2757532C16AEA86500388503 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2757532B16AEA86500388503 /* WebKit.framework */; };
 		27A60C0E1536E7F500EEE538 /* TestKSURLFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60C0D1536E7F500EEE538 /* TestKSURLFormatter.m */; };
 		27A900FD165BFFD800D23C4B /* toxxx.c in Sources */ = {isa = PBXBuildFile; fileRef = 27A900FB165BFFD800D23C4B /* toxxx.c */; };
 		27A90100165C000B00D23C4B /* util.c in Sources */ = {isa = PBXBuildFile; fileRef = 27A900FE165C000B00D23C4B /* util.c */; };
@@ -18,7 +19,6 @@
 		801978D514FEDE0B008F41E3 /* TestKSURLNormalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 801978D414FEDE0B008F41E3 /* TestKSURLNormalization.m */; };
 		801978D914FEDE26008F41E3 /* KSURLNormalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 801978D714FEDE26008F41E3 /* KSURLNormalization.m */; };
 		EE0F59A313897980006045D3 /* KSPathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EE0F599713897980006045D3 /* KSPathUtilities.m */; };
-		EE0F59AA13897B20006045D3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0F59A913897B20006045D3 /* WebKit.framework */; };
 		EE20B4B613897F7400AE2AF9 /* TestKSPathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EE20B4B513897F7400AE2AF9 /* TestKSPathUtilities.m */; };
 		EE43C84F13898D7B008ABD16 /* KSFileWrapperExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = EE43C84413898D7B008ABD16 /* KSFileWrapperExtensions.m */; };
 		EE43C85013898D7B008ABD16 /* KSURLFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = EE43C84613898D7B008ABD16 /* KSURLFormatter.m */; };
@@ -33,6 +33,7 @@
 /* Begin PBXFileReference section */
 		27246F0D165BF184001B638E /* NSURL+IFUnicodeURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL+IFUnicodeURL.h"; path = "IFUnicodeURL/IFUnicodeURL/NSURL+IFUnicodeURL.h"; sourceTree = SOURCE_ROOT; };
 		27246F0E165BF184001B638E /* NSURL+IFUnicodeURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+IFUnicodeURL.m"; path = "IFUnicodeURL/IFUnicodeURL/NSURL+IFUnicodeURL.m"; sourceTree = SOURCE_ROOT; };
+		2757532B16AEA86500388503 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		27A60C0C1536E7F500EEE538 /* TestKSURLFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestKSURLFormatter.h; sourceTree = "<group>"; };
 		27A60C0D1536E7F500EEE538 /* TestKSURLFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSURLFormatter.m; sourceTree = "<group>"; };
 		27A900FB165BFFD800D23C4B /* toxxx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = toxxx.c; path = IFUnicodeURL/IDNSDK/toxxx.c; sourceTree = "<group>"; };
@@ -51,7 +52,6 @@
 		801978D714FEDE26008F41E3 /* KSURLNormalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSURLNormalization.m; sourceTree = SOURCE_ROOT; };
 		EE0F599613897980006045D3 /* KSPathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPathUtilities.h; sourceTree = SOURCE_ROOT; };
 		EE0F599713897980006045D3 /* KSPathUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPathUtilities.m; sourceTree = SOURCE_ROOT; };
-		EE0F59A913897B20006045D3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/WebKit.framework; sourceTree = DEVELOPER_DIR; };
 		EE20B4B513897F7400AE2AF9 /* TestKSPathUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSPathUtilities.m; sourceTree = "<group>"; };
 		EE43C84413898D7B008ABD16 /* KSFileWrapperExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSFileWrapperExtensions.m; sourceTree = SOURCE_ROOT; };
 		EE43C84513898D7B008ABD16 /* KSURLFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLFormatter.h; sourceTree = SOURCE_ROOT; };
@@ -79,7 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE0F59AA13897B20006045D3 /* WebKit.framework in Frameworks */,
+				2757532C16AEA86500388503 /* WebKit.framework in Frameworks */,
 				EE83867C13897644005E0FFD /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -152,8 +152,8 @@
 		EE83867A13897644005E0FFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EE0F59A913897B20006045D3 /* WebKit.framework */,
 				EE83867B13897644005E0FFD /* Cocoa.framework */,
+				2757532B16AEA86500388503 /* WebKit.framework */,
 				EE83867D13897644005E0FFD /* Other Frameworks */,
 			);
 			name = Frameworks;
