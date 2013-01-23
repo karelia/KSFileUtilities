@@ -9,6 +9,8 @@
 #import "TestKSURLFormatter.h"
 #import "KSURLFormatter.h"
 
+#import <WebKit/WebKit.h>
+
 
 @implementation TestKSURLFormatter
 

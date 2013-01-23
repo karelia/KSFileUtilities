@@ -26,6 +26,8 @@
 
 #import "KSEncodeURLString.h"
 
+#import "NSURL+IFUnicodeURL.h"
+
 
 @implementation KSEncodeURLString
 
@@ -40,6 +42,13 @@
     [pboard writeObjects:@[value]];
     
     NSURL *result = [WebView URLFromPasteboard:pboard];
+    
+    // Fallback to IFUnicodeURL
+    if (!result && [value isKindOfClass:[NSString class]] && [value length])
+    {
+        result = [NSURL URLWithUnicodeString:value];
+    }
+    
     return result;
 }
 
