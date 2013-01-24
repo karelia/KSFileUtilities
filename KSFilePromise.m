@@ -76,11 +76,9 @@
 }
 
 + (void)tryToDeleteFilePromiseURL:(NSURL *)url destination:(KSFilePromiseDestination *)destination retryInterval:(int64_t)delayInSeconds;
-{
-    NSFileManager *manager = [[NSFileManager alloc] init];
-    
+{    
     NSError *error;
-    if (![manager removeItemAtURL:url error:&error])
+    if (![[NSFileManager defaultManager] removeItemAtURL:url error:&error])
     {
         NSLog(@"File promise deletion failed: %@", error);
         NSLog(@"Maybe the file hasn't arrived yet, or will become removable soon. Retrying later");
