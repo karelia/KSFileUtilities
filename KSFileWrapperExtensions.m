@@ -121,26 +121,20 @@
         // If the file is already inside a doc, we favour hardlinking for performance
         if ([self matchesContentsOfURL:originalURL])
         {
+            // Linking might fail because:
+            // - The destination URL already exists
+            // - It's an external filesystem which doesn't support hardlinks. #190275
+            // - Attempted to link across filesystems
+            //
+            // If so, can just fall back to standard writing, which will handle all situations
             BOOL result = [[NSFileManager defaultManager] linkItemAtURL:originalURL toURL:URL error:outError];
             
-            if (!result && fallbackToCopy)
-            {
-                // Linking might fail because:
-                // - The destination URL already exists
-                // - It's an external filesystem which doesn't support hardlinks. #190275
-                // - Attempted to link across filesystems
-                //
-                // If so, can just fall back to copying, which will handle all situations, except: destination already existing, and that fails fast on copying anyway
-                result = [[NSFileManager defaultManager] copyItemAtURL:originalURL toURL:URL error:outError];
-            }
-            
-            return result;
+            if (result || !fallbackToCopy) return result;
         }
     }
     
     // For regular files, asking NSFileWrapper is the final fallback
-    // For directories that have already been copied into a doc, this will take the fast path of using hardlinks if possible. Unfortunately when taking the slow path, it does so by loading each file into memory. We dump them back out again when releasing the wrapper, but this could definitely be improved
-    // For everything else (highly rare) this is the easy fallback
+    // For folders/packages, this will take the fast path of using hardlinks if possible. Unfortunately when taking the slow path, it does so by loading each file into memory. We dump them back out again when releasing the wrapper, but this could definitely be improved
     return [self writeToURL:URL options:options originalContentsURL:originalURL error:outError];
 }
 
