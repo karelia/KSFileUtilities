@@ -121,8 +121,7 @@
         // If the file is already inside a doc, we favour hardlinking for performance
         if ([self matchesContentsOfURL:originalURL])
         {
-            NSFileManager *fileManager = [[NSFileManager alloc] init];
-            BOOL result = [fileManager linkItemAtURL:originalURL toURL:URL error:outError];
+            BOOL result = [[NSFileManager defaultManager] linkItemAtURL:originalURL toURL:URL error:outError];
             
             if (!result && fallbackToCopy)
             {
@@ -132,9 +131,8 @@
                 // - Attempted to link across filesystems
                 //
                 // If so, can just fall back to copying, which will handle all situations, except: destination already existing, and that fails fast on copying anyway
-                result = [fileManager copyItemAtURL:originalURL toURL:URL error:outError];
+                result = [[NSFileManager defaultManager] copyItemAtURL:originalURL toURL:URL error:outError];
             }
-            [fileManager release];
             
             return result;
         }
