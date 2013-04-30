@@ -153,6 +153,10 @@
     STAssertTrue([@"/foo/bar/baz.html" ks_isSubpathOfPath:@"/foo/bar/baz.html/"], nil);
     STAssertTrue([@"/foo/bar/baz.html/" ks_isSubpathOfPath:@"/foo/bar/baz.html"], nil);
     STAssertTrue([@"/foo/bar/baz.html/" ks_isSubpathOfPath:@"/foo/bar/baz.html/"], nil);
+    
+    // Make sure similar things aren't mistaken
+    STAssertFalse([@"/foo/abcdefg" ks_isSubpathOfPath:@"/foo/abcd"], nil);
+    STAssertFalse([@"/foo/abcd" ks_isSubpathOfPath:@"/foo/abcdefg"], nil);
 }
 
 - (void)testStringByIncrementingPath;
