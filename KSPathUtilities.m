@@ -174,13 +174,13 @@
     
     
     // How do you get from the directory path, to commonDir?
-    [dirPath ks_enumeratePathComponentsInRange:dirSearchRange usingBlock:^(NSString *component, NSRange range, BOOL *stop) {
+    [dirPath ks_enumeratePathComponentRangesInRange:dirSearchRange usingBlock:^(NSRange range, BOOL *stop) {
         
         // Ignore components which just specify current directory
-        if ([component isEqualToString:@"."]) return;
+        if ([dirPath compare:@"." options:NSLiteralSearch range:range] == NSOrderedSame) return;
         
         
-        if (range.length == 2) NSAssert(![component isEqualToString:@".."], @".. unsupported: %@", dirPath);
+        if (range.length == 2) NSAssert([dirPath compare:@".." options:NSLiteralSearch range:range] != NSOrderedSame, @".. unsupported: %@", dirPath);
         
         if ([result length]) [result appendString:@"/"];
         [result appendString:@".."];
