@@ -218,13 +218,19 @@
 {
     @autoreleasepool
     {
-        
+        [self ks_enumeratePathComponentRangesInRange:searchRange usingBlock:^(NSRange componentRange, BOOL *stop) {
+            block([self substringWithRange:componentRange], componentRange, stop);
+        }];
+    }
+}
+
+- (void)ks_enumeratePathComponentRangesInRange:(NSRange)searchRange usingBlock:(void (^)(NSRange componentRange, BOOL *stop))block;
+{
     // Report absolute path's first component specially
     if (searchRange.location == 0 && [self isAbsolutePath])
     {
-        NSRange range = NSMakeRange(0, 1);
         BOOL stop = NO;
-        block(@"/", range, &stop);
+        block(NSMakeRange(0, 1), &stop);
         if (stop) return;
     }
     
@@ -240,10 +246,9 @@
             
             if (range.length == 0) return;
             
-            NSString *component = [self substringWithRange:range];
             BOOL stop = NO;
             
-            block(component, range, &stop);
+            block(range, &stop);
             if (stop) return;
             
             // bump up slashRange so adjusting searchRange has correct effect
@@ -253,8 +258,6 @@
         searchRange.location += slashRange.length; searchRange.length -= slashRange.length;
     }
     while (searchRange.length);
-        
-    }
 }
 
 #pragma mark POSIX
