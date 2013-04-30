@@ -139,53 +139,56 @@
     }
     
     
-    // Easy way out
-    if ([self isEqualToString:dirPath]) return @".";
-    
-    
     // Determine the common ancestor directory containing both paths
     __block NSRange mySearchRange = NSMakeRange(1, [self length] - 1);
-    __block NSRange dirSearchRange = NSMakeRange(1, [dirPath length] - 1);
+    NSMutableString *result = [NSMutableString string];
     
-    [self ks_enumeratePathComponentsInRange:mySearchRange usingBlock:^(NSString *myComponent, NSRange myRange, BOOL *stopOuter) {
+    
+    if ([self hasPrefix:dirPath])   // easy win when self is obviously a subpath
+    {
+        mySearchRange.location = NSMaxRange([self rangeOfString:dirPath options:NSAnchoredSearch]);
+        mySearchRange.length = self.length - mySearchRange.location;
+    }
+    else
+    {
+        __block NSRange dirSearchRange = NSMakeRange(1, [dirPath length] - 1);
         
-        // Does it match the other path?
-        [dirPath ks_enumeratePathComponentsInRange:dirSearchRange usingBlock:^(NSString *dirComponent, NSRange dirRange, BOOL *stopInner) {
+        [self ks_enumeratePathComponentsInRange:mySearchRange usingBlock:^(NSString *myComponent, NSRange myRange, BOOL *stopOuter) {
             
-            if ([myComponent compare:dirComponent options:0] == NSOrderedSame)
-            {
-                dirSearchRange = NSMakeRange(NSMaxRange(dirRange),
-                                             NSMaxRange(dirSearchRange) - NSMaxRange(dirRange));
+            // Does it match the other path?
+            [dirPath ks_enumeratePathComponentsInRange:dirSearchRange usingBlock:^(NSString *dirComponent, NSRange dirRange, BOOL *stopInner) {
                 
-                mySearchRange = NSMakeRange(NSMaxRange(myRange),
-                                            NSMaxRange(mySearchRange) - NSMaxRange(myRange));
-            }
-            else
-            {
-                *stopOuter = YES;
-            }
-            
-            *stopInner = YES;
+                if ([myComponent compare:dirComponent options:0] == NSOrderedSame)
+                {
+                    dirSearchRange = NSMakeRange(NSMaxRange(dirRange),
+                                                 NSMaxRange(dirSearchRange) - NSMaxRange(dirRange));
+                    
+                    mySearchRange = NSMakeRange(NSMaxRange(myRange),
+                                                NSMaxRange(mySearchRange) - NSMaxRange(myRange));
+                }
+                else
+                {
+                    *stopOuter = YES;
+                }
+                
+                *stopInner = YES;
+            }];
         }];
-    }];
-    
-    
-    NSMutableString *result = [NSMutableString stringWithCapacity:(dirSearchRange.length + mySearchRange.length)];
-    
-    
-    // How do you get from the directory path, to commonDir?
-    [dirPath ks_enumeratePathComponentRangesInRange:dirSearchRange usingBlock:^(NSRange range, BOOL *stop) {
-        
-        // Ignore components which just specify current directory
-        if ([dirPath compare:@"." options:NSLiteralSearch range:range] == NSOrderedSame) return;
         
         
-        if (range.length == 2) NSAssert([dirPath compare:@".." options:NSLiteralSearch range:range] != NSOrderedSame, @".. unsupported: %@", dirPath);
-        
-        if ([result length]) [result appendString:@"/"];
-        [result appendString:@".."];
-    }];
-    
+        // How do you get from the directory path, to commonDir?
+        [dirPath ks_enumeratePathComponentRangesInRange:dirSearchRange usingBlock:^(NSRange range, BOOL *stop) {
+            
+            // Ignore components which just specify current directory
+            if ([dirPath compare:@"." options:NSLiteralSearch range:range] == NSOrderedSame) return;
+            
+            
+            if (range.length == 2) NSAssert([dirPath compare:@".." options:NSLiteralSearch range:range] != NSOrderedSame, @".. unsupported: %@", dirPath);
+            
+            if ([result length]) [result appendString:@"/"];
+            [result appendString:@".."];
+        }];
+    }
     
     // And then navigating from commonDir, to self, is mostly a simple append
 	NSString *pathRelativeToCommonDir = [self substringWithRange:mySearchRange];
