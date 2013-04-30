@@ -222,6 +222,10 @@
                 
                 if (myPath && otherPath)
                 {
+                    // Account for URLs like http://example.com that have no path at all
+                    if (myPath.length == 0) myPath = @"/";
+                    if (otherPath.length == 0) otherPath = @"/";
+                    
                     result = [myPath ks_isSubpathOfPath:otherPath];
                 }
             }

@@ -101,23 +101,24 @@
     NSParameterAssert(aPath);  // karelia case #115844
     
     
-	NSString *adjustedMePath = self;
-	if (![adjustedMePath isEqualToString:@"/"])
-	{
-		adjustedMePath = [adjustedMePath stringByAppendingString:@"/"];
-	}
-	
-	NSString *adjustedOtherPath = aPath;
-	if (![adjustedOtherPath hasSuffix:@"/"])
-	{
-		adjustedOtherPath = [adjustedOtherPath stringByAppendingString:@"/"];
-	}
+    // Strip off trailing slashes as they confuse the search
+    while ([aPath hasSuffix:@"/"] && ![self hasSuffix:@"/"] && aPath.length > 1)
+    {
+        aPath = [aPath substringToIndex:aPath.length - 1];
+    }
     
     // Used to -hasPrefix:, but really need to do it case insensitively
-    NSRange result = [adjustedMePath rangeOfString:adjustedOtherPath
-                                           options:(NSAnchoredSearch | NSCaseInsensitiveSearch)];
+    NSRange range = [self rangeOfString:aPath
+                                options:(NSAnchoredSearch | NSCaseInsensitiveSearch)];
     
-    return (result.location == 0);
+    if (range.location != 0) return NO;
+    
+    // Correct for last component being only a sub*string*
+    if (self.length == range.length) return YES;  // shortcut for exact match
+    if ([aPath hasSuffix:@"/"]) return YES; // when has a directory termintator, no risk of mismatch
+    
+    BOOL result = ([self characterAtIndex:range.length] == '/');
+    return result;
 }
 
 
