@@ -216,6 +216,9 @@
 
 - (void)ks_enumeratePathComponentsInRange:(NSRange)searchRange usingBlock:(void (^)(NSString *component, NSRange range, BOOL *stop))block;
 {
+    @autoreleasepool
+    {
+        
     // Report absolute path's first component specially
     if (searchRange.location == 0 && [self isAbsolutePath])
     {
@@ -250,6 +253,8 @@
         searchRange.location += slashRange.length; searchRange.length -= slashRange.length;
     }
     while (searchRange.length);
+        
+    }
 }
 
 #pragma mark POSIX
