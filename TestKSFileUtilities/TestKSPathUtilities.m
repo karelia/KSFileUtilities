@@ -52,6 +52,32 @@
 
 #pragma mark - Tests
 
+- (void)testEnumeratePathComponents;
+{
+    STAssertEqualObjects([self componentsOfPath:@"foo/bar"], (@[@"foo", @"bar"]), nil);
+    STAssertEqualObjects([self componentsOfPath:@"foo/bar/"], (@[@"foo", @"bar"]), nil);
+    STAssertEqualObjects([self componentsOfPath:@"foo//bar/"], (@[@"foo", @"bar"]), nil);
+
+    STAssertEqualObjects([self componentsOfPath:@"/"], (@[@"/"]), nil);
+    STAssertEqualObjects([self componentsOfPath:@"//"], (@[@"/"]), nil);
+    STAssertEqualObjects([self componentsOfPath:@"/foo/bar"], (@[@"/", @"foo", @"bar"]), nil);
+    STAssertEqualObjects([self componentsOfPath:@"/foo/bar/"], (@[@"/", @"foo", @"bar"]), nil);
+    STAssertEqualObjects([self componentsOfPath:@"/foo//bar/"], (@[@"/", @"foo", @"bar"]), nil);
+    STAssertEqualObjects([self componentsOfPath:@"//foo//bar/"], (@[@"/", @"foo", @"bar"]), nil);
+}
+
+- (NSArray *)componentsOfPath:(NSString *)path;
+{
+    NSMutableArray *result = [NSMutableArray array];
+    
+    [path ks_enumeratePathComponentsInRange:NSMakeRange(0, path.length) options:0 usingBlock:^(NSString *component, NSRange componentRange, NSRange enclosingRange, BOOL *stop) {
+        
+        [result addObject:component];
+    }];
+    
+    return result;
+}
+
 - (void)testPathRelativeToDirectory {
     // Test cases for ks_pathRelativeToDirectory
     

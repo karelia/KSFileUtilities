@@ -43,6 +43,12 @@
 - (NSString *)ks_stringWithPathSuffix:(NSString *)aString;
 
 
+#pragma mark Finding Path Components
+
+- (void)ks_enumeratePathComponentsInRange:(NSRange)range
+                                  options:(NSStringEnumerationOptions)opts  // only NSStringEnumerationSubstringNotRequired is supported for now
+                               usingBlock:(void (^)(NSString *component, NSRange componentRange, NSRange enclosingRange, BOOL *stop))block;
+
 #pragma mark Comparing Paths
 
 // Standardizes the paths and tests equality ignoring case

@@ -81,6 +81,76 @@
     return [[[KSIncrementedPath alloc] initWithBasePath:self suffix:2] autorelease];
 }
 
+#pragma mark Finding Path Components
+
+- (void)ks_enumeratePathComponentsInRange:(NSRange)range
+                                  options:(NSStringEnumerationOptions)opts  // only NSStringEnumerationSubstringNotRequired is supported for now
+                               usingBlock:(void (^)(NSString *component, NSRange componentRange, NSRange enclosingRange, BOOL *stop))block;
+{
+    while (range.length)
+    {
+        // Seek for next path separator
+        NSRange enclosingRange = NSMakeRange(range.location, 0);
+        NSRange separatorRange = [self rangeOfString:@"/" options:NSLiteralSearch range:range];
+        
+        // Separators that don't mark a new component can be more-or-less ignored
+        while (separatorRange.location == range.location)
+        {
+            // Absolute paths are a special case where we have to treat the leading slash as a component
+            if (separatorRange.location == 0)
+            {
+                // Search for immediately following separator, but no more
+                separatorRange = NSMakeRange(separatorRange.length, 0); // weird fake, yes
+                if (self.length > separatorRange.location && [self characterAtIndex:separatorRange.location] == '/') separatorRange.length = 1;
+                break;
+            }
+            
+            range.location += separatorRange.length; range.length -= separatorRange.length;
+            if (range.length == 0) return;
+            
+            enclosingRange.length += separatorRange.length;
+            
+            separatorRange = [self rangeOfString:@"/" options:NSLiteralSearch range:range];
+        }
+        
+   
+        // Now we know where the component lies
+        NSRange componentRange = range;
+        if (separatorRange.location == NSNotFound)
+        {
+            range.length = 0;   // so we finish after this iteration
+        }
+        else
+        {
+            range = NSMakeRange(NSMaxRange(separatorRange), NSMaxRange(range) - NSMaxRange(separatorRange));
+            
+            componentRange.length = (separatorRange.location - componentRange.location);
+            
+            enclosingRange.length += separatorRange.length;
+            
+            
+            // Look for remainder of enclosingRange that immediately follow the component
+            separatorRange = [self rangeOfString:@"/" options:NSAnchoredSearch|NSLiteralSearch range:range];
+            while (separatorRange.location != NSNotFound)
+            {
+                enclosingRange.length += separatorRange.length;
+                range.location += separatorRange.length; range.length -= separatorRange.length;
+                separatorRange = [self rangeOfString:@"/" options:NSAnchoredSearch|NSLiteralSearch range:range];
+            }
+        }
+        
+        enclosingRange.length += componentRange.length; // only add now that componentRange.length is correct
+        
+        BOOL stop = NO;
+        block((opts & NSStringEnumerationSubstringNotRequired ? nil : [self substringWithRange:componentRange]),
+              componentRange,
+              enclosingRange,
+              &stop);
+        
+        if (stop) return;
+    }
+}
+
 #pragma mark Comparing Paths
 
 - (BOOL)ks_isEqualToPath:(NSString *)aPath;
@@ -153,10 +223,10 @@
     {
         __block NSRange dirSearchRange = NSMakeRange(1, [dirPath length] - 1);
         
-        [self ks_enumeratePathComponentsInRange:mySearchRange usingBlock:^(NSString *myComponent, NSRange myRange, BOOL *stopOuter) {
+        [self ks_enumeratePathComponentsInRange:mySearchRange options:0 usingBlock:^(NSString *myComponent, NSRange myRange, NSRange enclosingRange, BOOL *stopOuter) {
             
             // Does it match the other path?
-            [dirPath ks_enumeratePathComponentsInRange:dirSearchRange usingBlock:^(NSString *dirComponent, NSRange dirRange, BOOL *stopInner) {
+            [dirPath ks_enumeratePathComponentsInRange:dirSearchRange options:0 usingBlock:^(NSString *dirComponent, NSRange dirRange, NSRange enclosingRange, BOOL *stopInner) {
                 
                 if ([myComponent compare:dirComponent options:0] == NSOrderedSame)
                 {
@@ -177,7 +247,7 @@
         
         
         // How do you get from the directory path, to commonDir?
-        [dirPath ks_enumeratePathComponentRangesInRange:dirSearchRange usingBlock:^(NSRange range, BOOL *stop) {
+        [dirPath ks_enumeratePathComponentsInRange:dirSearchRange options:NSStringEnumerationSubstringNotRequired usingBlock:^(NSString *component, NSRange range, NSRange enclosingRange, BOOL *stop) {
             
             // Ignore components which just specify current directory
             if ([dirPath compare:@"." options:NSLiteralSearch range:range] == NSOrderedSame) return;
@@ -215,52 +285,6 @@
     
 	
 	return result;
-}
-
-- (void)ks_enumeratePathComponentsInRange:(NSRange)searchRange usingBlock:(void (^)(NSString *component, NSRange range, BOOL *stop))block;
-{
-    @autoreleasepool
-    {
-        [self ks_enumeratePathComponentRangesInRange:searchRange usingBlock:^(NSRange componentRange, BOOL *stop) {
-            block([self substringWithRange:componentRange], componentRange, stop);
-        }];
-    }
-}
-
-- (void)ks_enumeratePathComponentRangesInRange:(NSRange)searchRange usingBlock:(void (^)(NSRange componentRange, BOOL *stop))block;
-{
-    // Report absolute path's first component specially
-    if (searchRange.location == 0 && [self isAbsolutePath])
-    {
-        BOOL stop = NO;
-        block(NSMakeRange(0, 1), &stop);
-        if (stop) return;
-    }
-    
-    do
-    {
-        NSRange slashRange = [self rangeOfString:@"/" options:NSLiteralSearch range:searchRange];
-        
-        if (slashRange.location != searchRange.location)
-        {
-            NSRange range = (slashRange.location == NSNotFound ?
-                             searchRange :
-                             NSMakeRange(searchRange.location, slashRange.location - searchRange.location));
-            
-            if (range.length == 0) return;
-            
-            BOOL stop = NO;
-            
-            block(range, &stop);
-            if (stop) return;
-            
-            // bump up slashRange so adjusting searchRange has correct effect
-            slashRange.length += range.length;
-        }
-        
-        searchRange.location += slashRange.length; searchRange.length -= slashRange.length;
-    }
-    while (searchRange.length);
 }
 
 #pragma mark POSIX
