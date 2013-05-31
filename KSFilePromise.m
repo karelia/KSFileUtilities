@@ -50,6 +50,22 @@
     return result;
 }
 
++ (NSArray *)promisesFromDraggingInfo:(id <NSDraggingInfo>)info forDocument:(NSDocument *)doc
+		   waitUntilFilesAreReachable:(BOOL)waitTillReachable timeout:(NSTimeInterval)timeout;
+{
+	NSArray *result = [self promisesFromDraggingInfo:info forDocument:doc];
+	
+	if (waitTillReachable)
+	{
+		for (KSFilePromise *aPromise in result)
+		{
+			[aPromise waitUntilFileIsReachableWithTimeout:timeout error:NULL];
+		}
+	}
+	
+	return result;
+}
+
 - (id)initWithName:(NSString *)name destination:(KSFilePromiseDestination *)destination;
 {
     NSParameterAssert([name length] > 0);

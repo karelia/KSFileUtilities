@@ -27,6 +27,10 @@
 // Do NOT attempt to alloc/init KSFilePromise instances yourself
 + (NSArray *)promisesFromDraggingInfo:(id <NSDraggingInfo>)info forDocument:(NSDocument *)doc;
 
+// As above but can be asked to wait for files to arrive
++ (NSArray *)promisesFromDraggingInfo:(id <NSDraggingInfo>)info forDocument:(NSDocument *)doc
+		   waitUntilFilesAreReachable:(BOOL)waitTillReachable timeout:(NSTimeInterval)timeout;
+
 + (BOOL)canReadFilePromiseConformingToTypes:(NSArray *)types fromPasteboard:(NSPasteboard *)pasteboard;
 
 @property(nonatomic, readonly) NSURL *fileURL;
