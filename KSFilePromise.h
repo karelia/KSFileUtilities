@@ -31,4 +31,9 @@
 
 @property(nonatomic, readonly) NSURL *fileURL;
 
+// File promises arrive at the source program's discretion
+// This is a crude method to wait until the file at least exists! There's no way to really know when it's actually *complete* though
+// If the timeout is reached, returns NO with the most recent reachability error (likely "no such file")
+- (BOOL)waitUntilFileIsReachableWithTimeout:(NSTimeInterval)timeout error:(NSError **)error;
+
 @end

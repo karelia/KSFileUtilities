@@ -122,6 +122,23 @@
 
 @synthesize fileURL = _fileURL;
 
+#pragma mark Waiting for File Existance
+
+- (BOOL)waitUntilFileIsReachableWithTimeout:(NSTimeInterval)timeout error:(NSError **)error;
+{
+	NSURL *url = self.fileURL;
+	NSTimeInterval start = [NSProcessInfo processInfo].systemUptime;
+	
+	BOOL result;
+	while (!(result = [url checkResourceIsReachableAndReturnError:error]))
+	{
+		if ([NSProcessInfo processInfo].systemUptime - start > timeout) break;
+		[NSThread sleepForTimeInterval:0.1f];	// yes it's horriffic. Think of something better before you judge me
+	}
+	
+	return result;
+}
+
 #pragma mark NSCopying
 
 - (id)copyWithZone:(NSZone *)zone;
