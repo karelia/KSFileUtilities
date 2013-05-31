@@ -27,8 +27,17 @@
 // Do NOT attempt to alloc/init KSFilePromise instances yourself
 + (NSArray *)promisesFromDraggingInfo:(id <NSDraggingInfo>)info forDocument:(NSDocument *)doc;
 
+// As above but can be asked to wait for files to arrive
++ (NSArray *)promisesFromDraggingInfo:(id <NSDraggingInfo>)info forDocument:(NSDocument *)doc
+		   waitUntilFilesAreReachable:(BOOL)waitTillReachable timeout:(NSTimeInterval)timeout;
+
 + (BOOL)canReadFilePromiseConformingToTypes:(NSArray *)types fromPasteboard:(NSPasteboard *)pasteboard;
 
 @property(nonatomic, readonly) NSURL *fileURL;
+
+// File promises arrive at the source program's discretion
+// This is a crude method to wait until the file at least exists! There's no way to really know when it's actually *complete* though
+// If the timeout is reached, returns NO with the most recent reachability error (likely "no such file")
+- (BOOL)waitUntilFileIsReachableWithTimeout:(NSTimeInterval)timeout error:(NSError **)error;
 
 @end

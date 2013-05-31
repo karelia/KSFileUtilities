@@ -50,6 +50,22 @@
     return result;
 }
 
++ (NSArray *)promisesFromDraggingInfo:(id <NSDraggingInfo>)info forDocument:(NSDocument *)doc
+		   waitUntilFilesAreReachable:(BOOL)waitTillReachable timeout:(NSTimeInterval)timeout;
+{
+	NSArray *result = [self promisesFromDraggingInfo:info forDocument:doc];
+	
+	if (waitTillReachable)
+	{
+		for (KSFilePromise *aPromise in result)
+		{
+			[aPromise waitUntilFileIsReachableWithTimeout:timeout error:NULL];
+		}
+	}
+	
+	return result;
+}
+
 - (id)initWithName:(NSString *)name destination:(KSFilePromiseDestination *)destination;
 {
     NSParameterAssert([name length] > 0);
@@ -75,10 +91,12 @@
     [super dealloc];
 }
 
-+ (void)tryToDeleteFilePromiseURL:(NSURL *)url destination:(KSFilePromiseDestination *)destination retryInterval:(int64_t)delayInSeconds;
++ (BOOL)tryToDeleteFilePromiseURL:(NSURL *)url destination:(KSFilePromiseDestination *)destination retryInterval:(int64_t)delayInSeconds;
 {    
     NSError *error;
-    if (![[NSFileManager defaultManager] removeItemAtURL:url error:&error])
+    BOOL result = [[NSFileManager defaultManager] removeItemAtURL:url error:&error];
+	
+	if (!result)
     {
         NSLog(@"File promise deletion failed: %@", error);
         NSLog(@"Maybe the file hasn't arrived yet, or will become removable soon. Retrying later");
@@ -86,11 +104,15 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
-            [self tryToDeleteFilePromiseURL:url
-                                destination:destination
-                              retryInterval:(2 * delayInSeconds)];    // keep extending to minimise interruptions
+            BOOL retryResult = [self tryToDeleteFilePromiseURL:url
+												   destination:destination
+												 retryInterval:(2 * delayInSeconds)];    // keep extending to minimise interruptions
+			
+			if (retryResult) NSLog(@"Retried deletion of file promise succeded: %@", [url path]);
         });
     }
+	
+	return result;
 }
 
 #pragma mark Pasteboard Introspection
@@ -115,6 +137,23 @@
 #pragma mark Properties
 
 @synthesize fileURL = _fileURL;
+
+#pragma mark Waiting for File Existance
+
+- (BOOL)waitUntilFileIsReachableWithTimeout:(NSTimeInterval)timeout error:(NSError **)error;
+{
+	NSURL *url = self.fileURL;
+	NSTimeInterval start = [NSProcessInfo processInfo].systemUptime;
+	
+	BOOL result;
+	while (!(result = [url checkResourceIsReachableAndReturnError:error]))
+	{
+		if ([NSProcessInfo processInfo].systemUptime - start > timeout) break;
+		[NSThread sleepForTimeInterval:0.1f];	// yes it's horriffic. Think of something better before you judge me
+	}
+	
+	return result;
+}
 
 #pragma mark NSCopying
 
