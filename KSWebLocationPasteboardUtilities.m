@@ -145,7 +145,7 @@
             
             NSArray *checkResults = [spellChecker checkString:string
                                                         range:NSMakeRange(0, [string length])
-                                                        types:NSTextCheckingTypeLink
+                                                        types:(NSTextCheckingTypes)NSTextCheckingTypeLink   // cast to suppress oddity of SDK
                                                       options:nil
                                        inSpellDocumentWithTag:0
                                                   orthography:NULL
