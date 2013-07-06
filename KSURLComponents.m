@@ -16,9 +16,11 @@
     
     self = [self init];
     
-    CFStringRef scheme = CFURLCopyScheme((CFURLRef)url);
-    if (scheme)
+    // Avoid CFURLCopyScheme as it resolves relative URLs
+    CFRange schemeRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentScheme, NULL);
+    if (schemeRange.location != kCFNotFound)
     {
+        CFStringRef scheme = CFStringCreateWithSubstring(NULL, CFURLGetString((CFURLRef)url), schemeRange);
         self.scheme = (NSString *)scheme;
         CFRelease(scheme);
     }
