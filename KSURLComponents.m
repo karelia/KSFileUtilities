@@ -111,7 +111,29 @@
 
 - (NSURL *)URLRelativeToURL:(NSURL *)baseURL;
 {
+    NSString *user = self.percentEncodedUser;
+    NSString *password = self.percentEncodedPassword;
+    NSString *host = self.percentEncodedHost;
+    NSNumber *port = self.port;
+    NSString *path = self.percentEncodedPath;
+    
+    BOOL hasAuthorityComponent = (user || password || host || port);
+    
+    // If the KSURLComponents has an authority component (user, password, host or port) and a path component, then the path must either begin with "/" or be an empty string.
+    if (hasAuthorityComponent &&
+        !(path.length == 0 || [path isAbsolutePath]))
+    {
+        return nil;
+    }
+    
+    // If the KSURLComponents does not have an authority component (user, password, host or port) and has a path component, the path component must not start with "//".
+    if (!hasAuthorityComponent && [path hasPrefix:@"//"])
+    {
+        return nil;
+    }
+    
     NSMutableString *string = [[NSMutableString alloc] init];
+    
     
     NSString *scheme = self.scheme;
     if (scheme)
@@ -120,12 +142,10 @@
         [string appendString:@":"];
     }
     
-    NSString *user = self.percentEncodedUser;
     if (user)
     {
         [string appendString:user];
         
-        NSString *password = self.percentEncodedPassword;
         if (password)
         {
             [string appendString:@":"];
@@ -135,19 +155,16 @@
         [string appendString:@"@"];
     }
     
-    NSString *host = self.percentEncodedHost;
     if (host)
     {
         [string appendString:host];
     }
     
-    NSNumber *port = self.port;
     if (port)
     {
         [string appendFormat:@":%u", port.unsignedIntValue];
     }
     
-    NSString *path = self.percentEncodedPath;
     if (path)
     {
         [string appendString:path];
