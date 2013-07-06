@@ -23,23 +23,29 @@
         CFRelease(scheme);
     }
     
-    CFStringRef user = CFURLCopyUserName((CFURLRef)url);
-    if (user)
+    // Avoid CFURLCopyUserName as it removes escapes
+    CFRange userRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentUser, NULL);
+    if (userRange.location != kCFNotFound)
     {
+        CFStringRef user = CFStringCreateWithSubstring(NULL, CFURLGetString((CFURLRef)url), userRange);
         self.percentEncodedUser = (NSString *)user;
         CFRelease(user);
     }
     
-    CFStringRef password = CFURLCopyPassword((CFURLRef)url);
-    if (password)
+    // Avoid CFURLCopyPassword as it removes escapes
+    CFRange passwordRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentPassword, NULL);
+    if (passwordRange.location != kCFNotFound)
     {
+        CFStringRef password = CFStringCreateWithSubstring(NULL, CFURLGetString((CFURLRef)url), passwordRange);
         self.percentEncodedPassword = (NSString *)password;
         CFRelease(password);
     }
     
-    CFStringRef host = CFURLCopyHostName((CFURLRef)url);
-    if (host)
+    // Avoid CFURLCopyHostName as it removes escapes
+    CFRange hostRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentHost, NULL);
+    if (hostRange.location != kCFNotFound)
     {
+        CFStringRef host = CFStringCreateWithSubstring(NULL, CFURLGetString((CFURLRef)url), hostRange);
         self.percentEncodedHost = (NSString *)host;
         CFRelease(host);
     }
