@@ -60,7 +60,7 @@
     STAssertEqualObjects(components.password, @"password", nil);
     STAssertEqualObjects(components.host, @"host", nil);
     STAssertEqualObjects(components.port, @(0), nil);
-    STAssertEqualObjects(components.path, @"path", nil);
+    STAssertEqualObjects(components.path, @"/path", nil);
     STAssertEqualObjects(components.query, @"query", nil);
     STAssertEqualObjects(components.fragment, @"fragment", nil);
 }

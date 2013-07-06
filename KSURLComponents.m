@@ -169,7 +169,7 @@
 @synthesize percentEncodedUser = _userComponent;
 - (NSString *)user;
 {
-    return [self.percentEncodedUser stringByRemovingPercentEncoding];
+    return [self.percentEncodedUser stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 - (void)setUser:(NSString *)user;
 {
@@ -181,7 +181,7 @@
 @synthesize percentEncodedPassword = _passwordComponent;
 - (NSString *)password;
 {
-    return [self.percentEncodedPassword stringByRemovingPercentEncoding];
+    return [self.percentEncodedPassword stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 - (void)setPassword:(NSString *)password;
 {
@@ -193,7 +193,7 @@
 @synthesize percentEncodedHost = _hostComponent;
 - (NSString *)host;
 {
-    return [self.percentEncodedHost stringByRemovingPercentEncoding];
+    return [self.percentEncodedHost stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 - (void)setHost:(NSString *)host;
 {
@@ -223,7 +223,7 @@
 @synthesize percentEncodedPath = _pathComponent;
 - (NSString *)path;
 {
-    return [self.percentEncodedPath stringByRemovingPercentEncoding];
+    return [self.percentEncodedPath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 - (void)setPath:(NSString *)path;
 {
@@ -235,7 +235,7 @@
 @synthesize percentEncodedQuery = _queryComponent;
 - (NSString *)query;
 {
-    return [self.percentEncodedQuery stringByRemovingPercentEncoding];
+    return [self.percentEncodedQuery stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 - (void)setQuery:(NSString *)query;
 {
@@ -247,7 +247,7 @@
 @synthesize percentEncodedFragment = _fragmentComponent;
 - (NSString *)fragment;
 {
-    return [self.percentEncodedFragment stringByRemovingPercentEncoding];
+    return [self.percentEncodedFragment stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 - (void)setFragment:(NSString *)fragment;
 {
