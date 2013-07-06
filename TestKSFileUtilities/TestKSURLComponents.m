@@ -170,6 +170,24 @@
 
 #pragma mark Creating a URL
 
+- (void)testURL;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    components.scheme = @"scheme";
+    components.user = @"user";
+    components.password = @"password";
+    components.host = @"host";
+    components.port = @(0);
+    components.path = @"/path";
+    components.query = @"query";
+    components.fragment = @"fragment";
+    
+    NSURL *url = [components URL];
+    STAssertEqualObjects(url.relativeString, @"scheme://user:password@host:0/path?query#fragment", nil);
+    
+    [components release];
+}
+
 - (void)testURLFromAuthorityComponentAndRelativePath
 {
     KSURLComponents *components = [KSURLComponents componentsWithString:@"http://example.com"];
