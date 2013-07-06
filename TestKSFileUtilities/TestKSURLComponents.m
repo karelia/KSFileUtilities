@@ -28,6 +28,8 @@
     [super tearDown];
 }
 
+#pragma mark Creating URL Components
+
 - (void)testInit
 {
     KSURLComponents *components = [[KSURLComponents alloc] init];
@@ -164,6 +166,28 @@
     STAssertEqualObjects(components.path, @"/path", nil);
     STAssertNil(components.query, nil);
     STAssertNil(components.fragment, nil);
+}
+
+#pragma mark Creating a URL
+
+- (void)testURLFromAuthorityComponentAndRelativePath
+{
+    KSURLComponents *components = [KSURLComponents componentsWithString:@"http://example.com"];
+    components.path = @"relative";
+    
+    NSURL *url = [components URL];
+    STAssertNil(url, @"If the KSURLComponents has an authority component (user, password, host or port) and a path component, then the path must either begin with \"/\" or be an empty string");
+}
+
+- (void)testURLFromNoAuthorityComponentAndProtocolRelativePath
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    components.path = @"//protocol/relative";
+    
+    NSURL *url = [components URL];
+    STAssertNil(url, @"If the KSURLComponents does not have an authority component (user, password, host or port) and has a path component, the path component must not start with \"//\"");
+    
+    [components release];
 }
 
 @end
