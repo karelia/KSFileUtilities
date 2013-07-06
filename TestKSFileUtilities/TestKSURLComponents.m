@@ -65,4 +65,25 @@
     STAssertEqualObjects(components.fragment, @"fragment", nil);
 }
 
+- (void)testInitWithEscapedURL;
+{
+    KSURLComponents *components = [KSURLComponents componentsWithURL:[NSURL URLWithString:@"scheme://us%C3%A9r:p%C3%A2ssword@h%C3%B4st:0/p%C3%A0th?q%C3%BCery#fragme%C3%B1t"]
+                                             resolvingAgainstBaseURL:NO];
+    
+    STAssertEqualObjects(components.scheme, @"scheme", nil);
+    STAssertEqualObjects(components.user, @"usér", nil);
+    STAssertEqualObjects(components.percentEncodedUser, @"us%C3%A9r", nil);
+    STAssertEqualObjects(components.password, @"pâssword", nil);
+    STAssertEqualObjects(components.percentEncodedPassword, @"p%C3%A2ssword", nil);
+    STAssertEqualObjects(components.host, @"hôst", nil);
+    STAssertEqualObjects(components.percentEncodedHost, @"h%C3%B4st", nil);
+    STAssertEqualObjects(components.port, @(0), nil);
+    STAssertEqualObjects(components.path, @"/pàth", nil);
+    STAssertEqualObjects(components.percentEncodedPath, @"/p%C3%A0th", nil);
+    STAssertEqualObjects(components.query, @"qüery", nil);
+    STAssertEqualObjects(components.percentEncodedQuery, @"q%C3%BCery", nil);
+    STAssertEqualObjects(components.fragment, @"fragmeñt", nil);
+    STAssertEqualObjects(components.percentEncodedFragment, @"fragme%C3%B1t", nil);
+}
+
 @end
