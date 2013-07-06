@@ -86,4 +86,84 @@
     STAssertEqualObjects(components.percentEncodedFragment, @"fragme%C3%B1t", nil);
 }
 
+- (void)testInitWithRelativeFragment;
+{
+    KSURLComponents *components = [KSURLComponents componentsWithURL:[NSURL URLWithString:@"#fragment"
+                                                                            relativeToURL:[NSURL URLWithString:@"http://example.com/path#wrong"]]
+                                             resolvingAgainstBaseURL:NO];
+    
+    STAssertNil(components.scheme, nil);
+    STAssertNil(components.user, nil);
+    STAssertNil(components.password, nil);
+    STAssertNil(components.host, nil);
+    STAssertNil(components.port, nil);
+    STAssertNil(components.path, nil);
+    STAssertNil(components.query, nil);
+    STAssertEqualObjects(components.fragment, @"fragment", nil);
+}
+
+- (void)testInitWithRelativeQuery;
+{
+    KSURLComponents *components = [KSURLComponents componentsWithURL:[NSURL URLWithString:@"?query"
+                                                                            relativeToURL:[NSURL URLWithString:@"http://example.com/path?wrong#fragment"]]
+                                             resolvingAgainstBaseURL:NO];
+    
+    STAssertNil(components.scheme, nil);
+    STAssertNil(components.user, nil);
+    STAssertNil(components.password, nil);
+    STAssertNil(components.host, nil);
+    STAssertNil(components.port, nil);
+    STAssertNil(components.path, nil);
+    STAssertEqualObjects(components.query, @"query", nil);
+    STAssertNil(components.fragment, nil);
+}
+
+- (void)testInitWithRelativeAbsolutePath;
+{
+    KSURLComponents *components = [KSURLComponents componentsWithURL:[NSURL URLWithString:@"/path"
+                                                                            relativeToURL:[NSURL URLWithString:@"http://example.com/wrong?query#fragment"]]
+                                             resolvingAgainstBaseURL:NO];
+    
+    STAssertNil(components.scheme, nil);
+    STAssertNil(components.user, nil);
+    STAssertNil(components.password, nil);
+    STAssertNil(components.host, nil);
+    STAssertNil(components.port, nil);
+    STAssertEqualObjects(components.path, @"/path", nil);
+    STAssertNil(components.query, nil);
+    STAssertNil(components.fragment, nil);
+}
+
+- (void)testInitWithRelativeRelativePath;
+{
+    KSURLComponents *components = [KSURLComponents componentsWithURL:[NSURL URLWithString:@"path"
+                                                                            relativeToURL:[NSURL URLWithString:@"http://example.com/wrong?query#fragment"]]
+                                             resolvingAgainstBaseURL:NO];
+    
+    STAssertNil(components.scheme, nil);
+    STAssertNil(components.user, nil);
+    STAssertNil(components.password, nil);
+    STAssertNil(components.host, nil);
+    STAssertNil(components.port, nil);
+    STAssertEqualObjects(components.path, @"path", nil);
+    STAssertNil(components.query, nil);
+    STAssertNil(components.fragment, nil);
+}
+
+- (void)testInitWithProtocolRelativeURL;
+{
+    KSURLComponents *components = [KSURLComponents componentsWithURL:[NSURL URLWithString:@"//host/path"
+                                                                            relativeToURL:[NSURL URLWithString:@"http://example.com/wrong?query#fragment"]]
+                                             resolvingAgainstBaseURL:NO];
+    
+    STAssertNil(components.scheme, nil);
+    STAssertNil(components.user, nil);
+    STAssertNil(components.password, nil);
+    STAssertEqualObjects(components.host, @"host", nil);
+    STAssertNil(components.port, nil);
+    STAssertEqualObjects(components.path, @"/path", nil);
+    STAssertNil(components.query, nil);
+    STAssertNil(components.fragment, nil);
+}
+
 @end
