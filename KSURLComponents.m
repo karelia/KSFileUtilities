@@ -55,9 +55,25 @@
     SInt32 port = CFURLGetPortNumber((CFURLRef)url);
     if (port >= 0) self.port = @(port);
     
-    CFStringRef path = CFURLCopyPath((CFURLRef)url);
-    if (path)
+    
+    // Account for parameter. NS/CFURL treat it as distinct, but NSURLComponents rolls it into the path
+    CFRange pathRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentPath, NULL);
+    
+    CFRange parameterRange;
+    CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentParameterString, &parameterRange);
+    
+    if (pathRange.location != kCFNotFound || (parameterRange.location != kCFNotFound && parameterRange.length > 0))
     {
+        if (pathRange.location == kCFNotFound)
+        {
+            pathRange = parameterRange;
+        }
+        else if (parameterRange.length > 0)
+        {
+            pathRange.length += parameterRange.length;
+        }
+        
+        CFStringRef path = CFStringCreateWithSubstring(NULL, CFURLGetString((CFURLRef)url), pathRange);
         self.percentEncodedPath = (NSString *)path;
         CFRelease(path);
     }
