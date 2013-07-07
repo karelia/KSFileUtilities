@@ -188,6 +188,87 @@
     [components release];
 }
 
+- (void)testURLFromScheme;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    components.scheme = @"scheme";
+    
+    NSURL *url = [components URL];
+    STAssertEqualObjects(url.relativeString, @"scheme:", nil);
+}
+
+- (void)testURLFromUser;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    components.user = @"user";
+    
+    NSURL *url = [components URL];
+    STAssertEqualObjects(url.relativeString, @"//user@", nil);
+}
+
+- (void)testURLFromPassword;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    components.password = @"password";
+    
+    NSURL *url = [components URL];
+    STAssertEqualObjects(url.relativeString, @"//:password@", nil);
+}
+
+- (void)testURLFromHost;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    components.host = @"host";
+    
+    NSURL *url = [components URL];
+    STAssertEqualObjects(url.relativeString, @"//host", nil);
+}
+
+- (void)testURLFromPort;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    components.port = @(0);
+    
+    NSURL *url = [components URL];
+    STAssertEqualObjects(url.relativeString, @"//:0", nil);
+}
+
+- (void)testURLFromAbsolutePath;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    components.path = @"/path";
+    
+    NSURL *url = [components URL];
+    STAssertEqualObjects(url.relativeString, @"/path", nil);
+}
+
+- (void)testURLFromRelativePath;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    components.path = @"path";
+    
+    NSURL *url = [components URL];
+    STAssertEqualObjects(url.relativeString, @"path", nil);
+}
+
+- (void)testURLFromQuery;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    components.query = @"query";
+    
+    NSURL *url = [components URL];
+    STAssertEqualObjects(url.relativeString, @"?query", nil);
+}
+
+- (void)testURLFromFragment;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    components.fragment = @"fragment";
+    
+    NSURL *url = [components URL];
+    STAssertEqualObjects(url.relativeString, @"#fragment", nil);
+}
+
 - (void)testURLFromAuthorityComponentAndRelativePath
 {
     KSURLComponents *components = [KSURLComponents componentsWithString:@"http://example.com"];
