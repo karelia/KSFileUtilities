@@ -144,18 +144,15 @@
     
     if (hasAuthorityComponent) [string appendString:@"//"];
     
-    if (user)
+    if (user) [string appendString:user];
+    
+    if (password)
     {
-        [string appendString:user];
-        
-        if (password)
-        {
-            [string appendString:@":"];
-            [string appendString:password];
-        }
-        
-        [string appendString:@"@"];
+        [string appendString:@":"];
+        [string appendString:password];
     }
+    
+    if (user || password) [string appendString:@"@"];
     
     if (host)
     {
