@@ -269,6 +269,18 @@
     STAssertEqualObjects(url.relativeString, @"#fragment", nil);
 }
 
+- (void)testURLWithoutSchemeOrHost;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    components.user = @"user";
+    components.password = @"password";
+    components.port = @(0);
+    components.path = @"/path";
+    
+    NSURL *url = [components URL];
+    STAssertEqualObjects(url.relativeString, @"//user:password@:0/path", nil);
+}
+
 - (void)testURLFromAuthorityComponentAndRelativePath
 {
     KSURLComponents *components = [KSURLComponents componentsWithString:@"http://example.com"];
