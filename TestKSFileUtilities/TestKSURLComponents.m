@@ -313,6 +313,26 @@
     STAssertEqualObjects(url.relativeString, @"//user:password@:0/path", nil);
 }
 
+- (void)testURLFromSchemeAndAbsolutePathWithoutAuthorityComponent;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    components.scheme = @"scheme";
+    components.path = @"/path";
+    
+    NSURL *url = [components URL];
+    STAssertEqualObjects(url.relativeString, @"scheme:/path", nil);
+}
+
+- (void)testURLFromSchemeAndRelativePathWithoutAuthorityComponent;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    components.scheme = @"scheme";
+    components.path = @"path";
+    
+    NSURL *url = [components URL];
+    STAssertEqualObjects(url.relativeString, @"scheme:path", nil);
+}
+
 - (void)testURLFromAuthorityComponentAndRelativePath
 {
     KSURLComponents *components = [KSURLComponents componentsWithString:@"http://example.com"];
@@ -325,6 +345,7 @@
 - (void)testURLFromNoAuthorityComponentAndProtocolRelativePath
 {
     KSURLComponents *components = [[KSURLComponents alloc] init];
+    components.scheme = @"scheme";
     components.path = @"//protocol/relative";
     
     NSURL *url = [components URL];
