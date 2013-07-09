@@ -51,13 +51,13 @@
 @property (copy) NSString *query;
 @property (copy) NSString *fragment;
 
-// Getting these properties retains any percent encoding these components may have. Setting these properties assumes the component string is already correctly percent encoded. Attempting to set an incorrectly percent encoded string will cause an exception. Although ';' is a legal path character, it is recommended that it be percent-encoded for best compatibility with NSURL (-stringByAddingPercentEncodingWithAllowedCharacters: will percent-encode any ';' chraracters if you pass the URLPathAllowedCharacterSet).
-@property (copy) NSString *percentEncodedUser;
-@property (copy) NSString *percentEncodedPassword;
-@property (copy) NSString *percentEncodedHost;
-@property (copy) NSString *percentEncodedPath;
-@property (copy) NSString *percentEncodedQuery;
-@property (copy) NSString *percentEncodedFragment;
+// Getting these properties retains any percent encoding these components may have. Setting these properties is currently not supported as I am lazy and doing so is rarely useful. If you do have a use case, please send me a pull request or file an issue on GitHub.
+@property (copy, readonly) NSString *percentEncodedUser;
+@property (copy, readonly) NSString *percentEncodedPassword;
+@property (copy, readonly) NSString *percentEncodedHost;
+@property (copy, readonly) NSString *percentEncodedPath;
+@property (copy, readonly) NSString *percentEncodedQuery;
+@property (copy, readonly) NSString *percentEncodedFragment;
 
 
 @end

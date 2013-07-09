@@ -8,6 +8,17 @@
 
 #import "KSURLComponents.h"
 
+
+@interface KSURLComponents ()
+@property (copy, readwrite) NSString *percentEncodedUser;
+@property (copy, readwrite) NSString *percentEncodedPassword;
+@property (copy, readwrite) NSString *percentEncodedHost;
+@property (copy, readwrite) NSString *percentEncodedPath;
+@property (copy, readwrite) NSString *percentEncodedQuery;
+@property (copy, readwrite) NSString *percentEncodedFragment;
+@end
+
+
 @implementation KSURLComponents
 
 #pragma mark Lifecycle
