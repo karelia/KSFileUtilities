@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface KSURLComponents : NSObject
+@interface KSURLComponents : NSObject <NSCopying>
 {
   @private
     NSString    *_schemeComponent;

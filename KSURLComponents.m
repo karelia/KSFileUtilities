@@ -343,4 +343,22 @@
     return self.scheme.hash + self.percentEncodedUser.hash + self.percentEncodedPassword.hash + self.percentEncodedPassword.hash + self.percentEncodedHost.hash + self.port.hash + self.percentEncodedPath.hash + self.percentEncodedQuery.hash + self.percentEncodedFragment.hash;
 }
 
+#pragma mark NSCopying
+
+- (id)copyWithZone:(NSZone *)zone;
+{
+    KSURLComponents *result = [[KSURLComponents alloc] init];
+    
+    result.scheme = self.scheme;
+    result.percentEncodedUser = self.percentEncodedUser;
+    result.percentEncodedPassword = self.percentEncodedPassword;
+    result.percentEncodedHost = self.percentEncodedHost;
+    result.port = self.port;
+    result.percentEncodedPath = self.percentEncodedPath;
+    result.percentEncodedQuery = self.percentEncodedQuery;
+    result.percentEncodedFragment = self.percentEncodedFragment;
+    
+    return result;
+}
+
 @end
