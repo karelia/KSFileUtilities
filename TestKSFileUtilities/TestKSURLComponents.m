@@ -354,4 +354,17 @@
     [components release];
 }
 
+#pragma mark NSCopying
+
+- (void)testCopying;
+{
+    KSURLComponents *components = [KSURLComponents componentsWithURL:[NSURL URLWithString:@"scheme://user:password@host:0/path?query#fragment"]
+                                             resolvingAgainstBaseURL:NO];
+    
+    KSURLComponents *components2 = [components copy];
+    
+    STAssertEqualObjects(components, components2, nil);
+    [components2 release];
+}
+
 @end
