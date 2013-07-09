@@ -10,6 +10,8 @@
 
 @implementation KSURLComponents
 
+#pragma mark Lifecycle
+
 - (id)initWithURL:(NSURL *)url resolvingAgainstBaseURL:(BOOL)resolve;
 {
     if (resolve) url = [url absoluteURL];
@@ -120,6 +122,22 @@
     return [[[self alloc] initWithString:URLString] autorelease];
 }
 
+- (void)dealloc;
+{
+    [_schemeComponent release];
+    [_userComponent release];
+    [_passwordComponent release];
+    [_hostComponent release];
+    [_portComponent release];
+    [_pathComponent release];
+    [_queryComponent release];
+    [_fragmentComponent release];
+    
+    [super dealloc];
+}
+
+#pragma mark Generating a URL
+
 - (NSURL *)URL;
 {
     return [self URLRelativeToURL:nil];
@@ -203,6 +221,8 @@
     [string release];
     return result;
 }
+
+#pragma mark Components
 
 @synthesize scheme = _schemeComponent;
 
