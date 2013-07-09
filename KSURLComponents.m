@@ -235,7 +235,31 @@
 
 #pragma mark Components
 
-@synthesize scheme = _schemeComponent;
+- (NSString *)scheme;
+{
+    @synchronized (self)
+    {
+        return [[_schemeComponent retain] autorelease];
+    }
+}
+- (void)setScheme:(NSString *)scheme;
+{
+    if (scheme)
+    {
+        NSCharacterSet *legalCharacters = [NSCharacterSet characterSetWithCharactersInString:@"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-."];
+        
+        if ([scheme rangeOfCharacterFromSet:legalCharacters.invertedSet].location != NSNotFound)
+        {
+            [NSException raise:NSInvalidArgumentException format:@"invalid characters in scheme"];
+        }
+    }
+    
+    @synchronized (self)
+    {
+        scheme = [scheme copy];
+        [_schemeComponent release]; _schemeComponent = scheme;
+    }
+}
 
 @synthesize percentEncodedUser = _userComponent;
 - (NSString *)user;

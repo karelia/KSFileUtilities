@@ -202,6 +202,13 @@
 
 #pragma mark Escaping
 
+- (void)testSchemeValidation;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    STAssertThrowsSpecificNamed(components.scheme = @"!*'();:@&=+$,/?#[]", NSException, NSInvalidArgumentException, nil);
+    [components release];
+}
+
 - (void)testUserEscaping;
 {
     KSURLComponents *components = [[KSURLComponents alloc] init];
