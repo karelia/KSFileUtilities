@@ -200,6 +200,68 @@
     STAssertNil(components.fragment, nil);
 }
 
+#pragma mark Escaping
+
+- (void)testUserEscaping;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    
+    components.user = @"!*'();:@&=+$,/?#[]";
+    STAssertEqualObjects(components.percentEncodedUser, @"!*'();%3A%40&=+$,%2F%3F%23%5B%5D", nil);
+    
+    [components release];
+}
+
+- (void)testPasswordEscaping;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    
+    components.password = @"!*'();:@&=+$,/?#[]";
+    STAssertEqualObjects(components.percentEncodedPassword, @"!*'();%3A%40&=+$,%2F%3F%23%5B%5D", nil);
+    
+    [components release];
+}
+
+- (void)testHostEscaping;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    
+    components.host = @"!*'();:@&=+$,/?#[]";
+    STAssertEqualObjects(components.percentEncodedHost, @"!*'();%3A%40&=+$,%2F%3F%23%5B%5D", nil);
+    
+    [components release];
+}
+
+- (void)testPathEscaping;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    
+    components.path = @"!*'();:@&=+$,/?#[]";
+    STAssertEqualObjects(components.percentEncodedPath, @"!*'()%3B%3A@&=+$,/%3F%23%5B%5D", nil);
+    
+    [components release];
+}
+
+- (void)testQueryEscaping;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    
+    components.query = @"!*'();:@&=+$,/?#[]";
+    STAssertEqualObjects(components.percentEncodedQuery, @"!*'();:@&=+$,/?%23%5B%5D", nil);
+    
+    [components release];
+}
+
+- (void)testFragmentEscaping;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    
+    components.fragment = @"!*'();:@&=+$,/?#[]";
+    STAssertEqualObjects(components.percentEncodedFragment, @"!*'();:@&=+$,/?%23%5B%5D", nil);
+    
+    [components release];
+}
+
 #pragma mark Creating a URL
 
 - (void)testURL;
