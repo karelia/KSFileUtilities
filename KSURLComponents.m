@@ -213,7 +213,11 @@
 }
 - (void)setUser:(NSString *)user;
 {
-    CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)user, NULL, NULL, kCFStringEncodingUTF8);
+    CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)user, NULL, CFSTR(":@/?#"), kCFStringEncodingUTF8);
+    // : signifies the start of the password, so must be escaped
+    // @ signifies the end of the user/password, so must be escaped
+    // / ? # I reckon technically should be fine since they're before the @ symbol, but NSURLComponents seems to be cautious here, and understandably so
+    
     self.percentEncodedUser = (NSString *)escaped;
     CFRelease(escaped);
 }
@@ -225,7 +229,10 @@
 }
 - (void)setPassword:(NSString *)password;
 {
-    CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)password, NULL, NULL, kCFStringEncodingUTF8);
+    CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)password, NULL, CFSTR("@:/?#"), kCFStringEncodingUTF8);
+    // @ signifies the end of the user/password, so must be escaped
+    // : / ? # I reckon technically should be fine since they're before the @ symbol, but NSURLComponents seems to be cautious here, and understandably so
+    
     self.percentEncodedPassword = (NSString *)escaped;
     CFRelease(escaped);
 }
@@ -237,7 +244,11 @@
 }
 - (void)setHost:(NSString *)host;
 {
-    CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)host, NULL, NULL, kCFStringEncodingUTF8);
+    CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)host, NULL, CFSTR("@:/?#"), kCFStringEncodingUTF8);
+    // @ must be escaped so as not to confuse as a username
+    // Escaping : too to avoid confusion with port. NSURLComponents doesn't do so at present rdar://14387977
+    // / ? and # must be escaped so as not to indicate start of path, query or fragment
+    
     self.percentEncodedHost = (NSString *)escaped;
     CFRelease(escaped);
 }
@@ -267,7 +278,10 @@
 }
 - (void)setPath:(NSString *)path;
 {
-    CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)path, NULL, NULL, kCFStringEncodingUTF8);
+    CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)path, NULL, CFSTR(":;?#"), kCFStringEncodingUTF8);
+    // : doesn't *need* to be escaped if the path is part of a complete URL, but it does if the generated URL is scheme-less. Seems safest to always escape it, and NSURLComponents does so too
+    // ; ? and # all need to be escape to avoid confusion with parameter, query and fragment
+    
     self.percentEncodedPath = (NSString *)escaped;
     CFRelease(escaped);
 }
