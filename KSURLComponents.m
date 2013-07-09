@@ -296,4 +296,51 @@
     CFRelease(escaped);
 }
 
+#pragma mark Equality Testing
+
+- (BOOL)isEqual:(id)object;
+{
+    if (![object isKindOfClass:[KSURLComponents class]]) return NO;
+    
+    NSString *myScheme = self.scheme;
+    NSString *otherScheme = [object scheme];
+    if (myScheme != otherScheme && ![myScheme isEqualToString:otherScheme]) return NO;
+    
+    NSString *myUser = self.percentEncodedUser;
+    NSString *otherUser = [object percentEncodedUser];
+    if (myUser != otherUser && ![myUser isEqualToString:otherUser]) return NO;
+    
+    NSString *myPassword = self.percentEncodedPassword;
+    NSString *otherPassword = [object percentEncodedPassword];
+    if (myPassword != otherPassword && ![myPassword isEqualToString:otherPassword]) return NO;
+    
+    NSString *myHost = self.percentEncodedHost;
+    NSString *otherHost = [object percentEncodedHost];
+    if (myHost != otherHost && ![myHost isEqualToString:otherHost]) return NO;
+    
+    NSNumber *myPort = self.port;
+    NSNumber *otherPort = [(KSURLComponents *)object port];
+    if (myPort != otherPort && ![myPort isEqualToNumber:otherPort]) return NO;
+    
+    NSString *myPath = self.percentEncodedPath;
+    NSString *otherPath = [object percentEncodedPath];
+    if (myPath != otherPath && ![myPath isEqualToString:otherPath]) return NO;
+    
+    NSString *myQuery = self.percentEncodedQuery;
+    NSString *otherQuery = [object percentEncodedQuery];
+    if (myQuery != otherQuery && ![myQuery isEqualToString:otherQuery]) return NO;
+    
+    NSString *myFragment = self.percentEncodedFragment;
+    NSString *otherFragment = [object percentEncodedFragment];
+    if (myFragment != otherFragment && ![myFragment isEqualToString:otherFragment]) return NO;
+    
+    return YES;
+}
+
+- (NSUInteger)hash;
+{
+    // This could definitely be a better algorithm!
+    return self.scheme.hash + self.percentEncodedUser.hash + self.percentEncodedPassword.hash + self.percentEncodedPassword.hash + self.percentEncodedHost.hash + self.port.hash + self.percentEncodedPath.hash + self.percentEncodedQuery.hash + self.percentEncodedFragment.hash;
+}
+
 @end
