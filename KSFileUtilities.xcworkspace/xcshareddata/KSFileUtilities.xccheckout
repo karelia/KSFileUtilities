@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>72EB93BD-5E52-4CFC-9084-BB412C002BC8</string>
+	<key>IDESourceControlProjectName</key>
+	<string>KSFileUtilities</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>ACFADC67-D143-4184-867B-0593C0DAF284</key>
+		<string>ssh://github.com/karelia/IFUnicodeURL.git</string>
+		<key>D8088101-6CE1-4173-B3CC-942700F057E2</key>
+		<string>ssh://github.com/karelia/KSFileUtilities.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>KSFileUtilities.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>ACFADC67-D143-4184-867B-0593C0DAF284</key>
+		<string>../IFUnicodeURL</string>
+		<key>D8088101-6CE1-4173-B3CC-942700F057E2</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/karelia/KSFileUtilities.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D8088101-6CE1-4173-B3CC-942700F057E2</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D8088101-6CE1-4173-B3CC-942700F057E2</string>
+			<key>IDESourceControlWCCName</key>
+			<string>KSFileUtilities</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>ACFADC67-D143-4184-867B-0593C0DAF284</string>
+			<key>IDESourceControlWCCName</key>
+			<string>IFUnicodeURL</string>
+		</dict>
+	</array>
+</dict>
+</plist>
