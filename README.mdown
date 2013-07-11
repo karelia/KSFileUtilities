@@ -37,6 +37,11 @@ An `NSFormatter` subclass for a variety of URL display and input tasks.
 
 Decoding is performed by IFUnicodeURL. Make sure you handle its licensing appropriately — see the Licensing section of this document for details.
 
+KSURLComponents
+===============
+
+Much like `NSDateComponents`, provides an API for working with the pieces that make up a URL. Can be used to deconstruct URLs, or build new ones (from scratch or by altering an existing one).
+
 URL Normalization
 =================
 
