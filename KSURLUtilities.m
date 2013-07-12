@@ -104,11 +104,22 @@
 			URLString = [path substringToIndex:([path length] - 1)];
 		}
 	}
+    
+    // Properly escape
+    CFStringRef encodedPath = CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                      (CFStringRef)path,
+                                                                      NULL,
+                                                                      CFSTR(";?#"),
+                                                                      kCFStringEncodingUTF8);
 	
     // Work around 10.6 bug by effectively "faulting in" the base URL
     if ([path isAbsolutePath] && [baseURL isFileURL]) [baseURL absoluteString];
     
-	return [self URLWithString:URLString relativeToURL:baseURL];
+	NSURL *result =  [self URLWithString:(NSString *)encodedPath relativeToURL:baseURL];
+    NSAssert(result, @"path wasn't escaped properly somehow: %@", path);
+    
+    CFRelease(encodedPath);
+    return result;
 }
 
 
