@@ -7,7 +7,7 @@ It's common for URLs to split their query string up into a dictionary-like serie
 
     http://en.wikipedia.org/w/index.php?title=Main_page&action=raw
 
-`KSURLUtilities` has an easy solution for getting that into a more Cocoa-friendly form:
+`KSURLQueryUtilities` has an easy solution for getting that into a more Cocoa-friendly form:
 
     - (NSDictionary *)ks_queryParameters;
 
