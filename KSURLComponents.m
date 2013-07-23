@@ -383,6 +383,71 @@
     CFRelease(escaped);
 }
 
+#pragma mark Query Parameters
+
+- (NSDictionary *)queryParameters;
+{
+    __block NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    
+    [self enumerateQueryParametersUsingBlock:^(NSString *key, NSString *value, BOOL *stop) {
+        
+        // Bail if doesn't fit dictionary paradigm
+        if (!value || [result objectForKey:key])
+        {
+            *stop = YES;
+            result = nil;
+            return;
+        }
+        
+        [result setObject:value forKey:key];
+    }];
+    
+    return result;
+}
+
+- (void)enumerateQueryParametersUsingBlock:(void (^)(NSString *, NSString *, BOOL *))block;
+{
+    BOOL stop = NO;
+    
+    NSString *query = self.percentEncodedQuery; // we'll do our own decoding after separating components
+    NSRange searchRange = NSMakeRange(0, query.length);
+    
+    while (!stop)
+    {
+        NSRange keySeparatorRange = [query rangeOfString:@"=" options:NSLiteralSearch range:searchRange];
+        if (keySeparatorRange.location == NSNotFound) keySeparatorRange = NSMakeRange(NSMaxRange(searchRange), 0);
+        
+        NSRange keyRange = NSMakeRange(searchRange.location, keySeparatorRange.location - searchRange.location);
+        NSString *key = [query substringWithRange:keyRange];
+        
+        NSString *value = nil;
+        if (keySeparatorRange.length)   // there might be no value, so report as nil
+        {
+            searchRange = NSMakeRange(NSMaxRange(keySeparatorRange), query.length - NSMaxRange(keySeparatorRange));
+            
+            NSRange valueSeparatorRange = [query rangeOfString:@"&" options:NSLiteralSearch range:searchRange];
+            if (valueSeparatorRange.location == NSNotFound)
+            {
+                valueSeparatorRange.location = NSMaxRange(searchRange);
+                stop = YES;
+            }
+            
+            NSRange valueRange = NSMakeRange(searchRange.location, valueSeparatorRange.location - searchRange.location);
+            value = [query substringWithRange:valueRange];
+            
+            searchRange = NSMakeRange(NSMaxRange(valueSeparatorRange), query.length - NSMaxRange(valueSeparatorRange));
+        }
+        else
+        {
+            stop = YES;
+        }
+        
+        block([key stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
+              [value stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
+              &stop);
+    }
+}
+
 #pragma mark Equality Testing
 
 - (BOOL)isEqual:(id)object;
