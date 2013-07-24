@@ -317,9 +317,30 @@
 }
 - (void)setHost:(NSString *)host;
 {
+    NSRange startBracket = [host rangeOfString:@"[" options:NSAnchoredSearch];
+    if (startBracket.location != NSNotFound)
+    {
+        NSRange endBracket = [host rangeOfString:@"]" options:NSAnchoredSearch|NSBackwardsSearch];
+        if (endBracket.location != NSNotFound)
+        {
+            host = [host substringWithRange:NSMakeRange(startBracket.length, host.length - endBracket.length - startBracket.length)];
+            
+            CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)host, NULL, CFSTR("@/?#"), kCFStringEncodingUTF8);
+            // @ must be escaped so as not to confuse as a username
+            // Don't escape : as it's within a host literal, and likely part of an IPv6 address
+            // / ? and # must be escaped so as not to indicate start of path, query or fragment
+            
+            NSString *encoded = [NSString stringWithFormat:@"[%@]", escaped];
+            
+            self.percentEncodedHost = encoded;
+            CFRelease(escaped);
+            return;
+        }
+    }
+    
     CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)host, NULL, CFSTR("@:/?#"), kCFStringEncodingUTF8);
     // @ must be escaped so as not to confuse as a username
-    // Escaping : too to avoid confusion with port. NSURLComponents doesn't do so at present rdar://14387977
+    // : must be escaped too to avoid confusion with port
     // / ? and # must be escaped so as not to indicate start of path, query or fragment
     
     self.percentEncodedHost = (NSString *)escaped;

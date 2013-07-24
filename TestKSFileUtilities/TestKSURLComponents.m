@@ -239,6 +239,16 @@
     [components release];
 }
 
+- (void)testLiteralHostEscaping;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    
+    components.host = @"[!*'();:@&=+$,/?#[]]";
+    STAssertEqualObjects(components.percentEncodedHost, @"[!*'();:%40&=+$,%2F%3F%23%5B%5D]", @"Bracketing in [ ] indicates a literal host, which is allowed to contain : characters, e.g. for IPv6 addresses");
+    
+    [components release];
+}
+
 - (void)testPathEscaping;
 {
     KSURLComponents *components = [[KSURLComponents alloc] init];
