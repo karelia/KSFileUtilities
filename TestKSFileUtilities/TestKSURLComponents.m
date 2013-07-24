@@ -505,6 +505,22 @@
     STAssertEqualObjects(parameters, expected, nil);
 }
 
+- (void)testEmptyQueryParameterKey;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] initWithString:@"scheme://host?=value"];
+    
+    NSDictionary *parameters = [components queryParameters];
+    STAssertEqualObjects(parameters, @{ @"" : @"value" }, nil);
+}
+
+- (void)testEmptyQueryParameterValue;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] initWithString:@"scheme://host?key="];
+    
+    NSDictionary *parameters = [components queryParameters];
+    STAssertEqualObjects(parameters, @{ @"key" : @"" }, nil);
+}
+
 - (void)testRepeatedKeys;
 {
     KSURLComponents *components = [[KSURLComponents alloc] initWithString:@"scheme://host?key=value&key=value2"];
