@@ -96,7 +96,7 @@
  
  @return `nil` if query doesn't neatly fit an `NSDictionary` representation
  */
-- (NSDictionary *)queryParameters;
+@property (readonly) NSDictionary *queryParameters;
 
 /**
  Enumerates the parameters of `.query`
