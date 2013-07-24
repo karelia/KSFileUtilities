@@ -286,6 +286,12 @@
 }
 - (void)setUser:(NSString *)user;
 {
+    if (!user)
+    {
+        self.percentEncodedUser = user;
+        return;
+    }
+    
     CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)user, NULL, CFSTR(":@/?#"), kCFStringEncodingUTF8);
     // : signifies the start of the password, so must be escaped
     // @ signifies the end of the user/password, so must be escaped
@@ -302,6 +308,12 @@
 }
 - (void)setPassword:(NSString *)password;
 {
+    if (!password)
+    {
+        self.percentEncodedPassword = password;
+        return;
+    }
+    
     CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)password, NULL, CFSTR("@:/?#"), kCFStringEncodingUTF8);
     // @ signifies the end of the user/password, so must be escaped
     // : / ? # I reckon technically should be fine since they're before the @ symbol, but NSURLComponents seems to be cautious here, and understandably so
@@ -317,6 +329,12 @@
 }
 - (void)setHost:(NSString *)host;
 {
+    if (!host)
+    {
+        self.percentEncodedHost = host;
+        return;
+    }
+    
     NSRange startBracket = [host rangeOfString:@"[" options:NSAnchoredSearch];
     if (startBracket.location != NSNotFound)
     {
@@ -372,6 +390,12 @@
 }
 - (void)setPath:(NSString *)path;
 {
+    if (!path)
+    {
+        self.percentEncodedPath = path;
+        return;
+    }
+    
     CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)path, NULL, CFSTR(":;?#"), kCFStringEncodingUTF8);
     // : doesn't *need* to be escaped if the path is part of a complete URL, but it does if the generated URL is scheme-less. Seems safest to always escape it, and NSURLComponents does so too
     // ; ? and # all need to be escape to avoid confusion with parameter, query and fragment
@@ -387,6 +411,12 @@
 }
 - (void)setQuery:(NSString *)query;
 {
+    if (!query)
+    {
+        self.percentEncodedQuery = query;
+        return;
+    }
+    
     CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)query, NULL, NULL, kCFStringEncodingUTF8);
     self.percentEncodedQuery = (NSString *)escaped;
     CFRelease(escaped);
@@ -399,6 +429,12 @@
 }
 - (void)setFragment:(NSString *)fragment;
 {
+    if (!fragment)
+    {
+        self.percentEncodedFragment = fragment;
+        return;
+    }
+    
     CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)fragment, NULL, NULL, kCFStringEncodingUTF8);
     self.percentEncodedFragment = (NSString *)escaped;
     CFRelease(escaped);
