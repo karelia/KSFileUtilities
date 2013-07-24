@@ -113,7 +113,7 @@ On occasion there is a need to try to find the best available filename/path for 
 	example.png
 	example-2.png
 	example-3.png
-	exampke-4.png
+	example-4.png
 	…
 
 More information on the implementation and use of this method is on [Mike's blog](http://www.mikeabdullah.net/incrementing-paths.html)
