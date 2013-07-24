@@ -81,22 +81,24 @@
 #pragma mark Query Parameters
 
 /**
- Converts `.query` into a dictionary representation.
+ Converts between `.query` strings and their dictionary representation.
+ 
+ For example:
  
      http://example.com?key=value&foo=bar
  
- gives:
+ can be interpreted as:
  
      @{ @"key" : @"value", @"foo" : @"bar" }
  
- Keys and values are percent decoded for your convenience.
+ and vice versa. Keys and values are percent decoded for your convenience.
  
  If you have a query which doesn't match `NSDictionary`'s design, drop down to
  the primitive `-enumerateQueryParametersUsingBlock:` method instead.
  
  @return `nil` if query doesn't neatly fit an `NSDictionary` representation
  */
-@property (readonly) NSDictionary *queryParameters;
+@property (copy) NSDictionary *queryParameters;
 
 /**
  Enumerates the parameters of `.query`

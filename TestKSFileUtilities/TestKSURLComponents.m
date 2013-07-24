@@ -553,4 +553,11 @@
     STAssertEqualObjects(parameters, @{ @"k/y" : @"va/ue" }, nil);
 }
 
+- (void)testNilQueryParameters;
+{
+    KSURLComponents *components = [[KSURLComponents alloc] init];
+    components.queryParameters = nil;
+    STAssertEquals(components.percentEncodedQuery, nil, nil);
+}
+
 @end

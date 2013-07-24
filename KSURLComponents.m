@@ -426,6 +426,56 @@
     return result;
 }
 
+- (void)setQueryParameters:(NSDictionary *)parameters;
+{
+    if (!parameters)
+    {
+        self.query = nil;
+        return;
+    }
+    
+    // Build the list of parameters as a string
+	NSMutableString *query = [NSMutableString string];
+	
+    NSEnumerator *enumerator = [parameters keyEnumerator];
+    BOOL thisIsTheFirstParameter = YES;
+    
+    NSString *key;
+    while ((key = [enumerator nextObject]))
+    {
+        CFStringRef escapedKey = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)key, NULL, CFSTR("+=&#"), kCFStringEncodingUTF8);
+        // Escape + for safety as some backends interpret it as a space
+        // = indicates the start of value, so must be escaped
+        // & indicates the start of next parameter, so must be escaped
+        // # indicates the start of fragment, so must be escaped
+        
+        NSString *parameter = [parameters objectForKey:key];
+        
+        // Append the parameter and its key to the full query string
+        if (!thisIsTheFirstParameter)
+        {
+            [query appendString:@"&"];
+        }
+        else
+        {
+            thisIsTheFirstParameter = NO;
+        }
+        
+        CFStringRef escapedValue = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)parameter, NULL, CFSTR("+&#"), kCFStringEncodingUTF8);
+        // Escape + for safety as some backends interpret it as a space
+        // = is allowed in values, as there's no further value to indicate
+        // & indicates the start of next parameter, so must be escaped
+        // # indicates the start of fragment, so must be escaped
+        
+        [query appendFormat:@"%@=%@", escapedKey, escapedValue];
+        
+        CFRelease(escapedKey);
+        CFRelease(escapedValue);
+    }
+    
+    self.percentEncodedQuery = query;
+}
+
 - (void)enumerateQueryParametersUsingBlock:(void (^)(NSString *, NSString *, BOOL *))block;
 {
     BOOL stop = NO;
