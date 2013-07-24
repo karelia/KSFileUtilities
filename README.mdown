@@ -113,7 +113,7 @@ On occasion there is a need to try to find the best available filename/path for 
 	example.png
 	example-2.png
 	example-3.png
-	exampke-4.png
+	example-4.png
 	…
 
 More information on the implementation and use of this method is on [Mike's blog](http://www.mikeabdullah.net/incrementing-paths.html)
@@ -130,7 +130,7 @@ A simple class that represents a URL, optionally with a title attached. Features
 
 - Handles Web Location files (e.g. those created by dragging a URL from Safari)
 - `NSCoding`
-- `NSCopying``
+- `NSCopying`
 
 You can pull in the `WebKit.framework`-dependent KSWebLocationPasteboardAdditions too, to (unsurprisingly) gain support for reading and writing Web Locations from/to the pasteboard.
 
