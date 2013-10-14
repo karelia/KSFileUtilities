@@ -77,42 +77,6 @@
 @property (copy, readonly) NSString *percentEncodedQuery;
 @property (copy, readonly) NSString *percentEncodedFragment;
 
-
-#pragma mark Query Parameters
-
-/**
- Converts between `.query` strings and their dictionary representation.
- 
- For example:
- 
-     http://example.com?key=value&foo=bar
- 
- can be interpreted as:
- 
-     @{ @"key" : @"value", @"foo" : @"bar" }
- 
- and vice versa. Keys and values are percent decoded for your convenience.
- 
- If you have a query which doesn't match `NSDictionary`'s design, drop down to
- the primitive `-enumerateQueryParametersUsingBlock:` method instead.
- 
- @return `nil` if query doesn't neatly fit an `NSDictionary` representation
- */
-@property (copy) NSDictionary *queryParameters;
-
-/**
- Enumerates the parameters of `.query`
- 
- Tolerates all forms of query:
- 
- * Parameters without a value are reported as `nil`
- * Parameters are reported in the order they appear in the URL
- * Duplicate parameters are correctly reported too
- 
- Keys and values are percent decoded for your convenience.
- 
- @param A block called for each parameter of the query
- */
-- (void)enumerateQueryParametersUsingBlock:(void (^)(NSString *key, NSString *value, BOOL *stop))block;
+// Looking to handle query parameters? Check out KSURLQueryParameters.
 
 @end
