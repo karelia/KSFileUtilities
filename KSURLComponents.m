@@ -32,7 +32,6 @@
 @property (copy, readwrite) NSString *percentEncodedPassword;
 @property (copy, readwrite) NSString *percentEncodedHost;
 @property (copy, readwrite) NSString *percentEncodedPath;
-@property (copy, readwrite) NSString *percentEncodedQuery;
 @property (copy, readwrite) NSString *percentEncodedFragment;
 @end
 
@@ -405,6 +404,14 @@
 }
 
 @synthesize percentEncodedQuery = _queryComponent;
+- (void)setPercentEncodedQuery:(NSString *)percentEncodedQuery;
+{
+    // TODO: Validate the string
+    
+    percentEncodedQuery = [percentEncodedQuery copy];
+    [_queryComponent release]; _queryComponent = percentEncodedQuery;
+}
+
 - (NSString *)query;
 {
     return [self.percentEncodedQuery stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

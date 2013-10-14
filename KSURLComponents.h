@@ -74,7 +74,7 @@
 @property (copy, readonly) NSString *percentEncodedPassword;
 @property (copy, readonly) NSString *percentEncodedHost;
 @property (copy, readonly) NSString *percentEncodedPath;
-@property (copy, readonly) NSString *percentEncodedQuery;
+@property (copy) NSString *percentEncodedQuery;
 @property (copy, readonly) NSString *percentEncodedFragment;
 
 // Looking to handle query parameters? Check out KSURLQueryParameters.
