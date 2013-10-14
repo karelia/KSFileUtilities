@@ -31,6 +31,11 @@
 
 + (instancetype)queryParametersWithPercentEncodedString:(NSString *)query;
 
+/**
+ @result `nil` if the url has no query component.
+ */
++ (instancetype)queryParametersOfURL:(NSURL *)url;
+
 - initWithDictionary:(NSDictionary *)dictionary __attribute((nonnull));
 
 + (instancetype)queryParametersWithDictionary:(NSDictionary *)dictionary __attribute((nonnull));

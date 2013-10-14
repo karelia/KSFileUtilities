@@ -455,7 +455,8 @@
     KSURLQueryParameters *parameters = [KSURLQueryParameters queryParametersWithPercentEncodedString:nil];
     STAssertNil(parameters, nil);
     
-    parameters = [KSURLQueryParameters queryParametersWithPercentEncodedString:[[NSURL URLWithString:@"scheme://host/"] query]];
+    NSURL *url = [NSURL URLWithString:@"scheme://host/"];
+    parameters = [KSURLQueryParameters queryParametersOfURL:url];
     STAssertNil(parameters, nil);
 }
 
@@ -492,8 +493,8 @@
 
 - (void)testSingleQueryParameter;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] initWithString:@"scheme://host?key=value"];
-    KSURLQueryParameters *parameters = [KSURLQueryParameters queryParametersWithPercentEncodedString:components.percentEncodedQuery];
+    NSURL *url = [[NSURL alloc] initWithString:@"scheme://host?key=value"];
+    KSURLQueryParameters *parameters = [KSURLQueryParameters queryParametersOfURL:url];
     STAssertEqualObjects(parameters.dictionaryRepresentation, @{ @"key" : @"value" }, nil);
 }
 
@@ -544,8 +545,8 @@
 
 - (void)testQueryParameterUnescaping;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] initWithString:@"scheme://host?k%2Fy=va%2Fue"];
-    KSURLQueryParameters *parameters = [KSURLQueryParameters queryParametersWithPercentEncodedString:components.percentEncodedQuery];
+    NSURL *url = [[NSURL alloc] initWithString:@"scheme://host?k%2Fy=va%2Fue"];
+    KSURLQueryParameters *parameters = [KSURLQueryParameters queryParametersOfURL:url];
     STAssertEqualObjects(parameters.dictionaryRepresentation, @{ @"k/y" : @"va/ue" }, nil);
 }
 

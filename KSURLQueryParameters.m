@@ -38,6 +38,28 @@
     return [[[self alloc] initWithPercentEncodedString:query] autorelease];
 }
 
++ (instancetype)queryParametersOfURL:(NSURL *)url;
+{
+    if (!url) return nil;
+    
+    CFRange queryRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentQuery, NULL);
+    if (queryRange.location == kCFNotFound) return nil;
+    
+    CFIndex length = CFURLGetBytes((CFURLRef)url, NULL, 0);
+    NSMutableData *data = [[NSMutableData alloc] initWithLength:length];
+    void *bytes = [data mutableBytes];
+    CFURLGetBytes((CFURLRef)url, bytes, length);
+    
+    NSString *string = [[NSString alloc] initWithBytes:(bytes + queryRange.location)
+                                                length:queryRange.length
+                                              encoding:NSASCIIStringEncoding];
+    
+    KSURLQueryParameters *result = [self queryParametersWithPercentEncodedString:string];
+    [data release];
+    [string release];
+    return result;
+}
+
 - initWithDictionary:(NSDictionary *)dictionary
 {
     NSParameterAssert(dictionary);
