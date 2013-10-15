@@ -119,6 +119,6 @@ typedef NS_OPTIONS(NSUInteger, KSURLComponentsQueryParameterDecodingOptions) {
  @param options A mask that specifies options for parameter decoding.
  @param block A block called for each parameter of the query.
  */
-- (void)enumerateQueryParametersWithOptions:(KSURLComponentsQueryParameterDecodingOptions)options usingBlock:(void (^)(NSString *key, NSString *value, BOOL *stop))block;
+- (void)enumerateQueryParametersWithOptions:(KSURLComponentsQueryParameterDecodingOptions)options usingBlock:(void (^)(NSString *key, NSString *value, BOOL *stop))block __attribute((nonnull(2)));
 
 @end
