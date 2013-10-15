@@ -39,22 +39,70 @@
     NSString    *_fragmentComponent;
 }
 
-// Initialize a KSURLComponents with the components of a URL. If resolvingAgainstBaseURL is YES and url is a relative URL, the components of [url absoluteURL] are used. If the url string from the NSURL is malformed, nil is returned.
+/**
+ Initialize a `KSURLComponents` with the components of a URL.
+ 
+ If the url string from the NSURL is malformed, nil is returned.
+ 
+ If `resolve` is `YES` and `url` is a relative URL, the components of `[url absoluteURL]`
+ are used. As a general rule, clients should pass in `YES` unless they're
+ specifically interested in the components of only the relative portion of a
+ relative URL.
+ 
+ @param url The URL whose components you want.
+ @param resolve Whether to resolve relative URLs before retrieving components
+ */
 - (id)initWithURL:(NSURL *)url resolvingAgainstBaseURL:(BOOL)resolve;
 
-// Initializes and returns a newly created KSURLComponents with the components of a URL. If resolvingAgainstBaseURL is YES and url is a relative URL, the components of [url absoluteURL] are used. If the url string from the NSURL is malformed, nil is returned.
+/**
+ Initializes and returns a newly created `KSURLComponents` with the components of a URL.
+ 
+ If the url string from the NSURL is malformed, nil is returned.
+ 
+ If `resolve` is `YES` and `url` is a relative URL, the components of `[url absoluteURL]`
+ are used. As a general rule, clients should pass in `YES` unless they're
+ specifically interested in the components of only the relative portion of a
+ relative URL.
+ 
+ @param url The URL whose components you want.
+ @param resolve Whether to resolve relative URLs before retrieving components
+ */
 + (id)componentsWithURL:(NSURL *)url resolvingAgainstBaseURL:(BOOL)resolve;
 
-// Initialize a KSURLComponents with a URL string. If the URLString is malformed, nil is returned.
+/**
+ Initialize a `KSURLComponents` with a URL string.
+ 
+ If the URLString is malformed, `nil` is returned.
+ */
 - (id)initWithString:(NSString *)URLString;
 
-// Initializes and returns a newly created KSURLComponents with a URL string. If the URLString is malformed, nil is returned.
+/**
+ Initializes and returns a newly created `KSURLComponents` with a URL string.
+ 
+ If the URLString is malformed, `nil` is returned.
+ */
 + (id)componentsWithString:(NSString *)URLString;
 
-// Returns a URL created from the KSURLComponents. If the KSURLComponents has an authority component (user, password, host or port) and a path component, then the path must either begin with "/" or be an empty string. If the KSURLComponents does not have an authority component (user, password, host or port) and has a path component, the path component must not start with "//". If those requirements are not met, nil is returned.
+/**
+ Returns a URL created from the `KSURLComponents`.
+ 
+ If the `KSURLComponents` has an authority component (user, password, host or port)
+ and a path component, then the path must either begin with `/` or be an empty
+ string. If the `KSURLComponents` does not have an authority component (user, password, host or port)
+ and has a path component, the path component must not start with `//`. If those
+ requirements are not met, `nil` is returned.
+ */
 - (NSURL *)URL;
 
-// Returns a URL created from the KSURLComponents relative to a base URL. If the KSURLComponents has an authority component (user, password, host or port) and a path component, then the path must either begin with "/" or be an empty string. If the KSURLComponents does not have an authority component (user, password, host or port) and has a path component, the path component must not start with "//". If those requirements are not met, nil is returned.
+/**
+ Returns a URL created from the `KSURLComponents` relative to a base URL.
+ 
+ If the `KSURLComponents` has an authority component (user, password, host or port)
+ and a path component, then the path must either begin with `/` or be an empty
+ string. If the `KSURLComponents` does not have an authority component (user, password, host or port)
+ and has a path component, the path component must not start with `//`. If those
+ requirements are not met, `nil` is returned.
+ */
 - (NSURL *)URLRelativeToURL:(NSURL *)baseURL;
 
 // Warning: IETF STD 66 (rfc3986) says the use of the format "user:password" in the userinfo subcomponent of a URI is deprecated because passing authentication information in clear text has proven to be a security risk. However, there are cases where this practice is still needed, and so the user and password components and methods are provided.
