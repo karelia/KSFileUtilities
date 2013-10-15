@@ -325,7 +325,13 @@
 @synthesize percentEncodedHost = _hostComponent;
 - (NSString *)host;
 {
-    return [self.percentEncodedHost stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    // Treat empty host specially. It signifies the host in URLs like file:///path
+    // nil for practical usage from -host, but a marker internally to differentiate
+    // from file:/path
+    NSString *host = self.percentEncodedHost;
+    if (host.length == 0) return nil;
+    
+    return [host stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 - (void)setHost:(NSString *)host;
 {
