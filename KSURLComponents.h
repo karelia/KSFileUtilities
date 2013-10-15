@@ -26,6 +26,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface KSURLComponents : NSObject <NSCopying>
 {
   @private
@@ -80,6 +81,10 @@
 
 #pragma mark Query Parameters
 
+typedef NS_OPTIONS(NSUInteger, KSURLComponentsQueryParameterDecodingOptions) {
+    KSURLComponentsQueryParameterDecodingPlusAsSpace = 1UL << 0,    // + characters are interpreted as spaces, rather than regular + symbols
+};
+
 /**
  Converts between `.query` strings and their dictionary representation.
  
@@ -111,8 +116,9 @@
  
  Keys and values are percent decoded for your convenience.
  
- @param A block called for each parameter of the query
+ @param options A mask that specifies options for parameter decoding.
+ @param block A block called for each parameter of the query.
  */
-- (void)enumerateQueryParametersUsingBlock:(void (^)(NSString *key, NSString *value, BOOL *stop))block;
+- (void)enumerateQueryParametersWithOptions:(KSURLComponentsQueryParameterDecodingOptions)options usingBlock:(void (^)(NSString *key, NSString *value, BOOL *stop))block;
 
 @end

@@ -464,7 +464,7 @@
     STAssertNil(parameters, nil);
     
     __block BOOL blockCalled = NO;
-    [components enumerateQueryParametersUsingBlock:^(NSString *key, NSString *value, BOOL *stop) {
+    [components enumerateQueryParametersWithOptions:0 usingBlock:^(NSString *key, NSString *value, BOOL *stop) {
         STAssertEqualObjects(key, @"", nil);
         STAssertNil(value, nil);
         blockCalled = YES;
@@ -480,7 +480,7 @@
     STAssertNil(parameters, nil);
     
     __block BOOL blockCalled = NO;
-    [components enumerateQueryParametersUsingBlock:^(NSString *key, NSString *value, BOOL *stop) {
+    [components enumerateQueryParametersWithOptions:0 usingBlock:^(NSString *key, NSString *value, BOOL *stop) {
         STAssertEqualObjects(key, @"query", nil);
         STAssertNil(value, nil);
         blockCalled = YES;
@@ -529,7 +529,7 @@
     STAssertNil(parameters, nil);
     
     __block int blockCalled = 0;
-    [components enumerateQueryParametersUsingBlock:^(NSString *key, NSString *value, BOOL *stop) {
+    [components enumerateQueryParametersWithOptions:0 usingBlock:^(NSString *key, NSString *value, BOOL *stop) {
         STAssertEqualObjects(key, @"key", nil);
         STAssertEqualObjects(value, (blockCalled ? @"value2" : @"value"), nil);
         ++blockCalled;
