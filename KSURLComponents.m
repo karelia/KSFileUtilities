@@ -74,6 +74,7 @@
         CFRelease(password);
     }
     
+    
     // Avoid CFURLCopyHostName as it removes escapes
     CFRange hostRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentHost, NULL);
     if (hostRange.location != kCFNotFound)
@@ -82,6 +83,23 @@
         self.percentEncodedHost = (NSString *)host;
         CFRelease(host);
     }
+    
+    // Need to represent the presence of a host whenever the URL starts scheme://
+    // Manually searching is the best I've found so far
+    else if (schemeRange.location == 0)
+    {
+        CFStringRef urlString = CFURLGetString((CFURLRef)url);
+        
+        if (CFStringFindWithOptions(urlString,
+                                    CFSTR("://"),
+                                    CFRangeMake(schemeRange.length, CFStringGetLength(urlString) - schemeRange.length),
+                                    kCFCompareAnchored,
+                                    NULL))
+        {
+            self.percentEncodedHost = @"";
+        }
+    }
+    
     
     SInt32 port = CFURLGetPortNumber((CFURLRef)url);
     if (port >= 0) self.port = @(port);
