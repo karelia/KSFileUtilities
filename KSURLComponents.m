@@ -28,12 +28,12 @@
 
 
 @interface KSURLComponents ()
-@property (copy, readwrite) NSString *percentEncodedUser;
-@property (copy, readwrite) NSString *percentEncodedPassword;
-@property (copy, readwrite) NSString *percentEncodedHost;
-@property (copy, readwrite) NSString *percentEncodedPath;
-@property (copy, readwrite) NSString *percentEncodedQuery;
-@property (copy, readwrite) NSString *percentEncodedFragment;
+@property (nonatomic, copy, readwrite) NSString *percentEncodedUser;
+@property (nonatomic, copy, readwrite) NSString *percentEncodedPassword;
+@property (nonatomic, copy, readwrite) NSString *percentEncodedHost;
+@property (nonatomic, copy, readwrite) NSString *percentEncodedPath;
+@property (nonatomic, copy, readwrite) NSString *percentEncodedQuery;
+@property (nonatomic, copy, readwrite) NSString *percentEncodedFragment;
 @end
 
 
@@ -44,23 +44,52 @@
 - (id)initWithURL:(NSURL *)url resolvingAgainstBaseURL:(BOOL)resolve;
 {
     if (resolve) url = [url absoluteURL];
+    CFStringRef urlString = CFURLGetString((CFURLRef)url);
+    BOOL fudgedParsing = NO;
     
     self = [self init];
+    
+    
+    // Default to empty path. NSURLComponents seems to basically do that; it's very hard to end up with a nil path
+    self.percentEncodedPath = @"";
+    
     
     // Avoid CFURLCopyScheme as it resolves relative URLs
     CFRange schemeRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentScheme, NULL);
     if (schemeRange.location != kCFNotFound)
     {
-        CFStringRef scheme = CFStringCreateWithSubstring(NULL, CFURLGetString((CFURLRef)url), schemeRange);
+        CFStringRef scheme = CFStringCreateWithSubstring(NULL, urlString, schemeRange);
         self.scheme = (NSString *)scheme;
         CFRelease(scheme);
+        
+        // For URLs which feature no slashes to indicate the path *before* a
+        // ; ? or # mark, we need to coerce them into parsing
+        if (schemeRange.location == 0)
+        {
+            if (!CFStringFindWithOptions(urlString,
+                                         CFSTR(":/"),
+                                         CFRangeMake(schemeRange.length, CFStringGetLength(urlString) - schemeRange.length),
+                                         kCFCompareAnchored,
+                                         NULL))
+            {
+                NSMutableString *fudgedString = [(NSString *)urlString mutableCopy];
+                [fudgedString insertString:@"/"
+                                   atIndex:(schemeRange.length + 1)];   // after the colon
+                
+                url = [NSURL URLWithString:fudgedString];
+                [fudgedString release];
+                urlString = CFURLGetString((CFURLRef)url);
+                
+                fudgedParsing = YES;
+            }
+        }
     }
     
     // Avoid CFURLCopyUserName as it removes escapes
     CFRange userRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentUser, NULL);
     if (userRange.location != kCFNotFound)
     {
-        CFStringRef user = CFStringCreateWithSubstring(NULL, CFURLGetString((CFURLRef)url), userRange);
+        CFStringRef user = CFStringCreateWithSubstring(NULL, urlString, userRange);
         self.percentEncodedUser = (NSString *)user;
         CFRelease(user);
     }
@@ -69,19 +98,35 @@
     CFRange passwordRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentPassword, NULL);
     if (passwordRange.location != kCFNotFound)
     {
-        CFStringRef password = CFStringCreateWithSubstring(NULL, CFURLGetString((CFURLRef)url), passwordRange);
+        CFStringRef password = CFStringCreateWithSubstring(NULL, urlString, passwordRange);
         self.percentEncodedPassword = (NSString *)password;
         CFRelease(password);
     }
+    
     
     // Avoid CFURLCopyHostName as it removes escapes
     CFRange hostRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentHost, NULL);
     if (hostRange.location != kCFNotFound)
     {
-        CFStringRef host = CFStringCreateWithSubstring(NULL, CFURLGetString((CFURLRef)url), hostRange);
+        CFStringRef host = CFStringCreateWithSubstring(NULL, urlString, hostRange);
         self.percentEncodedHost = (NSString *)host;
         CFRelease(host);
     }
+    
+    // Need to represent the presence of a host whenever the URL starts scheme://
+    // Manually searching is the best I've found so far
+    else if (schemeRange.location == 0)
+    {
+        if (CFStringFindWithOptions(urlString,
+                                    CFSTR("://"),
+                                    CFRangeMake(schemeRange.length, CFStringGetLength(urlString) - schemeRange.length),
+                                    kCFCompareAnchored,
+                                    NULL))
+        {
+            self.percentEncodedHost = @"";
+        }
+    }
+    
     
     SInt32 port = CFURLGetPortNumber((CFURLRef)url);
     if (port >= 0) self.port = @(port);
@@ -102,6 +147,11 @@
         else if (parameterRange.length > 0)
         {
             pathRange.length += parameterRange.length;
+        }
+        
+        if (fudgedParsing)
+        {
+            pathRange.location++; pathRange.length--;
         }
         
         CFStringRef path = CFStringCreateWithSubstring(NULL, CFURLGetString((CFURLRef)url), pathRange);
@@ -253,13 +303,7 @@
 
 #pragma mark Components
 
-- (NSString *)scheme;
-{
-    @synchronized (self)
-    {
-        return [[_schemeComponent retain] autorelease];
-    }
-}
+@synthesize scheme = _schemeComponent;
 - (void)setScheme:(NSString *)scheme;
 {
     if (scheme)
@@ -272,11 +316,8 @@
         }
     }
     
-    @synchronized (self)
-    {
-        scheme = [scheme copy];
-        [_schemeComponent release]; _schemeComponent = scheme;
-    }
+    scheme = [scheme copy];
+    [_schemeComponent release]; _schemeComponent = scheme;
 }
 
 @synthesize percentEncodedUser = _userComponent;
@@ -325,7 +366,13 @@
 @synthesize percentEncodedHost = _hostComponent;
 - (NSString *)host;
 {
-    return [self.percentEncodedHost stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    // Treat empty host specially. It signifies the host in URLs like file:///path
+    // nil for practical usage from -host, but a marker internally to differentiate
+    // from file:/path
+    NSString *host = self.percentEncodedHost;
+    if (host.length == 0) return nil;
+    
+    return [host stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 - (void)setHost:(NSString *)host;
 {
@@ -365,28 +412,23 @@
     CFRelease(escaped);
 }
 
-- (NSNumber *)port;
-{
-    @synchronized (self)
-    {
-        return [[_portComponent retain] autorelease];
-    }
-}
+@synthesize port = _portComponent;
 - (void)setPort:(NSNumber *)port;
 {
     if (port.integerValue < 0) [NSException raise:NSInvalidArgumentException format:@"Invalid port: %@; can't be negative", port];
     
     port = [port copy];
-    @synchronized (self)
-    {
-        [_portComponent release]; _portComponent = port;
-    }
+    [_portComponent release]; _portComponent = port;
 }
 
 @synthesize percentEncodedPath = _pathComponent;
 - (NSString *)path;
 {
-    return [self.percentEncodedPath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    // Same treatment as -host
+    NSString *path = self.percentEncodedPath;
+    if (path.length == 0) return nil;
+    
+    return [path stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 - (void)setPath:(NSString *)path;
 {
@@ -624,6 +666,22 @@
     result.percentEncodedFragment = self.percentEncodedFragment;
     
     return result;
+}
+
+#pragma mark Debugging
+
+- (NSString *)description;
+{
+    return [[super description] stringByAppendingFormat:
+            @" {scheme = %@, user = %@, password = %@, host = %@, port = %@, path = %@, query = %@, fragment = %@}",
+            self.scheme,
+            self.percentEncodedUser,
+            self.percentEncodedPassword,
+            self.percentEncodedHost,
+            self.port,
+            self.percentEncodedPath,
+            self.percentEncodedQuery,
+            self.percentEncodedFragment];
 }
 
 @end
