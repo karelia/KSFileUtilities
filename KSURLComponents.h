@@ -165,7 +165,7 @@ typedef NS_OPTIONS(NSUInteger, KSURLComponentsQueryParameterDecodingOptions) {
  
     http://example.com?key=value&foo=bar
  
- Keys and values are percent encoded according to `options`.
+ Keys and values are percent encoded.
  
  @param parameters A dictionary to encode, whose keys and values are all strings.
  */
