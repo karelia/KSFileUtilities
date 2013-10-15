@@ -552,7 +552,7 @@
         if (options & KSURLComponentsQueryParameterDecodingPlusAsSpace)
         {
             key = [key stringByReplacingOccurrencesOfString:@"+" withString:@" "];
-            value = [key stringByReplacingOccurrencesOfString:@"+" withString:@" "];
+            value = [value stringByReplacingOccurrencesOfString:@"+" withString:@" "];
         }
         
         block([key stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
