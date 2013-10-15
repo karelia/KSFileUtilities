@@ -567,35 +567,35 @@
 - (void)testEncodeNilQueryParameters;
 {
     KSURLComponents *components = [[KSURLComponents alloc] init];
-    [components setQueryParameters:nil options:0];
+    [components setQueryParameters:nil];
     STAssertNil(components.percentEncodedQuery, nil);
 }
 
 - (void)testEncodeEmptyQueryParameters;
 {
     KSURLComponents *components = [[KSURLComponents alloc] init];
-    [components setQueryParameters:@{ } options:0];
+    [components setQueryParameters:@{ }];
     STAssertEqualObjects(components.percentEncodedQuery, @"", nil);
 }
 
 - (void)testEncodeQueryParameter;
 {
     KSURLComponents *components = [[KSURLComponents alloc] init];
-    [components setQueryParameters:@{ @"key" : @"value" } options:0];
+    [components setQueryParameters:@{ @"key" : @"value" }];
     STAssertEqualObjects(components.percentEncodedQuery, @"key=value", nil);
 }
 
 - (void)testEncodeQueryParameters;
 {
     KSURLComponents *components = [[KSURLComponents alloc] init];
-    [components setQueryParameters:@{ @"key" : @"value", @"key2" : @"value2" } options:0];
+    [components setQueryParameters:@{ @"key" : @"value", @"key2" : @"value2" }];
     STAssertEqualObjects(components.percentEncodedQuery, @"key=value&key2=value2", nil);
 }
 
 - (void)testEncodeQueryParameterEscaping;
 {
     KSURLComponents *components = [[KSURLComponents alloc] init];
-    [components setQueryParameters:@{ @"!*'();:@&=+$,/?#[]" : @"!*'();:@&=+$,/?#[]" } options:0];
+    [components setQueryParameters:@{ @"!*'();:@&=+$,/?#[]" : @"!*'();:@&=+$,/?#[]" }];
     STAssertEqualObjects(components.percentEncodedQuery, @"!*'();:@%26%3D%2B$,/?%23%5B%5D=!*'();:@%26=%2B$,/?%23%5B%5D", nil);
 }
 

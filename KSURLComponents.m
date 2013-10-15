@@ -462,7 +462,7 @@
     return result;
 }
 
-- (void)setQueryParameters:(NSDictionary *)parameters options:(NSUInteger)options;
+- (void)setQueryParameters:(NSDictionary *)parameters;
 {
     if (!parameters)
     {

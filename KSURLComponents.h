@@ -120,9 +120,8 @@ typedef NS_OPTIONS(NSUInteger, KSURLComponentsQueryParameterDecodingOptions) {
  Keys and values are percent encoded according to `options`.
  
  @param parameters A dictionary to encode, whose keys and values are all strings.
- @param options A mask that specifies options for parameter decoding. Pass `0` for now.
  */
-- (void)setQueryParameters:(NSDictionary *)parameters options:(NSUInteger)options;
+- (void)setQueryParameters:(NSDictionary *)parameters;
 
 /**
  Enumerates the parameters of `.query`
