@@ -329,6 +329,74 @@
     STAssertNil(components.fragment, nil);
 }
 
+- (void)testInitWithSchemeAndHostOnly;
+{
+    KSURLComponents *components = [KSURLComponents componentsWithURL:[NSURL URLWithString:@"scheme://host"]
+                                             resolvingAgainstBaseURL:NO];
+    
+    STAssertEqualObjects(components.scheme, @"scheme", nil);
+    STAssertNil(components.user, nil);
+    STAssertNil(components.password, nil);
+    STAssertEqualObjects(components.percentEncodedHost, @"host", nil);
+    STAssertEqualObjects(components.host, @"host", nil);
+    STAssertNil(components.port, nil);
+    STAssertEqualObjects(components.percentEncodedPath, @"", nil);
+    STAssertNil(components.path, nil);
+    STAssertNil(components.query, nil);
+    STAssertNil(components.fragment, nil);
+}
+
+- (void)testInitWithSchemeAndQueryOnlyNoSlashes;
+{
+    KSURLComponents *components = [KSURLComponents componentsWithURL:[NSURL URLWithString:@"scheme:?query"]
+                                             resolvingAgainstBaseURL:NO];
+    
+    STAssertEqualObjects(components.scheme, @"scheme", nil);
+    STAssertNil(components.user, nil);
+    STAssertNil(components.password, nil);
+    STAssertNil(components.percentEncodedHost, nil);
+    STAssertNil(components.host, nil);
+    STAssertNil(components.port, nil);
+    STAssertEqualObjects(components.percentEncodedPath, @"", nil);
+    STAssertNil(components.path, nil);
+    STAssertEqualObjects(components.query, @"query", nil);
+    STAssertNil(components.fragment, nil);
+}
+
+- (void)testInitWithSchemeAndQueryOnlyOneSlash;
+{
+    KSURLComponents *components = [KSURLComponents componentsWithURL:[NSURL URLWithString:@"scheme:/?query"]
+                                             resolvingAgainstBaseURL:NO];
+    
+    STAssertEqualObjects(components.scheme, @"scheme", nil);
+    STAssertNil(components.user, nil);
+    STAssertNil(components.password, nil);
+    STAssertNil(components.percentEncodedHost, nil);
+    STAssertNil(components.host, nil);
+    STAssertNil(components.port, nil);
+    STAssertEqualObjects(components.percentEncodedPath, @"/", nil);
+    STAssertEqualObjects(components.path, @"/", nil);
+    STAssertEqualObjects(components.query, @"query", nil);
+    STAssertNil(components.fragment, nil);
+}
+
+- (void)testInitWithSchemeAndQueryOnlyTwoSlashes;
+{
+    KSURLComponents *components = [KSURLComponents componentsWithURL:[NSURL URLWithString:@"scheme://?query"]
+                                             resolvingAgainstBaseURL:NO];
+    
+    STAssertEqualObjects(components.scheme, @"scheme", nil);
+    STAssertNil(components.user, nil);
+    STAssertNil(components.password, nil);
+    STAssertEqualObjects(components.percentEncodedHost, @"", nil);
+    STAssertNil(components.host, nil);
+    STAssertNil(components.port, nil);
+    STAssertEqualObjects(components.percentEncodedPath, @"", nil);
+    STAssertNil(components.path, nil);
+    STAssertEqualObjects(components.query, @"query", nil);
+    STAssertNil(components.fragment, nil);
+}
+
 #pragma mark Escaping
 
 - (void)testSchemeValidation;
