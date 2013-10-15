@@ -88,6 +88,27 @@
     STAssertEqualObjects(components.percentEncodedFragment, @"fragme%C3%B1t", nil);
 }
 
+- (void)testInitWithNoHost;
+{
+    KSURLComponents *components = [KSURLComponents componentsWithURL:[NSURL URLWithString:@"scheme:/path/example.txt"]
+                                             resolvingAgainstBaseURL:NO];
+    
+    STAssertEqualObjects(components.scheme, @"scheme", nil);
+    STAssertNil(components.user, nil);
+    STAssertNil(components.percentEncodedUser, nil);
+    STAssertNil(components.password, nil);
+    STAssertNil(components.percentEncodedPassword, nil);
+    STAssertNil(components.host, nil);
+    STAssertNil(components.percentEncodedHost, nil);
+    STAssertNil(components.port, nil);
+    STAssertEqualObjects(components.path, @"/path/example.txt", nil);
+    STAssertEqualObjects(components.percentEncodedPath, @"/path/example.txt", nil);
+    STAssertNil(components.query, nil);
+    STAssertNil(components.percentEncodedQuery, nil);
+    STAssertNil(components.fragment, nil);
+    STAssertNil(components.percentEncodedFragment, nil);
+}
+
 - (void)testInitWithEmptyHost;
 {
     KSURLComponents *components = [KSURLComponents componentsWithURL:[NSURL URLWithString:@"file:///path/example.txt"]
