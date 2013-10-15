@@ -28,12 +28,12 @@
 
 
 @interface KSURLComponents ()
-@property (copy, readwrite) NSString *percentEncodedUser;
-@property (copy, readwrite) NSString *percentEncodedPassword;
-@property (copy, readwrite) NSString *percentEncodedHost;
-@property (copy, readwrite) NSString *percentEncodedPath;
-@property (copy, readwrite) NSString *percentEncodedQuery;
-@property (copy, readwrite) NSString *percentEncodedFragment;
+@property (nonatomic, copy, readwrite) NSString *percentEncodedUser;
+@property (nonatomic, copy, readwrite) NSString *percentEncodedPassword;
+@property (nonatomic, copy, readwrite) NSString *percentEncodedHost;
+@property (nonatomic, copy, readwrite) NSString *percentEncodedPath;
+@property (nonatomic, copy, readwrite) NSString *percentEncodedQuery;
+@property (nonatomic, copy, readwrite) NSString *percentEncodedFragment;
 @end
 
 
@@ -303,13 +303,7 @@
 
 #pragma mark Components
 
-- (NSString *)scheme;
-{
-    @synchronized (self)
-    {
-        return [[_schemeComponent retain] autorelease];
-    }
-}
+@synthesize scheme = _schemeComponent;
 - (void)setScheme:(NSString *)scheme;
 {
     if (scheme)
@@ -322,11 +316,8 @@
         }
     }
     
-    @synchronized (self)
-    {
-        scheme = [scheme copy];
-        [_schemeComponent release]; _schemeComponent = scheme;
-    }
+    scheme = [scheme copy];
+    [_schemeComponent release]; _schemeComponent = scheme;
 }
 
 @synthesize percentEncodedUser = _userComponent;
@@ -421,22 +412,13 @@
     CFRelease(escaped);
 }
 
-- (NSNumber *)port;
-{
-    @synchronized (self)
-    {
-        return [[_portComponent retain] autorelease];
-    }
-}
+@synthesize port = _portComponent;
 - (void)setPort:(NSNumber *)port;
 {
     if (port.integerValue < 0) [NSException raise:NSInvalidArgumentException format:@"Invalid port: %@; can't be negative", port];
     
     port = [port copy];
-    @synchronized (self)
-    {
-        [_portComponent release]; _portComponent = port;
-    }
+    [_portComponent release]; _portComponent = port;
 }
 
 @synthesize percentEncodedPath = _pathComponent;
