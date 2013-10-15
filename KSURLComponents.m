@@ -505,4 +505,20 @@
     return result;
 }
 
+#pragma mark Debugging
+
+- (NSString *)description;
+{
+    return [[super description] stringByAppendingFormat:
+            @" {scheme = %@, user = %@, password = %@, host = %@, port = %@, path = %@, query = %@, fragment = %@}",
+            self.scheme,
+            self.percentEncodedUser,
+            self.percentEncodedPassword,
+            self.percentEncodedHost,
+            self.port,
+            self.percentEncodedPath,
+            self.percentEncodedQuery,
+            self.percentEncodedFragment];
+}
+
 @end
