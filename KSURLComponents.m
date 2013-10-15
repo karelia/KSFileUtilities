@@ -45,6 +45,7 @@
 {
     if (resolve) url = [url absoluteURL];
     CFStringRef urlString = CFURLGetString((CFURLRef)url);
+    BOOL fudgedParsing = NO;
     
     self = [self init];
     
@@ -60,6 +61,28 @@
         CFStringRef scheme = CFStringCreateWithSubstring(NULL, urlString, schemeRange);
         self.scheme = (NSString *)scheme;
         CFRelease(scheme);
+        
+        // For URLs which feature no slashes to indicate the path *before* a
+        // ; ? or # mark, we need to coerce them into parsing
+        if (schemeRange.location == 0)
+        {
+            if (!CFStringFindWithOptions(urlString,
+                                         CFSTR(":/"),
+                                         CFRangeMake(schemeRange.length, CFStringGetLength(urlString) - schemeRange.length),
+                                         kCFCompareAnchored,
+                                         NULL))
+            {
+                NSMutableString *fudgedString = [(NSString *)urlString mutableCopy];
+                [fudgedString insertString:@"/"
+                                   atIndex:(schemeRange.length + 1)];   // after the colon
+                
+                url = [NSURL URLWithString:fudgedString];
+                [fudgedString release];
+                urlString = CFURLGetString((CFURLRef)url);
+                
+                fudgedParsing = YES;
+            }
+        }
     }
     
     // Avoid CFURLCopyUserName as it removes escapes
@@ -124,6 +147,11 @@
         else if (parameterRange.length > 0)
         {
             pathRange.length += parameterRange.length;
+        }
+        
+        if (fudgedParsing)
+        {
+            pathRange.location++; pathRange.length--;
         }
         
         CFStringRef path = CFStringCreateWithSubstring(NULL, CFURLGetString((CFURLRef)url), pathRange);
