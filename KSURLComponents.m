@@ -442,11 +442,11 @@
 
 #pragma mark Query Parameters
 
-- (NSDictionary *)queryParameters;
+- (NSDictionary *)queryParametersWithOptions:(KSURLComponentsQueryParameterDecodingOptions)options;
 {
     __block NSMutableDictionary *result = [NSMutableDictionary dictionary];
     
-    [self enumerateQueryParametersWithOptions:0 usingBlock:^(NSString *key, NSString *value, BOOL *stop) {
+    [self enumerateQueryParametersWithOptions:options usingBlock:^(NSString *key, NSString *value, BOOL *stop) {
         
         // Bail if doesn't fit dictionary paradigm
         if (!value || [result objectForKey:key])
@@ -462,7 +462,7 @@
     return result;
 }
 
-- (void)setQueryParameters:(NSDictionary *)parameters;
+- (void)setQueryParameters:(NSDictionary *)parameters options:(NSUInteger)options;
 {
     if (!parameters)
     {
