@@ -47,6 +47,11 @@
     
     self = [self init];
     
+    
+    // Default to empty path. NSURLComponents seems to basically do that; it's very hard to end up with a nil path
+    self.percentEncodedPath = @"";
+    
+    
     // Avoid CFURLCopyScheme as it resolves relative URLs
     CFRange schemeRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentScheme, NULL);
     if (schemeRange.location != kCFNotFound)
