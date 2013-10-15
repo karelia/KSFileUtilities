@@ -75,17 +75,12 @@
     }
     
     // Avoid CFURLCopyHostName as it removes escapes
-    CFRange hostSeparatorRange;
-    CFRange hostRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentHost, &hostSeparatorRange);
+    CFRange hostRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentHost, NULL);
     if (hostRange.location != kCFNotFound)
     {
         CFStringRef host = CFStringCreateWithSubstring(NULL, CFURLGetString((CFURLRef)url), hostRange);
         self.percentEncodedHost = (NSString *)host;
         CFRelease(host);
-    }
-    else if (hostSeparatorRange.location != kCFNotFound && hostSeparatorRange.length == 0)
-    {
-        self.percentEncodedHost = @"";
     }
     
     SInt32 port = CFURLGetPortNumber((CFURLRef)url);
