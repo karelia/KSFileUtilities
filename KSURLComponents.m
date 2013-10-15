@@ -44,6 +44,7 @@
 - (id)initWithURL:(NSURL *)url resolvingAgainstBaseURL:(BOOL)resolve;
 {
     if (resolve) url = [url absoluteURL];
+    CFStringRef urlString = CFURLGetString((CFURLRef)url);
     
     self = [self init];
     
@@ -56,7 +57,7 @@
     CFRange schemeRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentScheme, NULL);
     if (schemeRange.location != kCFNotFound)
     {
-        CFStringRef scheme = CFStringCreateWithSubstring(NULL, CFURLGetString((CFURLRef)url), schemeRange);
+        CFStringRef scheme = CFStringCreateWithSubstring(NULL, urlString, schemeRange);
         self.scheme = (NSString *)scheme;
         CFRelease(scheme);
     }
@@ -65,7 +66,7 @@
     CFRange userRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentUser, NULL);
     if (userRange.location != kCFNotFound)
     {
-        CFStringRef user = CFStringCreateWithSubstring(NULL, CFURLGetString((CFURLRef)url), userRange);
+        CFStringRef user = CFStringCreateWithSubstring(NULL, urlString, userRange);
         self.percentEncodedUser = (NSString *)user;
         CFRelease(user);
     }
@@ -74,7 +75,7 @@
     CFRange passwordRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentPassword, NULL);
     if (passwordRange.location != kCFNotFound)
     {
-        CFStringRef password = CFStringCreateWithSubstring(NULL, CFURLGetString((CFURLRef)url), passwordRange);
+        CFStringRef password = CFStringCreateWithSubstring(NULL, urlString, passwordRange);
         self.percentEncodedPassword = (NSString *)password;
         CFRelease(password);
     }
@@ -84,7 +85,7 @@
     CFRange hostRange = CFURLGetByteRangeForComponent((CFURLRef)url, kCFURLComponentHost, NULL);
     if (hostRange.location != kCFNotFound)
     {
-        CFStringRef host = CFStringCreateWithSubstring(NULL, CFURLGetString((CFURLRef)url), hostRange);
+        CFStringRef host = CFStringCreateWithSubstring(NULL, urlString, hostRange);
         self.percentEncodedHost = (NSString *)host;
         CFRelease(host);
     }
@@ -93,8 +94,6 @@
     // Manually searching is the best I've found so far
     else if (schemeRange.location == 0)
     {
-        CFStringRef urlString = CFURLGetString((CFURLRef)url);
-        
         if (CFStringFindWithOptions(urlString,
                                     CFSTR("://"),
                                     CFRangeMake(schemeRange.length, CFStringGetLength(urlString) - schemeRange.length),
