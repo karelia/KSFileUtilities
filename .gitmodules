@@ -1,6 +1,6 @@
 [submodule "IFUnicodeURL"]
 	path = IFUnicodeURL
-	url = git@github.com:karelia/IFUnicodeURL.git
+	url = https://github.com/karelia/IFUnicodeURL.git
 [submodule "TestKSFileUtilities/OCUnit2JUnit"]
 	path = TestKSFileUtilities/OCUnit2JUnit
 	url = https://github.com/ciryon/OCUnit2JUnit

@@ -90,16 +90,15 @@
 {
 	NSParameterAssert(path);
     
-    NSString *URLString = path;
 	if ([path hasSuffix:@"/"] != isDirectory)
 	{
 		if (isDirectory)
 		{
-			URLString = [path stringByAppendingString:@"/"];
+			path = [path stringByAppendingString:@"/"];
 		}
 		else
 		{
-			URLString = [path substringToIndex:([path length] - 1)];
+			path = [path substringToIndex:(path.length - 1)];
 		}
 	}
     
