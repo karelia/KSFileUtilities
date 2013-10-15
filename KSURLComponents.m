@@ -392,7 +392,11 @@
 @synthesize percentEncodedPath = _pathComponent;
 - (NSString *)path;
 {
-    return [self.percentEncodedPath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    // Same treatment as -host
+    NSString *path = self.percentEncodedPath;
+    if (path.length == 0) return nil;
+    
+    return [path stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 - (void)setPath:(NSString *)path;
 {
