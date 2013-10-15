@@ -553,6 +553,17 @@
     STAssertEqualObjects(parameters, @{ @"k/y" : @"va/ue" }, nil);
 }
 
+- (void)testPlusSymbolInQueryParameters;
+{
+    KSURLComponents *components = [KSURLComponents componentsWithString:@"?size=%7B64%2C+64%7D"];
+    
+    NSDictionary *parameters = [components queryParametersWithOptions:0];
+    STAssertEqualObjects(parameters, @{ @"size" : @"{64,+64}" }, nil);
+    
+    parameters = [components queryParametersWithOptions:KSURLComponentsQueryParameterDecodingPlusAsSpace];
+    STAssertEqualObjects(parameters, @{ @"size" : @"{64, 64}" }, nil);
+}
+
 - (void)testEncodeNilQueryParameters;
 {
     KSURLComponents *components = [[KSURLComponents alloc] init];
