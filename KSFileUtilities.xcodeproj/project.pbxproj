@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		27246F0F165BF184001B638E /* NSURL+IFUnicodeURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 27246F0E165BF184001B638E /* NSURL+IFUnicodeURL.m */; };
+		27422A79180D609B00136F43 /* KSMailtoURLs.m in Sources */ = {isa = PBXBuildFile; fileRef = 27422A78180D609B00136F43 /* KSMailtoURLs.m */; };
 		2757532C16AEA86500388503 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2757532B16AEA86500388503 /* WebKit.framework */; };
 		27A60C0E1536E7F500EEE538 /* TestKSURLFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60C0D1536E7F500EEE538 /* TestKSURLFormatter.m */; };
 		27A900FD165BFFD800D23C4B /* toxxx.c in Sources */ = {isa = PBXBuildFile; fileRef = 27A900FB165BFFD800D23C4B /* toxxx.c */; };
@@ -35,6 +36,8 @@
 /* Begin PBXFileReference section */
 		27246F0D165BF184001B638E /* NSURL+IFUnicodeURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL+IFUnicodeURL.h"; path = "IFUnicodeURL/IFUnicodeURL/NSURL+IFUnicodeURL.h"; sourceTree = SOURCE_ROOT; };
 		27246F0E165BF184001B638E /* NSURL+IFUnicodeURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+IFUnicodeURL.m"; path = "IFUnicodeURL/IFUnicodeURL/NSURL+IFUnicodeURL.m"; sourceTree = SOURCE_ROOT; };
+		27422A77180D609B00136F43 /* KSMailtoURLs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMailtoURLs.h; sourceTree = SOURCE_ROOT; };
+		27422A78180D609B00136F43 /* KSMailtoURLs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMailtoURLs.m; sourceTree = SOURCE_ROOT; };
 		2757532B16AEA86500388503 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		27A60C0C1536E7F500EEE538 /* TestKSURLFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestKSURLFormatter.h; sourceTree = "<group>"; };
 		27A60C0D1536E7F500EEE538 /* TestKSURLFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSURLFormatter.m; sourceTree = "<group>"; };
@@ -120,6 +123,8 @@
 				EE43C84613898D7B008ABD16 /* KSURLFormatter.m */,
 				27F0501A178829180019FC07 /* KSURLComponents.h */,
 				27F0501B178829180019FC07 /* KSURLComponents.m */,
+				27422A77180D609B00136F43 /* KSMailtoURLs.h */,
+				27422A78180D609B00136F43 /* KSMailtoURLs.m */,
 				27246F10165BF1D2001B638E /* IFUnicodeURL */,
 				27F86FBD164FBA9D003608CC /* KSEncodeURLString.h */,
 				27F86FBE164FBA9D003608CC /* KSEncodeURLString.m */,
@@ -301,6 +306,7 @@
 				27246F0F165BF184001B638E /* NSURL+IFUnicodeURL.m in Sources */,
 				27A900FD165BFFD800D23C4B /* toxxx.c in Sources */,
 				27A90100165C000B00D23C4B /* util.c in Sources */,
+				27422A79180D609B00136F43 /* KSMailtoURLs.m in Sources */,
 				27A90103165C003A00D23C4B /* nameprep.c in Sources */,
 				27A90106165C005700D23C4B /* puny.c in Sources */,
 			);
