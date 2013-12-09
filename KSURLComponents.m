@@ -482,6 +482,92 @@
     CFRelease(escaped);
 }
 
+#pragma mark Equality Testing
+
+- (BOOL)isEqual:(id)object;
+{
+    if (![object isKindOfClass:[KSURLComponents class]]) return NO;
+    
+    NSString *myScheme = self.scheme;
+    NSString *otherScheme = [object scheme];
+    if (myScheme != otherScheme && ![myScheme isEqualToString:otherScheme]) return NO;
+    
+    NSString *myUser = self.percentEncodedUser;
+    NSString *otherUser = [object percentEncodedUser];
+    if (myUser != otherUser && ![myUser isEqualToString:otherUser]) return NO;
+    
+    NSString *myPassword = self.percentEncodedPassword;
+    NSString *otherPassword = [object percentEncodedPassword];
+    if (myPassword != otherPassword && ![myPassword isEqualToString:otherPassword]) return NO;
+    
+    NSString *myHost = self.percentEncodedHost;
+    NSString *otherHost = [object percentEncodedHost];
+    if (myHost != otherHost && ![myHost isEqualToString:otherHost]) return NO;
+    
+    NSNumber *myPort = self.port;
+    NSNumber *otherPort = [(KSURLComponents *)object port];
+    if (myPort != otherPort && ![myPort isEqualToNumber:otherPort]) return NO;
+    
+    NSString *myPath = self.percentEncodedPath;
+    NSString *otherPath = [object percentEncodedPath];
+    if (myPath != otherPath && ![myPath isEqualToString:otherPath]) return NO;
+    
+    NSString *myQuery = self.percentEncodedQuery;
+    NSString *otherQuery = [object percentEncodedQuery];
+    if (myQuery != otherQuery && ![myQuery isEqualToString:otherQuery]) return NO;
+    
+    NSString *myFragment = self.percentEncodedFragment;
+    NSString *otherFragment = [object percentEncodedFragment];
+    if (myFragment != otherFragment && ![myFragment isEqualToString:otherFragment]) return NO;
+    
+    return YES;
+}
+
+- (NSUInteger)hash;
+{
+    // This could definitely be a better algorithm!
+    return self.scheme.hash + self.percentEncodedUser.hash + self.percentEncodedPassword.hash + self.percentEncodedPassword.hash + self.percentEncodedHost.hash + self.port.hash + self.percentEncodedPath.hash + self.percentEncodedQuery.hash + self.percentEncodedFragment.hash;
+}
+
+#pragma mark NSCopying
+
+- (id)copyWithZone:(NSZone *)zone;
+{
+    KSURLComponents *result = [[KSURLComponents alloc] init];
+    
+    result.scheme = self.scheme;
+    result.percentEncodedUser = self.percentEncodedUser;
+    result.percentEncodedPassword = self.percentEncodedPassword;
+    result.percentEncodedHost = self.percentEncodedHost;
+    result.port = self.port;
+    result.percentEncodedPath = self.percentEncodedPath;
+    result.percentEncodedQuery = self.percentEncodedQuery;
+    result.percentEncodedFragment = self.percentEncodedFragment;
+    
+    return result;
+}
+
+#pragma mark Debugging
+
+- (NSString *)description;
+{
+    return [[super description] stringByAppendingFormat:
+            @" {scheme = %@, user = %@, password = %@, host = %@, port = %@, path = %@, query = %@, fragment = %@}",
+            self.scheme,
+            self.percentEncodedUser,
+            self.percentEncodedPassword,
+            self.percentEncodedHost,
+            self.port,
+            self.percentEncodedPath,
+            self.percentEncodedQuery,
+            self.percentEncodedFragment];
+}
+
+@end
+
+
+@implementation KSURLComponents (KSQueryParameters)
+
 #pragma mark Query Parameters
 
 - (NSDictionary *)queryParametersWithOptions:(KSURLComponentsQueryParameterDecodingOptions)options;
@@ -601,87 +687,6 @@
               [value stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
               &stop);
     }
-}
-
-#pragma mark Equality Testing
-
-- (BOOL)isEqual:(id)object;
-{
-    if (![object isKindOfClass:[KSURLComponents class]]) return NO;
-    
-    NSString *myScheme = self.scheme;
-    NSString *otherScheme = [object scheme];
-    if (myScheme != otherScheme && ![myScheme isEqualToString:otherScheme]) return NO;
-    
-    NSString *myUser = self.percentEncodedUser;
-    NSString *otherUser = [object percentEncodedUser];
-    if (myUser != otherUser && ![myUser isEqualToString:otherUser]) return NO;
-    
-    NSString *myPassword = self.percentEncodedPassword;
-    NSString *otherPassword = [object percentEncodedPassword];
-    if (myPassword != otherPassword && ![myPassword isEqualToString:otherPassword]) return NO;
-    
-    NSString *myHost = self.percentEncodedHost;
-    NSString *otherHost = [object percentEncodedHost];
-    if (myHost != otherHost && ![myHost isEqualToString:otherHost]) return NO;
-    
-    NSNumber *myPort = self.port;
-    NSNumber *otherPort = [(KSURLComponents *)object port];
-    if (myPort != otherPort && ![myPort isEqualToNumber:otherPort]) return NO;
-    
-    NSString *myPath = self.percentEncodedPath;
-    NSString *otherPath = [object percentEncodedPath];
-    if (myPath != otherPath && ![myPath isEqualToString:otherPath]) return NO;
-    
-    NSString *myQuery = self.percentEncodedQuery;
-    NSString *otherQuery = [object percentEncodedQuery];
-    if (myQuery != otherQuery && ![myQuery isEqualToString:otherQuery]) return NO;
-    
-    NSString *myFragment = self.percentEncodedFragment;
-    NSString *otherFragment = [object percentEncodedFragment];
-    if (myFragment != otherFragment && ![myFragment isEqualToString:otherFragment]) return NO;
-    
-    return YES;
-}
-
-- (NSUInteger)hash;
-{
-    // This could definitely be a better algorithm!
-    return self.scheme.hash + self.percentEncodedUser.hash + self.percentEncodedPassword.hash + self.percentEncodedPassword.hash + self.percentEncodedHost.hash + self.port.hash + self.percentEncodedPath.hash + self.percentEncodedQuery.hash + self.percentEncodedFragment.hash;
-}
-
-#pragma mark NSCopying
-
-- (id)copyWithZone:(NSZone *)zone;
-{
-    KSURLComponents *result = [[KSURLComponents alloc] init];
-    
-    result.scheme = self.scheme;
-    result.percentEncodedUser = self.percentEncodedUser;
-    result.percentEncodedPassword = self.percentEncodedPassword;
-    result.percentEncodedHost = self.percentEncodedHost;
-    result.port = self.port;
-    result.percentEncodedPath = self.percentEncodedPath;
-    result.percentEncodedQuery = self.percentEncodedQuery;
-    result.percentEncodedFragment = self.percentEncodedFragment;
-    
-    return result;
-}
-
-#pragma mark Debugging
-
-- (NSString *)description;
-{
-    return [[super description] stringByAppendingFormat:
-            @" {scheme = %@, user = %@, password = %@, host = %@, port = %@, path = %@, query = %@, fragment = %@}",
-            self.scheme,
-            self.percentEncodedUser,
-            self.percentEncodedPassword,
-            self.percentEncodedHost,
-            self.port,
-            self.percentEncodedPath,
-            self.percentEncodedQuery,
-            self.percentEncodedFragment];
 }
 
 @end

@@ -126,8 +126,10 @@
 @property (nonatomic, copy, readonly) NSString *percentEncodedQuery;
 @property (nonatomic, copy, readonly) NSString *percentEncodedFragment;
 
+@end
 
-#pragma mark Query Parameters
+
+@interface KSURLComponents (KSQueryParameters)
 
 typedef NS_OPTIONS(NSUInteger, KSURLComponentsQueryParameterDecodingOptions) {
     KSURLComponentsQueryParameterDecodingPlusAsSpace = 1UL << 0,    // + characters are interpreted as spaces, rather than regular + symbols
