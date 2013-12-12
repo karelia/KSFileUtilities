@@ -18,6 +18,11 @@
 
 #pragma mark Convenience
 
++ (NSDictionary *)parametersFromURL:(NSURL *)url options:(KSURLQueryParameterDecodingOptions)options;
+{
+    return [[self queryWithURL:url] parametersWithOptions:options];
+}
+
 + (NSString *)encodeParameters:(NSDictionary *)parameters;
 {
     KSURLQuery *query = [[KSURLQuery alloc] init];
