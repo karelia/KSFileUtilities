@@ -8,8 +8,6 @@
 
 #import "KSURLQuery.h"
 
-#import "KSURLComponents.h"
-
 
 @interface KSURLQuery ()
 @property(nonatomic, readwrite, copy) NSString *percentEncodedString;
@@ -21,9 +19,14 @@
 + (instancetype)queryWithURL:(NSURL *)url;
 {
     // Always resolve, since unlike paths there's no way for two queries to be in some way concatenated
-    KSURLComponents *components = [[KSURLComponents alloc] initWithURL:url resolvingAgainstBaseURL:YES];
-    KSURLQuery *result = [self queryWithPercentEncodedString:components.percentEncodedQuery];
-    [components release];
+    CFURLRef cfURL = CFURLCopyAbsoluteURL((CFURLRef)url);
+    
+    NSString *string = (NSString *)CFURLCopyQueryString(cfURL,
+                                                        NULL);  // leave unescaped
+    
+    KSURLQuery *result = [self queryWithPercentEncodedString:string];
+    [string release];
+    CFRelease(cfURL);
     return result;
 }
 
