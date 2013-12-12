@@ -86,6 +86,12 @@ typedef NS_OPTIONS(NSUInteger, KSURLQueryParameterDecodingOptions) {
  */
 - (void)setParameters:(NSDictionary *)parameters;
 
+/**
+ @result The encoded representation of the receiver.
+ 
+ Generally you then pass the result of this method to `NSURLComponents.percentEncodedQuery`
+ (or `KSURLComponents`) to build up a full URL.
+ */
 @property(atomic, readonly, copy) NSString *percentEncodedString;
 
 
