@@ -23,9 +23,12 @@
     return [[self queryWithURL:url] parametersWithOptions:options];
 }
 
-+ (NSDictionary *)parametersOfPercentEncodedQuery:(NSString *)query options:(KSURLQueryParameterDecodingOptions)options;
++ (NSDictionary *)parametersOfPercentEncodedQuery:(NSString *)string options:(KSURLQueryParameterDecodingOptions)options;
 {
-    return [[self queryWithPercentEncodedString:query] parametersWithOptions:options];
+    KSURLQuery *query = [[self alloc] initWithPercentEncodedString:string];
+    NSDictionary *result = [query parametersWithOptions:options];
+    [query release];
+    return result;
 }
 
 + (NSString *)encodeParameters:(NSDictionary *)parameters;
@@ -47,15 +50,10 @@
     NSString *string = (NSString *)CFURLCopyQueryString(cfURL,
                                                         NULL);  // leave unescaped
     
-    KSURLQuery *result = [self queryWithPercentEncodedString:string];
+    KSURLQuery *result = [[self alloc] initWithPercentEncodedString:string];
     [string release];
     CFRelease(cfURL);
-    return result;
-}
-
-+ (instancetype)queryWithPercentEncodedString:(NSString *)percentEncodedQuery;
-{
-    return [[[self alloc] initWithPercentEncodedString:percentEncodedQuery] autorelease];
+    return [result autorelease];
 }
 
 - initWithPercentEncodedString:(NSString *)string;

@@ -28,7 +28,6 @@ typedef NS_OPTIONS(NSUInteger, KSURLQueryParameterDecodingOptions) {
 
 #pragma mark Creating a KSURLQuery
 + (instancetype)queryWithURL:(NSURL *)url;
-+ (instancetype)queryWithPercentEncodedString:(NSString *)percentEncodedQuery;
 - initWithPercentEncodedString:(NSString *)string;
 
 
