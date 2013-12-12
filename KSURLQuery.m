@@ -10,7 +10,7 @@
 
 
 @interface KSURLQuery ()
-@property(nonatomic, readwrite, copy) NSString *percentEncodedString;
+@property(atomic, readwrite, copy) NSString *percentEncodedString;
 @end
 
 
