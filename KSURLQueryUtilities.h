@@ -30,14 +30,14 @@
 @interface NSURL (KSURLQueryUtilities)
 
 // It's common to use the query part of a URL for a dictionary-like series of parameters. This method will decode that for you, including handling strings which were escaped to fit the scheme
-- (NSDictionary *)ks_queryParameters;
+- (NSDictionary *)ks_queryParameters __deprecated_msg("use KSURLQuery instead");
 
 // To do the reverse, construct a dictonary for the query and pass into either of these methods. You can base the result off of an existing URL, or specify all the components.
-- (NSURL *)ks_URLWithQueryParameters:(NSDictionary *)parameters;
+- (NSURL *)ks_URLWithQueryParameters:(NSDictionary *)parameters __deprecated_msg("use KSURLQuery instead");
 + (NSURL *)ks_URLWithScheme:(NSString *)scheme
                        host:(NSString *)host
                        path:(NSString *)path
-            queryParameters:(NSDictionary *)parameters;
+            queryParameters:(NSDictionary *)parameters __deprecated_msg("use KSURLQuery instead");
 
 // Primitive methods for if you need tighter control over handling query dictionaries
 + (NSString *)ks_queryWithParameters:(NSDictionary *)parameters;
