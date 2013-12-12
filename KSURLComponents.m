@@ -568,8 +568,6 @@
 
 @implementation KSURLComponents (KSQueryParameters)
 
-#pragma mark Query Parameters
-
 - (NSDictionary *)queryParametersWithOptions:(KSURLComponentsQueryParameterDecodingOptions)options;
 {
     __block NSMutableDictionary *result = [NSMutableDictionary dictionary];
