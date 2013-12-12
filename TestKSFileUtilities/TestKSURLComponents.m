@@ -780,7 +780,7 @@
     NSDictionary *parameters = [query parametersWithOptions:0];
     STAssertEqualObjects(parameters, @{ @"size" : @"{64,+64}" }, nil);
     
-    parameters = [query parametersWithOptions:KSURLComponentsQueryParameterDecodingPlusAsSpace];
+    parameters = [query parametersWithOptions:KSURLQueryParameterDecodingPlusAsSpace];
     STAssertEqualObjects(parameters, @{ @"size" : @"{64, 64}" }, nil);
 }
 
