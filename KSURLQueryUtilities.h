@@ -49,7 +49,7 @@
 @interface NSString (KSURLQueryUtilities)
 
 // Follows RFC2396, section 3.4
-- (NSString *)ks_stringByAddingQueryComponentPercentEscapes;
-- (NSString *)ks_stringByReplacingQueryComponentPercentEscapes;
+- (NSString *)ks_stringByAddingQueryComponentPercentEscapes __deprecated_msg("use KSURLQuery instead; keys and values have different encoding needs");
+- (NSString *)ks_stringByReplacingQueryComponentPercentEscapes __deprecated_msg("use KSURLQuery instead; not all servers use + to encode a space");
 
 @end
