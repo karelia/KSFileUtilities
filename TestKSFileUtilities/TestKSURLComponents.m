@@ -9,6 +9,7 @@
 #import <SenTestingKit/SenTestingKit.h>
 
 #import "KSURLComponents.h"
+#import "KSURLQuery.h"
 
 @interface TestKSURLComponents : SenTestCase
 
@@ -669,21 +670,21 @@
 
 - (void)testNilQuery;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] init];
-    NSDictionary *parameters = [components queryParametersWithOptions:0];
+    KSURLQuery *query = [[KSURLQuery alloc] init];
+    NSDictionary *parameters = [query parametersWithOptions:0];
     
     STAssertNil(parameters, nil);
 }
 
 - (void)testEmptyQuery;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] initWithString:@"scheme://host?"];
+    KSURLQuery *query = [KSURLQuery queryWithURL:[NSURL URLWithString:@"scheme://host?"]];
     
-    NSDictionary *parameters = [components queryParametersWithOptions:0];
+    NSDictionary *parameters = [query parametersWithOptions:0];
     STAssertNil(parameters, nil);
     
     __block BOOL blockCalled = NO;
-    [components enumerateQueryParametersWithOptions:0 usingBlock:^(NSString *key, NSString *value, BOOL *stop) {
+    [query enumerateParametersWithOptions:0 usingBlock:^(NSString *key, NSString *value, BOOL *stop) {
         STAssertEqualObjects(key, @"", nil);
         STAssertNil(value, nil);
         blockCalled = YES;
@@ -693,13 +694,13 @@
 
 - (void)testNonParameterisedQuery;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] initWithString:@"scheme://host?query"];
+    KSURLQuery *query = [KSURLQuery queryWithURL:[NSURL URLWithString:@"scheme://host?query"]];
     
-    NSDictionary *parameters = [components queryParametersWithOptions:0];
+    NSDictionary *parameters = [query parametersWithOptions:0];
     STAssertNil(parameters, nil);
     
     __block BOOL blockCalled = NO;
-    [components enumerateQueryParametersWithOptions:0 usingBlock:^(NSString *key, NSString *value, BOOL *stop) {
+    [query enumerateParametersWithOptions:0 usingBlock:^(NSString *key, NSString *value, BOOL *stop) {
         STAssertEqualObjects(key, @"query", nil);
         STAssertNil(value, nil);
         blockCalled = YES;
@@ -709,46 +710,46 @@
 
 - (void)testSingleQueryParameter;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] initWithString:@"scheme://host?key=value"];
+    KSURLQuery *query = [KSURLQuery queryWithURL:[NSURL URLWithString:@"scheme://host?key=value"]];
     
-    NSDictionary *parameters = [components queryParametersWithOptions:0];
+    NSDictionary *parameters = [query parametersWithOptions:0];
     STAssertEqualObjects(parameters, @{ @"key" : @"value" }, nil);
 }
 
 - (void)testQueryParameters;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] initWithString:@"scheme://host?key=value&foo=bar"];
+    KSURLQuery *query = [KSURLQuery queryWithURL:[NSURL URLWithString:@"scheme://host?key=value&foo=bar"]];
     
-    NSDictionary *parameters = [components queryParametersWithOptions:0];
+    NSDictionary *parameters = [query parametersWithOptions:0];
     NSDictionary *expected = @{ @"key" : @"value", @"foo" : @"bar" };
     STAssertEqualObjects(parameters, expected, nil);
 }
 
 - (void)testEmptyQueryParameterKey;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] initWithString:@"scheme://host?=value"];
+    KSURLQuery *query = [KSURLQuery queryWithURL:[NSURL URLWithString:@"scheme://host?=value"]];
     
-    NSDictionary *parameters = [components queryParametersWithOptions:0];
+    NSDictionary *parameters = [query parametersWithOptions:0];
     STAssertEqualObjects(parameters, @{ @"" : @"value" }, nil);
 }
 
 - (void)testEmptyQueryParameterValue;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] initWithString:@"scheme://host?key="];
+    KSURLQuery *query = [KSURLQuery queryWithURL:[NSURL URLWithString:@"scheme://host?key="]];
     
-    NSDictionary *parameters = [components queryParametersWithOptions:0];
+    NSDictionary *parameters = [query parametersWithOptions:0];
     STAssertEqualObjects(parameters, @{ @"key" : @"" }, nil);
 }
 
 - (void)testRepeatedKeys;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] initWithString:@"scheme://host?key=value&key=value2"];
+    KSURLQuery *query = [KSURLQuery queryWithURL:[NSURL URLWithString:@"scheme://host?key=value&key=value2"]];
     
-    NSDictionary *parameters = [components queryParametersWithOptions:0];
+    NSDictionary *parameters = [query parametersWithOptions:0];
     STAssertNil(parameters, nil);
     
     __block int blockCalled = 0;
-    [components enumerateQueryParametersWithOptions:0 usingBlock:^(NSString *key, NSString *value, BOOL *stop) {
+    [query enumerateParametersWithOptions:0 usingBlock:^(NSString *key, NSString *value, BOOL *stop) {
         STAssertEqualObjects(key, @"key", nil);
         STAssertEqualObjects(value, (blockCalled ? @"value2" : @"value"), nil);
         ++blockCalled;
@@ -758,64 +759,64 @@
 
 - (void)testEqualsSignInQueryParameterValue;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] initWithString:@"scheme://host?key=val=ue"];
+    KSURLQuery *query = [KSURLQuery queryWithURL:[NSURL URLWithString:@"scheme://host?key=val=ue"]];
     
-    NSDictionary *parameters = [components queryParametersWithOptions:0];
+    NSDictionary *parameters = [query parametersWithOptions:0];
     STAssertEqualObjects(parameters, @{ @"key" : @"val=ue" }, nil);
 }
 
 - (void)testQueryParameterUnescaping;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] initWithString:@"scheme://host?k%2Fy=va%2Fue"];
+    KSURLQuery *query = [KSURLQuery queryWithURL:[NSURL URLWithString:@"scheme://host?k%2Fy=va%2Fue"]];
     
-    NSDictionary *parameters = [components queryParametersWithOptions:0];
+    NSDictionary *parameters = [query parametersWithOptions:0];
     STAssertEqualObjects(parameters, @{ @"k/y" : @"va/ue" }, nil);
 }
 
 - (void)testPlusSymbolInQueryParameters;
 {
-    KSURLComponents *components = [KSURLComponents componentsWithString:@"?size=%7B64%2C+64%7D"];
+    KSURLQuery *query = [KSURLQuery queryWithURL:[NSURL URLWithString:@"?size=%7B64%2C+64%7D"]];
     
-    NSDictionary *parameters = [components queryParametersWithOptions:0];
+    NSDictionary *parameters = [query parametersWithOptions:0];
     STAssertEqualObjects(parameters, @{ @"size" : @"{64,+64}" }, nil);
     
-    parameters = [components queryParametersWithOptions:KSURLComponentsQueryParameterDecodingPlusAsSpace];
+    parameters = [query parametersWithOptions:KSURLComponentsQueryParameterDecodingPlusAsSpace];
     STAssertEqualObjects(parameters, @{ @"size" : @"{64, 64}" }, nil);
 }
 
 - (void)testEncodeNilQueryParameters;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] init];
-    [components setQueryParameters:nil];
-    STAssertNil(components.percentEncodedQuery, nil);
+    KSURLQuery *query = [[KSURLQuery alloc] init];
+    [query setParameters:nil];
+    STAssertNil(query.percentEncodedString, nil);
 }
 
 - (void)testEncodeEmptyQueryParameters;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] init];
-    [components setQueryParameters:@{ }];
-    STAssertEqualObjects(components.percentEncodedQuery, @"", nil);
+    KSURLQuery *query = [[KSURLQuery alloc] init];
+    [query setParameters:@{ }];
+    STAssertEqualObjects(query.percentEncodedString, @"", nil);
 }
 
 - (void)testEncodeQueryParameter;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] init];
-    [components setQueryParameters:@{ @"key" : @"value" }];
-    STAssertEqualObjects(components.percentEncodedQuery, @"key=value", nil);
+    KSURLQuery *query = [[KSURLQuery alloc] init];
+    [query setParameters:@{ @"key" : @"value" }];
+    STAssertEqualObjects(query.percentEncodedString, @"key=value", nil);
 }
 
 - (void)testEncodeQueryParameters;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] init];
-    [components setQueryParameters:@{ @"key" : @"value", @"key2" : @"value2" }];
-    STAssertEqualObjects(components.percentEncodedQuery, @"key=value&key2=value2", nil);
+    KSURLQuery *query = [[KSURLQuery alloc] init];
+    [query setParameters:@{ @"key" : @"value", @"key2" : @"value2" }];
+    STAssertEqualObjects(query.percentEncodedString, @"key=value&key2=value2", nil);
 }
 
 - (void)testEncodeQueryParameterEscaping;
 {
-    KSURLComponents *components = [[KSURLComponents alloc] init];
-    [components setQueryParameters:@{ @"!*'();:@&=+$,/?#[]" : @"!*'();:@&=+$,/?#[]" }];
-    STAssertEqualObjects(components.percentEncodedQuery, @"!*'();:@%26%3D%2B$,/?%23%5B%5D=!*'();:@%26=%2B$,/?%23%5B%5D", nil);
+    KSURLQuery *query = [[KSURLQuery alloc] init];
+    [query setParameters:@{ @"!*'();:@&=+$,/?#[]" : @"!*'();:@&=+$,/?#[]" }];
+    STAssertEqualObjects(query.percentEncodedString, @"!*'();:@%26%3D%2B$,/?%23%5B%5D=!*'();:@%26=%2B$,/?%23%5B%5D", nil);
 }
 
 @end
