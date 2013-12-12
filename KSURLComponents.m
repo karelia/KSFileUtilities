@@ -571,26 +571,3 @@
 }
 
 @end
-
-
-@implementation KSURLComponents (KSQueryParameters)
-
-- (NSDictionary *)queryParametersWithOptions:(KSURLComponentsQueryParameterDecodingOptions)options;
-{
-    return [[KSURLQuery queryWithPercentEncodedString:self.percentEncodedQuery] parametersWithOptions:options];
-}
-
-- (void)setQueryParameters:(NSDictionary *)parameters;
-{
-    KSURLQuery *query = [[KSURLQuery alloc] init];
-    [query setParameters:parameters];
-    self.percentEncodedQuery = query.percentEncodedString;
-    [query release];
-}
-
-- (void)enumerateQueryParametersWithOptions:(KSURLComponentsQueryParameterDecodingOptions)options usingBlock:(void (^)(NSString *key, NSString *value, BOOL *stop))block;
-{
-    [[KSURLQuery queryWithPercentEncodedString:self.percentEncodedQuery] enumerateParametersWithOptions:options usingBlock:block];
-}
-
-@end
