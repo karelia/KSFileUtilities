@@ -16,6 +16,7 @@
 		27A90103165C003A00D23C4B /* nameprep.c in Sources */ = {isa = PBXBuildFile; fileRef = 27A90101165C003A00D23C4B /* nameprep.c */; };
 		27A90106165C005700D23C4B /* puny.c in Sources */ = {isa = PBXBuildFile; fileRef = 27A90104165C005600D23C4B /* puny.c */; };
 		27DA2577148E641100209E50 /* TestKSURLUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DA2576148E641100209E50 /* TestKSURLUtilities.m */; };
+		27DC29041859BC2C0089D717 /* KSURLQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DC29031859BC2C0089D717 /* KSURLQuery.m */; };
 		27F0501C178829220019FC07 /* KSURLComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F0501B178829180019FC07 /* KSURLComponents.m */; };
 		27F0501E1788399E0019FC07 /* TestKSURLComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F0501D1788399E0019FC07 /* TestKSURLComponents.m */; };
 		27F86FBF164FBA9D003608CC /* KSEncodeURLString.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F86FBE164FBA9D003608CC /* KSEncodeURLString.m */; };
@@ -50,6 +51,8 @@
 		27A90104165C005600D23C4B /* puny.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = puny.c; path = IFUnicodeURL/IDNSDK/puny.c; sourceTree = "<group>"; };
 		27A90105165C005700D23C4B /* puny.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = puny.h; path = IFUnicodeURL/IDNSDK/puny.h; sourceTree = "<group>"; };
 		27DA2576148E641100209E50 /* TestKSURLUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSURLUtilities.m; sourceTree = "<group>"; };
+		27DC29021859BC2C0089D717 /* KSURLQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLQuery.h; sourceTree = SOURCE_ROOT; };
+		27DC29031859BC2C0089D717 /* KSURLQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSURLQuery.m; sourceTree = SOURCE_ROOT; };
 		27F0501A178829180019FC07 /* KSURLComponents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSURLComponents.h; sourceTree = SOURCE_ROOT; };
 		27F0501B178829180019FC07 /* KSURLComponents.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KSURLComponents.m; sourceTree = SOURCE_ROOT; };
 		27F0501D1788399E0019FC07 /* TestKSURLComponents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestKSURLComponents.m; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 				27246F10165BF1D2001B638E /* IFUnicodeURL */,
 				27F0501A178829180019FC07 /* KSURLComponents.h */,
 				27F0501B178829180019FC07 /* KSURLComponents.m */,
+				27DC29021859BC2C0089D717 /* KSURLQuery.h */,
+				27DC29031859BC2C0089D717 /* KSURLQuery.m */,
 				27422A77180D609B00136F43 /* KSMailtoURLs.h */,
 				27422A78180D609B00136F43 /* KSMailtoURLs.m */,
 				27F86FBD164FBA9D003608CC /* KSEncodeURLString.h */,
@@ -296,6 +301,7 @@
 				EE43C85213898D7B008ABD16 /* KSWebLocation.m in Sources */,
 				EE43C85313898D7B008ABD16 /* KSWebLocationPasteboardUtilities.m in Sources */,
 				27F0501E1788399E0019FC07 /* TestKSURLComponents.m in Sources */,
+				27DC29041859BC2C0089D717 /* KSURLQuery.m in Sources */,
 				27F0501C178829220019FC07 /* KSURLComponents.m in Sources */,
 				EE43C85413898D7B008ABD16 /* KSWorkspaceUtilities.m in Sources */,
 				27DA2577148E641100209E50 /* TestKSURLUtilities.m in Sources */,
