@@ -14,6 +14,12 @@
     NSString    *_percentEncodedString;
 }
 
+#pragma mark Convenience
++ (NSString *)encodeParameters:(NSDictionary *)parameters;
+
+
+#pragma mark
+
 + (instancetype)queryWithURL:(NSURL *)url;
 + (instancetype)queryWithPercentEncodedString:(NSString *)percentEncodedQuery;
 

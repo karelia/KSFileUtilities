@@ -16,6 +16,19 @@
 
 @implementation KSURLQuery
 
+#pragma mark Convenience
+
++ (NSString *)encodeParameters:(NSDictionary *)parameters;
+{
+    KSURLQuery *query = [[KSURLQuery alloc] init];
+    [query setParameters:parameters];
+    NSString *result = query.percentEncodedString;
+    [query release];
+    return result;
+}
+
+#pragma mark
+
 + (instancetype)queryWithURL:(NSURL *)url;
 {
     // Always resolve, since unlike paths there's no way for two queries to be in some way concatenated
