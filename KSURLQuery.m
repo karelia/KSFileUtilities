@@ -106,7 +106,7 @@
             stop = YES;
         }
         
-        if (options & KSURLComponentsQueryParameterDecodingPlusAsSpace)
+        if (options & KSURLQueryParameterDecodingPlusAsSpace)
         {
             key = [key stringByReplacingOccurrencesOfString:@"+" withString:@" "];
             value = [value stringByReplacingOccurrencesOfString:@"+" withString:@" "];
