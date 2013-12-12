@@ -189,4 +189,35 @@
     self.percentEncodedString = query;
 }
 
+- (void)addParameter:(NSString *)key value:(NSString *)value;
+{
+    CFStringRef escapedKey = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)key, NULL, CFSTR("+=&#"), kCFStringEncodingUTF8);
+    // Escape + for safety as some backends interpret it as a space
+    // = indicates the start of value, so must be escaped
+    // & indicates the start of next parameter, so must be escaped
+    // # indicates the start of fragment, so must be escaped
+    
+    CFStringRef escapedValue = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)value, NULL, CFSTR("+&#"), kCFStringEncodingUTF8);
+    // Escape + for safety as some backends interpret it as a space
+    // = is allowed in values, as there's no further value to indicate
+    // & indicates the start of next parameter, so must be escaped
+    // # indicates the start of fragment, so must be escaped
+    
+    // Append the parameter and its value to the full query string
+    NSString *query = self.percentEncodedString;
+    if (query)
+    {
+        query = [query stringByAppendingFormat:@"&%@=%@", escapedKey, escapedValue];
+    }
+    else
+    {
+        query = [NSString stringWithFormat:@"%@=%@", escapedKey, escapedValue];
+    }
+    
+    self.percentEncodedString = query;
+    
+    CFRelease(escapedKey);
+    CFRelease(escapedValue);
+}
+
 @end

@@ -87,6 +87,15 @@ typedef NS_OPTIONS(NSUInteger, KSURLQueryParameterDecodingOptions) {
 - (void)setParameters:(NSDictionary *)parameters;
 
 /**
+ Adds an extra parameter to end of the receiver.
+ 
+ Enables the query to be built up piece-by-piece. This can be especially useful
+ when the ordering of parameters is critical, and/or parameters appear more than
+ once.
+ */
+- (void)addParameter:(NSString *)key value:(NSString *)value __attribute((nonnull(1)));
+
+/**
  @result The encoded representation of the receiver.
  
  Generally you then pass the result of this method to `NSURLComponents.percentEncodedQuery`
