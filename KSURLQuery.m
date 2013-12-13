@@ -23,7 +23,7 @@
     return [[self queryWithURL:url] parametersWithOptions:options];
 }
 
-+ (NSDictionary *)parametersOfPercentEncodedQuery:(NSString *)string options:(KSURLQueryParameterDecodingOptions)options;
++ (NSDictionary *)decodeString:(NSString *)string options:(KSURLQueryParameterDecodingOptions)options;
 {
     KSURLQuery *query = [[self alloc] initWithPercentEncodedString:string];
     NSDictionary *result = [query parametersWithOptions:options];

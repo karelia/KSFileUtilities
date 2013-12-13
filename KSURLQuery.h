@@ -21,9 +21,9 @@ typedef NS_OPTIONS(NSUInteger, KSURLQueryParameterDecodingOptions) {
 }
 
 #pragma mark Convenience
-+ (NSDictionary *)parametersFromURL:(NSURL *)url options:(KSURLQueryParameterDecodingOptions)options;
-+ (NSDictionary *)parametersOfPercentEncodedQuery:(NSString *)query options:(KSURLQueryParameterDecodingOptions)options;
 + (NSString *)encodeParameters:(NSDictionary *)parameters;
++ (NSDictionary *)decodeString:(NSString *)percentEncodedQuery options:(KSURLQueryParameterDecodingOptions)options;
++ (NSDictionary *)parametersFromURL:(NSURL *)url options:(KSURLQueryParameterDecodingOptions)options;
 
 
 #pragma mark Creating a KSURLQuery
