@@ -26,8 +26,6 @@
 
 #import "KSURLComponents.h"
 
-#import "KSURLQuery.h"
-
 
 @interface KSURLComponents ()
 @property (nonatomic, copy, readwrite) NSString *percentEncodedUser;
