@@ -157,13 +157,9 @@
     }
     
     // Build the list of parameters as a string
-	NSEnumerator *enumerator = [parameters keyEnumerator];
-    
-    NSString *key;
-    while ((key = [enumerator nextObject]))
-    {
-        [self addParameter:key value:[parameters objectForKey:key]];
-    }
+	[parameters enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *value, BOOL *stop) {
+        [self addParameter:key value:value];
+    }];
 }
 
 - (void)addParameter:(NSString *)key value:(NSString *)value;
