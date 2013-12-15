@@ -83,6 +83,10 @@ typedef NS_OPTIONS(NSUInteger, KSURLQueryParameterDecodingOptions) {
  
  Keys and values are percent encoded.
  
+ Since NSDictionary's API has no concept of ordering for keys, the order of the
+ parameters from calling this method is similarly undefined. If ordering is
+ important to your use case, use `-addParameter:value:` instead.
+ 
  @param parameters A dictionary to encode, whose keys and values are all strings.
  */
 - (void)setParameters:(NSDictionary *)parameters;
