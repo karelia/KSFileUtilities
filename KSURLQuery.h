@@ -81,7 +81,7 @@ typedef NS_OPTIONS(NSUInteger, KSURLQueryParameterDecodingOptions) {
  
  http://example.com?key=value&foo=bar
  
- Keys and values are percent encoded.
+ See `-addParameter:value:` for full details on encoding of keys and values.
  
  Since NSDictionary's API has no concept of ordering for keys, the order of the
  parameters from calling this method is similarly undefined. If ordering is
@@ -97,8 +97,14 @@ typedef NS_OPTIONS(NSUInteger, KSURLQueryParameterDecodingOptions) {
  Enables the query to be built up piece-by-piece. This can be especially useful
  when the ordering of parameters is critical, and/or parameters appear more than
  once.
+ 
+ Both the key and value are percent encoded.
+ 
+ `value` is sent a `-description` message to obtain a string representation
+ suitable for encoding, enabling objects like `NSNumber`s to be easily encoded,
+ as well as strings.
  */
-- (void)addParameter:(NSString *)key value:(NSString *)value __attribute((nonnull(1)));
+- (void)addParameter:(NSString *)key value:(id <NSObject>)value __attribute((nonnull(1)));
 
 /**
  @result The encoded representation of the receiver.

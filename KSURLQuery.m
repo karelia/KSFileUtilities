@@ -162,7 +162,7 @@
     }];
 }
 
-- (void)addParameter:(NSString *)key value:(NSString *)value;
+- (void)addParameter:(NSString *)key value:(id <NSObject>)value;
 {
     CFStringRef escapedKey = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)key, NULL, CFSTR("+=&#"), kCFStringEncodingUTF8);
     // Escape + for safety as some backends interpret it as a space
@@ -170,7 +170,7 @@
     // & indicates the start of next parameter, so must be escaped
     // # indicates the start of fragment, so must be escaped
     
-    CFStringRef escapedValue = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)value, NULL, CFSTR("+&#"), kCFStringEncodingUTF8);
+    CFStringRef escapedValue = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)value.description, NULL, CFSTR("+&#"), kCFStringEncodingUTF8);
     // Escape + for safety as some backends interpret it as a space
     // = is allowed in values, as there's no further value to indicate
     // & indicates the start of next parameter, so must be escaped
