@@ -157,9 +157,10 @@
     }
     
     // Build the list of parameters as a string
-	[parameters enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *value, BOOL *stop) {
-        [self addParameter:key value:value];
-    }];
+    for (NSString *aKey in [parameters.allKeys sortedArrayUsingSelector:@selector(compare:)])
+    {
+        [self addParameter:aKey value:[parameters objectForKey:aKey]];
+    }
 }
 
 - (void)addParameter:(NSString *)key value:(id <NSObject>)value;
