@@ -298,6 +298,9 @@
     STAssertEqualObjects([URL(@"http://example.com") URLByAppendingPathComponent:@""], URL(@"http://example.com/"), nil);
     STAssertEqualObjects([URL(@"http://example.com?foo=bar") URLByAppendingPathComponent:@""], URL(@"http://example.com/?foo=bar"), nil);
     STAssertEqualObjects([URL(@"http://example.com/?foo=bar") URLByAppendingPathComponent:@""], URL(@"http://example.com/?foo=bar"), nil);
+    
+    // There's a weird behaviour for directories on disk though; double slash:
+    STAssertEqualObjects([URL(@"file:///Users/Shared") URLByAppendingPathComponent:@""], URL(@"file:///Users/Shared//"), nil);
 }
 
 @end
