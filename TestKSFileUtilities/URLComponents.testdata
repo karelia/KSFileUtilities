@@ -49,5 +49,15 @@
     "percentEncodedHost" : "",
     "path" : "\/path\/example.txt",
     "percentEncodedPath" : "\/path\/example.txt"
+  },
+  {
+    "Name" : "User, but empty host",
+    "String" : "scheme:\/\/user@\/path\/example.txt",
+    "scheme" : "scheme",
+    "user" : "user",
+    "percentEncodedUser" : "user",
+    "percentEncodedHost" : "",
+    "path" : "\/path\/example.txt",
+    "percentEncodedPath" : "\/path\/example.txt"
   }
 ]
