@@ -100,5 +100,29 @@
     "percentEncodedHost" : "host",
     "path" : "\/path",
     "percentEncodedPath" : "\/path"
+  },
+  {
+    "String" : "scheme:",
+    "scheme" : "scheme",
+    "percentEncodedPath" : ""
+  },
+  {
+    "String" : "scheme:\/",
+    "scheme" : "scheme",
+    "path" : "\/",
+    "percentEncodedPath" : "\/"
+  },
+  {
+    "String" : "scheme:\/\/",
+    "scheme" : "scheme",
+    "percentEncodedHost" : "",
+    "percentEncodedPath" : ""
+  },
+  {
+    "String" : "scheme:\/\/\/",
+    "scheme" : "scheme",
+    "path" : "\/",
+    "percentEncodedHost" : "",
+    "percentEncodedPath" : "\/"
   }
 ]
