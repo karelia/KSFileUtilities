@@ -16,5 +16,23 @@
     "percentEncodedQuery" : "query",
     "fragment" : "fragment",
     "percentEncodedFragment" : "fragment"
+  },
+  {
+    "Name" : "Escaped",
+    "String" : "scheme:\/\/us%C3%A9r:p%C3%A2ssword@h%C3%B4st:0\/p%C3%A0th?q%C3%BCery#fragme%C3%B1t",
+    "scheme" : "scheme",
+    "user" : "usér",
+    "percentEncodedUser" : "us%C3%A9r",
+    "password" : "pâssword",
+    "percentEncodedPassword" : "p%C3%A2ssword",
+    "host" : "hôst",
+    "percentEncodedHost" : "h%C3%B4st",
+    "port" : 0,
+    "path" : "\/pàth",
+    "percentEncodedPath" : "\/p%C3%A0th",
+    "query" : "qüery",
+    "percentEncodedQuery" : "q%C3%BCery",
+    "fragment" : "fragmeñt",
+    "percentEncodedFragment" : "fragme%C3%B1t"
   }
 ]
