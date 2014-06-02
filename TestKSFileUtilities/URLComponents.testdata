@@ -59,5 +59,58 @@
     "percentEncodedHost" : "",
     "path" : "\/path\/example.txt",
     "percentEncodedPath" : "\/path\/example.txt"
+  },
+  {
+    "Name" : "Relative fragment",
+    "String" : "#fragment",
+    "baseURL" : "http:\/\/example.com\/path#wrong",
+    "percentEncodedPath" : "",
+    "fragment" : "fragment",
+    "percentEncodedFragment" : "fragment"
+  },
+  {
+    "Name" : "Relative query",
+    "String" : "?query",
+    "baseURL" : "http:\/\/example.com\/path?wrong#fragment",
+    "percentEncodedPath" : "",
+    "query" : "query",
+    "percentEncodedQuery" : "query"
+  },
+  {
+    "Name" : "Relative absolute path",
+    "String" : "\/path",
+    "baseURL" : "http:\/\/example.com\/wrong?query#fragment",
+    "path" : "\/path",
+    "percentEncodedPath" : "\/path"
+  },
+  {
+    "Name" : "Relative relative path",
+    "String" : "path",
+    "baseURL" : "http:\/\/example.com\/wrong?query#fragment",
+    "path" : "path",
+    "percentEncodedPath" : "path"
+  },
+  {
+    "Name" : "Parameter",
+    "String" : ";parameter",
+    "baseURL" : "http:\/\/example.com\/wrong?query#fragment",
+    "path" : ";parameter",
+    "percentEncodedPath" : ";parameter"
+  },
+  {
+    "Name" : "Path and parameter",
+    "String" : "path;parameter",
+    "baseURL" : "http:\/\/example.com\/wrong?query#fragment",
+    "path" : "path;parameter",
+    "percentEncodedPath" : "path;parameter"
+  },
+  {
+    "Name" : "Protocol relative URL",
+    "String" : "\/\/host\/path",
+    "baseURL" : "http:\/\/example.com\/wrong?query#fragment",
+    "host" : "host",
+    "percentEncodedHost" : "host",
+    "path" : "\/path",
+    "percentEncodedPath" : "\/path"
   }
 ]

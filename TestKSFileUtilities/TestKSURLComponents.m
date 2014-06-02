@@ -57,7 +57,9 @@
     NSArray *data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfURL:url] options:0 error:NULL];
     
     for (NSDictionary *properties in data) {
-        KSURLComponents *components = [KSURLComponents componentsWithURL:[NSURL URLWithString:properties[@"String"]] resolvingAgainstBaseURL:NO];
+		
+		NSURL *url = [NSURL URLWithString:properties[@"String"] relativeToURL:[NSURL URLWithString:properties[@"baseURL"]]];
+        KSURLComponents *components = [KSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
         
         STAssertEqualObjects(components.scheme, properties[@"scheme"], nil);
         STAssertEqualObjects(components.user, properties[@"user"], nil);
