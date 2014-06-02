@@ -1,0 +1,20 @@
+[
+  {
+    "Name" : "Absolute",
+    "String" : "scheme:\/\/user:password@host:0\/path?query#fragment",
+    "scheme" : "scheme",
+    "user" : "user",
+    "percentEncodedUser" : "user",
+    "password" : "password",
+    "percentEncodedPassword" : "password",
+    "host" : "host",
+    "percentEncodedHost" : "host",
+    "port" : 0,
+    "path" : "\/path",
+    "percentEncodedPath" : "\/path",
+    "query" : "query",
+    "percentEncodedQuery" : "query",
+    "fragment" : "fragment",
+    "percentEncodedFragment" : "fragment"
+  }
+]

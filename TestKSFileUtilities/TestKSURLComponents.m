@@ -52,6 +52,30 @@
     [components release];
 }
 
+- (void)testURLStrings {
+    NSURL *url = [[NSBundle bundleForClass:self.class] URLForResource:@"URLComponents" withExtension:@"testdata"];
+    NSArray *data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfURL:url] options:0 error:NULL];
+    
+    for (NSDictionary *properties in data) {
+        KSURLComponents *components = [KSURLComponents componentsWithURL:[NSURL URLWithString:properties[@"String"]] resolvingAgainstBaseURL:NO];
+        
+        STAssertEqualObjects(components.scheme, properties[@"scheme"], nil);
+        STAssertEqualObjects(components.user, properties[@"user"], nil);
+        STAssertEqualObjects(components.percentEncodedUser, properties[@"percentEncodedUser"], nil);
+        STAssertEqualObjects(components.password, properties[@"password"], nil);
+        STAssertEqualObjects(components.percentEncodedPassword, properties[@"percentEncodedPassword"], nil);
+        STAssertEqualObjects(components.host, properties[@"host"], nil);
+        STAssertEqualObjects(components.percentEncodedHost, properties[@"percentEncodedHost"], nil);
+        STAssertEqualObjects(components.port, properties[@"port"], nil);
+        STAssertEqualObjects(components.path, properties[@"path"], nil);
+        STAssertEqualObjects(components.percentEncodedPath, properties[@"percentEncodedPath"], nil);
+        STAssertEqualObjects(components.query, properties[@"query"], nil);
+        STAssertEqualObjects(components.percentEncodedQuery, properties[@"percentEncodedQuery"], nil);
+        STAssertEqualObjects(components.fragment, properties[@"fragment"], nil);
+        STAssertEqualObjects(components.percentEncodedFragment, properties[@"percentEncodedFragment"], nil);
+    }
+}
+
 - (void)testInitWithAbsoluteURL;
 {
     KSURLComponents *components = [KSURLComponents componentsWithURL:[NSURL URLWithString:@"scheme://user:password@host:0/path?query#fragment"]
