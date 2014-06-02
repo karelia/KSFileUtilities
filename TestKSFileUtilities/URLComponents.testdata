@@ -34,5 +34,20 @@
     "percentEncodedQuery" : "q%C3%BCery",
     "fragment" : "fragmeñt",
     "percentEncodedFragment" : "fragme%C3%B1t"
+  },
+  {
+    "Name" : "No host",
+    "String" : "scheme:\/path\/example.txt",
+    "scheme" : "scheme",
+    "path" : "\/path\/example.txt",
+    "percentEncodedPath" : "\/path\/example.txt"
+  },
+  {
+    "Name" : "Empty host",
+    "String" : "file:\/\/\/path\/example.txt",
+    "scheme" : "file",
+    "percentEncodedHost" : "",
+    "path" : "\/path\/example.txt",
+    "percentEncodedPath" : "\/path\/example.txt"
   }
 ]
