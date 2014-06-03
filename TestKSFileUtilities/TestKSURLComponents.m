@@ -58,7 +58,13 @@
     
     for (NSDictionary *properties in data) {
 		
-		NSURL *url = [NSURL URLWithString:properties[@"String"] relativeToURL:[NSURL URLWithString:properties[@"baseURL"]]];
+		NSString *urlString = properties[@"String"];
+		
+		NSURL *url = nil;
+		if (urlString) {
+			url = [NSURL URLWithString:properties[@"String"] relativeToURL:[NSURL URLWithString:properties[@"baseURL"]]];
+			STAssertNotNil(urlString, @"Been fed in an invalid URL string");
+		}
 		
 		{{
 			KSURLComponents *components = [KSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
