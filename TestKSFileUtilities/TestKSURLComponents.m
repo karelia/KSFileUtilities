@@ -52,6 +52,11 @@
     [components release];
 }
 
+- (void)testNilURL {
+	STAssertThrows([NSURLComponents componentsWithURL:nil resolvingAgainstBaseURL:NO], nil);
+	STAssertThrows([KSURLComponents componentsWithURL:nil resolvingAgainstBaseURL:NO], nil);
+}
+
 - (void)testURLStrings {
     NSURL *url = [[NSBundle bundleForClass:self.class] URLForResource:@"URLComponents" withExtension:@"testdata"];
     NSArray *data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfURL:url] options:0 error:NULL];
