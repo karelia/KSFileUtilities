@@ -30,28 +30,6 @@
 
 #pragma mark Creating URL Components
 
-- (void)testInit
-{
-    KSURLComponents *components = [[KSURLComponents alloc] init];
-    
-    STAssertNil(components.scheme, nil);
-    STAssertNil(components.user, nil);
-    STAssertNil(components.percentEncodedUser, nil);
-    STAssertNil(components.password, nil);
-    STAssertNil(components.percentEncodedPassword, nil);
-    STAssertNil(components.host, nil);
-    STAssertNil(components.percentEncodedHost, nil);
-    STAssertNil(components.port, nil);
-    STAssertNil(components.path, nil);
-    STAssertNil(components.percentEncodedPath, nil);
-    STAssertNil(components.query, nil);
-    STAssertNil(components.percentEncodedQuery, nil);
-    STAssertNil(components.fragment, nil);
-    STAssertNil(components.percentEncodedFragment, nil);
-    
-    [components release];
-}
-
 - (void)testNilURL {
 	STAssertThrows([NSURLComponents componentsWithURL:nil resolvingAgainstBaseURL:NO], nil);
 	STAssertThrows([KSURLComponents componentsWithURL:nil resolvingAgainstBaseURL:NO], nil);
@@ -72,7 +50,9 @@
 		}
 		
 		{{
-			KSURLComponents *components = [KSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+			KSURLComponents *components = (url ?
+										   [KSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO] :
+										   [[KSURLComponents alloc] init]);
 			
 			STAssertEqualObjects(components.scheme, properties[@"scheme"], nil);
 			STAssertEqualObjects(components.user, properties[@"user"], nil);
@@ -91,7 +71,9 @@
 		}}
 		
 		{{
-			NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+			NSURLComponents *components = (url ?
+										   [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO] :
+										   [[NSURLComponents alloc] init]);
 			
 			STAssertEqualObjects(components.scheme, properties[@"scheme"], nil);
 			STAssertEqualObjects(components.user, properties[@"user"], nil);
