@@ -43,6 +43,8 @@
 
 - (id)initWithURL:(NSURL *)url resolvingAgainstBaseURL:(BOOL)resolve;
 {
+	if (!url) [NSException raise:NSInvalidArgumentException format:@"-[KSURLComponents %@] requires a non-nil URL", NSStringFromSelector(_cmd)];
+	
     if (resolve) url = [url absoluteURL];
     CFStringRef urlString = CFURLGetString((CFURLRef)url);
     BOOL fudgedParsing = NO;

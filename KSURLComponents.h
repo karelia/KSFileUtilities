@@ -52,7 +52,7 @@
  @param url The URL whose components you want.
  @param resolve Whether to resolve relative URLs before retrieving components
  */
-- (id)initWithURL:(NSURL *)url resolvingAgainstBaseURL:(BOOL)resolve;
+- (id)initWithURL:(NSURL *)url resolvingAgainstBaseURL:(BOOL)resolve __attribute((nonnull));
 
 /**
  Initializes and returns a newly created `KSURLComponents` with the components of a URL.
@@ -67,7 +67,7 @@
  @param url The URL whose components you want.
  @param resolve Whether to resolve relative URLs before retrieving components
  */
-+ (id)componentsWithURL:(NSURL *)url resolvingAgainstBaseURL:(BOOL)resolve;
++ (id)componentsWithURL:(NSURL *)url resolvingAgainstBaseURL:(BOOL)resolve __attribute((nonnull));
 
 /**
  Initialize a `KSURLComponents` with a URL string.
