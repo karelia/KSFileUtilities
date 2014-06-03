@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		270C3085193CAD7000C9EE77 /* URLComponents.testdata in Resources */ = {isa = PBXBuildFile; fileRef = 270C3084193CAD7000C9EE77 /* URLComponents.testdata */; };
 		27246F0F165BF184001B638E /* NSURL+IFUnicodeURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 27246F0E165BF184001B638E /* NSURL+IFUnicodeURL.m */; };
 		27422A79180D609B00136F43 /* KSMailtoURLs.m in Sources */ = {isa = PBXBuildFile; fileRef = 27422A78180D609B00136F43 /* KSMailtoURLs.m */; };
 		2757532C16AEA86500388503 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2757532B16AEA86500388503 /* WebKit.framework */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		270C3084193CAD7000C9EE77 /* URLComponents.testdata */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = URLComponents.testdata; sourceTree = "<group>"; };
 		27246F0D165BF184001B638E /* NSURL+IFUnicodeURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL+IFUnicodeURL.h"; path = "IFUnicodeURL/IFUnicodeURL/NSURL+IFUnicodeURL.h"; sourceTree = SOURCE_ROOT; };
 		27246F0E165BF184001B638E /* NSURL+IFUnicodeURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+IFUnicodeURL.m"; path = "IFUnicodeURL/IFUnicodeURL/NSURL+IFUnicodeURL.m"; sourceTree = SOURCE_ROOT; };
 		27422A77180D609B00136F43 /* KSMailtoURLs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMailtoURLs.h; sourceTree = SOURCE_ROOT; };
@@ -195,6 +197,7 @@
 				27A60C0C1536E7F500EEE538 /* TestKSURLFormatter.h */,
 				27A60C0D1536E7F500EEE538 /* TestKSURLFormatter.m */,
 				27F0501D1788399E0019FC07 /* TestKSURLComponents.m */,
+				270C3084193CAD7000C9EE77 /* URLComponents.testdata */,
 			);
 			path = TestKSFileUtilities;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE83868613897644005E0FFD /* InfoPlist.strings in Resources */,
+				270C3085193CAD7000C9EE77 /* URLComponents.testdata in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
