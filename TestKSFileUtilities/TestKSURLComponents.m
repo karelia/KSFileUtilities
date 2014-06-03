@@ -59,22 +59,44 @@
     for (NSDictionary *properties in data) {
 		
 		NSURL *url = [NSURL URLWithString:properties[@"String"] relativeToURL:[NSURL URLWithString:properties[@"baseURL"]]];
-        KSURLComponents *components = [KSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
-        
-        STAssertEqualObjects(components.scheme, properties[@"scheme"], nil);
-        STAssertEqualObjects(components.user, properties[@"user"], nil);
-        STAssertEqualObjects(components.percentEncodedUser, properties[@"percentEncodedUser"], nil);
-        STAssertEqualObjects(components.password, properties[@"password"], nil);
-        STAssertEqualObjects(components.percentEncodedPassword, properties[@"percentEncodedPassword"], nil);
-        STAssertEqualObjects(components.host, properties[@"host"], nil);
-        STAssertEqualObjects(components.percentEncodedHost, properties[@"percentEncodedHost"], nil);
-        STAssertEqualObjects(components.port, properties[@"port"], nil);
-        STAssertEqualObjects(components.path, properties[@"path"], nil);
-        STAssertEqualObjects(components.percentEncodedPath, properties[@"percentEncodedPath"], nil);
-        STAssertEqualObjects(components.query, properties[@"query"], nil);
-        STAssertEqualObjects(components.percentEncodedQuery, properties[@"percentEncodedQuery"], nil);
-        STAssertEqualObjects(components.fragment, properties[@"fragment"], nil);
-        STAssertEqualObjects(components.percentEncodedFragment, properties[@"percentEncodedFragment"], nil);
+		
+		{{
+			KSURLComponents *components = [KSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+			
+			STAssertEqualObjects(components.scheme, properties[@"scheme"], nil);
+			STAssertEqualObjects(components.user, properties[@"user"], nil);
+			STAssertEqualObjects(components.percentEncodedUser, properties[@"percentEncodedUser"], nil);
+			STAssertEqualObjects(components.password, properties[@"password"], nil);
+			STAssertEqualObjects(components.percentEncodedPassword, properties[@"percentEncodedPassword"], nil);
+			STAssertEqualObjects(components.host, properties[@"host"], nil);
+			STAssertEqualObjects(components.percentEncodedHost, properties[@"percentEncodedHost"], nil);
+			STAssertEqualObjects(components.port, properties[@"port"], nil);
+			STAssertEqualObjects(components.path, properties[@"path"], nil);
+			STAssertEqualObjects(components.percentEncodedPath, properties[@"percentEncodedPath"], nil);
+			STAssertEqualObjects(components.query, properties[@"query"], nil);
+			STAssertEqualObjects(components.percentEncodedQuery, properties[@"percentEncodedQuery"], nil);
+			STAssertEqualObjects(components.fragment, properties[@"fragment"], nil);
+			STAssertEqualObjects(components.percentEncodedFragment, properties[@"percentEncodedFragment"], nil);
+		}}
+		
+		{{
+			NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+			
+			STAssertEqualObjects(components.scheme, properties[@"scheme"], nil);
+			STAssertEqualObjects(components.user, properties[@"user"], nil);
+			STAssertEqualObjects(components.percentEncodedUser, properties[@"percentEncodedUser"], nil);
+			STAssertEqualObjects(components.password, properties[@"password"], nil);
+			STAssertEqualObjects(components.percentEncodedPassword, properties[@"percentEncodedPassword"], nil);
+			STAssertEqualObjects(components.host, properties[@"host"], nil);
+			STAssertEqualObjects(components.percentEncodedHost, properties[@"percentEncodedHost"], nil);
+			STAssertEqualObjects(components.port, properties[@"port"], nil);
+			STAssertEqualObjects(components.path, properties[@"path"], nil);
+			STAssertEqualObjects(components.percentEncodedPath, properties[@"percentEncodedPath"], nil);
+			STAssertEqualObjects(components.query, properties[@"query"], nil);
+			STAssertEqualObjects(components.percentEncodedQuery, properties[@"percentEncodedQuery"], nil);
+			STAssertEqualObjects(components.fragment, properties[@"fragment"], nil);
+			STAssertEqualObjects(components.percentEncodedFragment, properties[@"percentEncodedFragment"], nil);
+		}}
     }
 }
 
