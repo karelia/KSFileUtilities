@@ -121,8 +121,38 @@
   {
     "String" : "scheme:\/\/\/",
     "scheme" : "scheme",
-    "path" : "\/",
     "percentEncodedHost" : "",
+    "path" : "\/",
     "percentEncodedPath" : "\/"
+  },
+  {
+    "String" : "scheme:\/\/host",
+    "scheme" : "scheme",
+    "host" : "host",
+    "percentEncodedHost" : "host",
+    "percentEncodedPath" : ""
+  },
+  {
+    "String" : "scheme:?query",
+    "scheme" : "scheme",
+    "percentEncodedPath" : "",
+    "query" : "query",
+    "percentEncodedQuery" : "query"
+  },
+  {
+    "String" : "scheme:\/?query",
+    "scheme" : "scheme",
+    "path" : "\/",
+    "percentEncodedPath" : "\/",
+    "query" : "query",
+    "percentEncodedQuery" : "query"
+  },
+  {
+    "String" : "scheme:\/\/?query",
+    "scheme" : "scheme",
+    "percentEncodedHost" : "",
+    "percentEncodedPath" : "",
+    "query" : "query",
+    "percentEncodedQuery" : "query"
   }
 ]
