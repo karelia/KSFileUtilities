@@ -142,6 +142,10 @@
     [self checkURL:URL(@"http://example.com/foo/bar") relativeToURL:URL(@"http://example.com/bar/foo%2F/") againstExpectedResult:@"../../foo/bar"];
     
     
+    // File URLs
+    [self checkURL:URL(@"file:///foo/bar/baz") relativeToURL:URL(@"file:///foo/bar/") againstExpectedResult:@"baz"];
+    
+    
     // Crashed at one point
     STAssertEqualObjects([URL(@"") ks_stringRelativeToURL:URL(@"http://example.com/foo/")], nil,
                          nil);
