@@ -266,13 +266,29 @@
     NSString *myHost = [self host];
     if (!myHost)
     {
+        // Host-less file URLs get special treatment, as if they're localhost. Maybe that could/should
+        // be generalised but I'm not in a position to presently.
+        if (self.isFileURL) {
+            myHost = @"localhost";
+        }
+        else {
+            
         // If self is an empty URL, there's no way to get to it. Falls through to here; return nil
         NSString *result = [self absoluteString];
         return ([result length] ? result : nil);
+        }
     }
     
     NSString *otherHost = [URL host];
-    if (!otherHost) BAIL;
+    if (!otherHost) {
+        // Host-less file URLs get special treatment, as if they're localhost
+        if (URL.isFileURL) {
+            otherHost = @"localhost";
+        }
+        else {
+            BAIL;
+        }
+    }
     
     if ([myHost caseInsensitiveCompare:otherHost] != NSOrderedSame) BAIL;
     
