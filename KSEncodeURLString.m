@@ -42,11 +42,16 @@
     
     NSURL *result = [WebView URLFromPasteboard:pboard];
     
-    // Fallback to IFUnicodeURL
+    // We were falling back to IFUnicodeURL if WebKit was unable to help. However, we found in case
+    // https://karelia.fogbugz.com/f/cases/252798 this crashes on the string:
+    // Complete summer class schedule! Fairytale ballet camps for ages 3-5, Intro to Ballet program for ages 5-9, Pre-Intensive for ages 6-
+    // Why? Who knows!
+#if FALLBACK_TO_IFUNICODE
     if (!result && [value isKindOfClass:[NSString class]] && [value length])
     {
         result = [NSURL URLWithUnicodeString:value];
     }
+#endif
     
     return result;
 }
