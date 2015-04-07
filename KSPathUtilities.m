@@ -165,8 +165,7 @@
  That way we ensure that we don't have something like ABCDEFGH being considered a subpath of ABCD
  But ABCD/EFGH will be.
  */
-- (BOOL)ks_isSubpathOfPath:(NSString *)aPath
-{
+- (BOOL)ks_isSubpathOfPath:(NSString *)aPath options:(NSStringCompareOptions)options {
     NSParameterAssert(aPath);  // karelia case #115844
     
     
@@ -176,9 +175,8 @@
         aPath = [aPath substringToIndex:aPath.length - 1];
     }
     
-    // Used to -hasPrefix:, but really need to do it case insensitively
-    NSRange range = [self rangeOfString:aPath
-                                options:(NSAnchoredSearch | NSCaseInsensitiveSearch)];
+    // Fancy equivalent of -hasPrefix:
+    NSRange range = [self rangeOfString:aPath options:(NSAnchoredSearch | options)];
     
     if (range.location != 0) return NO;
     

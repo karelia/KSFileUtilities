@@ -53,7 +53,15 @@
 // Standardizes the paths and tests equality ignoring case
 - (BOOL)ks_isEqualToPath:(NSString *)aPath;
 
-- (BOOL)ks_isSubpathOfPath:(NSString *)aPath;  // Does aPath contain self?
+/**
+ Does aPath contain the receiver?
+ 
+ @param options The options to use for deciding if path components are equal or not. Supports
+ NSCaseInsensitiveSearch and NSLiteralSearch. I think NSDiacriticInsensitiveSearch should work too,
+ although the docs don't seem to say either way. DON'T pass anything else you'll probably get weird/
+ wrong results.
+ */
+- (BOOL)ks_isSubpathOfPath:(NSString *)aPath options:(NSStringCompareOptions)options;
 
 // Will preserve any trailing slashes that are part of self
 - (NSString *)ks_pathRelativeToDirectory:(NSString *)otherPath;
