@@ -201,8 +201,7 @@
 /*  e.g. http://example.com/foo/bar.html is a subpath of http://example.com/foo/
  *  The URLs should have the same scheme and host. After that, path comparison is used
  */
-- (BOOL)ks_isSubpathOfURL:(NSURL *)aURL;
-{
+- (BOOL)ks_isSubpathOfURL:(NSURL *)aURL options:(NSStringCompareOptions)options {
     BOOL result = NO;
     
     
@@ -213,7 +212,7 @@
         NSString *myPath = [[self path] stringByResolvingSymlinksInPath];
         NSString *otherPath = [[aURL path] stringByResolvingSymlinksInPath];
         
-        result = [myPath ks_isSubpathOfPath:otherPath];
+        result = [myPath ks_isSubpathOfPath:otherPath options:options];
     }
     else
     {
@@ -234,7 +233,7 @@
                     if (myPath.length == 0) myPath = @"/";
                     if (otherPath.length == 0) otherPath = @"/";
                     
-                    result = [myPath ks_isSubpathOfPath:otherPath];
+                    result = [myPath ks_isSubpathOfPath:otherPath options:options];
                 }
             }
         }

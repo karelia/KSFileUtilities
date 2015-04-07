@@ -48,7 +48,10 @@
 - (BOOL)ks_hasDirectoryPath;
 - (NSURL *)ks_URLByAppendingPathComponent:(NSString *)pathComponent isDirectory:(BOOL)isDirectory;
 
-- (BOOL)ks_isSubpathOfURL:(NSURL *)aURL;
+/**
+ @param options same as for -[NSString ks_isSubpathOfPath:options:]
+ */
+- (BOOL)ks_isSubpathOfURL:(NSURL *)aURL options:(NSStringCompareOptions)options;
 
 
 #pragma mark Paths - Pre-Snowy compatibility
