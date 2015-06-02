@@ -123,6 +123,14 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        _defaultScheme = [@"http" retain];
+        _fallbackTopLevelDomain = [@"com" retain];
+    }
+    return self;
+}
+
 - (void)dealloc
 {
     [_defaultScheme release];
