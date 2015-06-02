@@ -56,14 +56,14 @@
 @property(nonatomic) BOOL useDisplayNameForFileURLs;
 
 // If no scheme is recognisable from the string, this will be substituted. Default is http
-@property(nonatomic, copy) NSString *defaultScheme;
+@property(nonatomic, copy) IBInspectable NSString *defaultScheme;
 
 // Default value is nil, which means any scheme is allowed. If a URL is entered that isn't in this list, the formatter substitutes in whatever it considers to be the best match, generally favouring those nearer the start of the array
 // An empty array is not permitted
 @property(nonatomic, copy) NSArray *allowedSchemes;
 
 // If the URL's host does not have a top-level domain specified, and this is non-nil, it is substituted in. Default is "com"
-@property(nonatomic, copy) NSString *fallbackTopLevelDomain;
+@property(nonatomic, copy) IBInspectable NSString *fallbackTopLevelDomain;
 
 
 #pragma mark Conversion
