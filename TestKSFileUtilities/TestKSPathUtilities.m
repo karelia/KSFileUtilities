@@ -170,19 +170,19 @@
 
 - (void)testIsSubpath;
 {
-    STAssertTrue([@"/foo/bar/baz.html" ks_isSubpathOfPath:@"/foo"], @"/foo/bar/baz.html is a subpath of of /foo");
-    STAssertTrue([@"/foo/bar/baz.html" ks_isSubpathOfPath:@"/foo/"], @"/foo/bar/baz.html is a subpath of of /foo/");
-    STAssertFalse([@"/foo/bar/baz.html" ks_isSubpathOfPath:@"/fo"], nil);
+    STAssertTrue([@"/foo/bar/baz.html" ks_isSubpathOfPath:@"/foo" options:0], @"/foo/bar/baz.html is a subpath of of /foo");
+    STAssertTrue([@"/foo/bar/baz.html" ks_isSubpathOfPath:@"/foo/" options:0], @"/foo/bar/baz.html is a subpath of of /foo/");
+    STAssertFalse([@"/foo/bar/baz.html" ks_isSubpathOfPath:@"/fo" options:0], nil);
     
     // Treat items as being subpaths of themselves
-    STAssertTrue([@"/foo/bar/baz.html" ks_isSubpathOfPath:@"/foo/bar/baz.html"], nil);
-    STAssertTrue([@"/foo/bar/baz.html" ks_isSubpathOfPath:@"/foo/bar/baz.html/"], nil);
-    STAssertTrue([@"/foo/bar/baz.html/" ks_isSubpathOfPath:@"/foo/bar/baz.html"], nil);
-    STAssertTrue([@"/foo/bar/baz.html/" ks_isSubpathOfPath:@"/foo/bar/baz.html/"], nil);
+    STAssertTrue([@"/foo/bar/baz.html" ks_isSubpathOfPath:@"/foo/bar/baz.html" options:0], nil);
+    STAssertTrue([@"/foo/bar/baz.html" ks_isSubpathOfPath:@"/foo/bar/baz.html/" options:0], nil);
+    STAssertTrue([@"/foo/bar/baz.html/" ks_isSubpathOfPath:@"/foo/bar/baz.html" options:0], nil);
+    STAssertTrue([@"/foo/bar/baz.html/" ks_isSubpathOfPath:@"/foo/bar/baz.html/" options:0], nil);
     
     // Make sure similar things aren't mistaken
-    STAssertFalse([@"/foo/abcdefg" ks_isSubpathOfPath:@"/foo/abcd"], nil);
-    STAssertFalse([@"/foo/abcd" ks_isSubpathOfPath:@"/foo/abcdefg"], nil);
+    STAssertFalse([@"/foo/abcdefg" ks_isSubpathOfPath:@"/foo/abcd" options:0], nil);
+    STAssertFalse([@"/foo/abcd" ks_isSubpathOfPath:@"/foo/abcdefg" options:0], nil);
 }
 
 - (void)testStringByIncrementingPath;
