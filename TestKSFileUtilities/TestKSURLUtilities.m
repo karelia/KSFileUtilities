@@ -48,12 +48,7 @@
         if (![[nsurlsOpinion path] length]) nsurlsOpinion = [nsurlsOpinion ks_hostURL];
         NSURL *urlWithPathAsNeeded = a; if (![[a path] length]) urlWithPathAsNeeded = [a ks_hostURL];
         
-        XCTAssertEqualObjects([nsurlsOpinion absoluteString], [urlWithPathAsNeeded absoluteString],
-                             @"(\'%@\' relative to \'%@\')",
-                             result,
-                             b,
-                             [urlWithPathAsNeeded absoluteString],
-                             nsurlsOpinion);
+        XCTAssertEqualObjects([nsurlsOpinion absoluteString], [urlWithPathAsNeeded absoluteString]);
     }
     
     
