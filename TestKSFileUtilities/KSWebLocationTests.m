@@ -26,4 +26,24 @@
     [super tearDown];
 }
 
+- (void)testTitleless {
+    KSWebLocation *webloc = [KSWebLocation webLocationWithURL:[NSURL URLWithString:@"http://example.com"]];
+    XCTAssertNotNil(webloc);
+    XCTAssertEqualObjects(webloc.URL.absoluteString, @"http://example.com");
+    XCTAssertNil(webloc.title);
+}
+
+- (void)testURLAndTitle {
+    KSWebLocation *webloc = [KSWebLocation webLocationWithURL:[NSURL URLWithString:@"http://example.com"]
+                                                        title:@"Test"];
+    
+    XCTAssertNotNil(webloc);
+    XCTAssertEqualObjects(webloc.URL.absoluteString, @"http://example.com");
+    XCTAssertEqualObjects(webloc.title, @"Test");
+}
+
+- (void)testNoURL {
+    XCTAssertThrows([KSWebLocation webLocationWithURL:nil]);
+}
+
 @end
