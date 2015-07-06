@@ -3,7 +3,7 @@
 //  KSFileUtilities
 //
 //  Created by Mike on 06/07/2015.
-//  Copyright (c) 2015 Jungle Candy Software. All rights reserved.
+//  Copyright (c) 2015 Karelia Software. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
