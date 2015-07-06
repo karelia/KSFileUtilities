@@ -77,7 +77,7 @@
 		EE43C84C13898D7B008ABD16 /* KSWebLocationPasteboardUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebLocationPasteboardUtilities.m; sourceTree = SOURCE_ROOT; };
 		EE43C84D13898D7B008ABD16 /* KSWorkspaceUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWorkspaceUtilities.h; sourceTree = SOURCE_ROOT; };
 		EE43C84E13898D7B008ABD16 /* KSWorkspaceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWorkspaceUtilities.m; sourceTree = SOURCE_ROOT; };
-		EE83867813897644005E0FFD /* TestKSFileUtilities.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestKSFileUtilities.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE83867813897644005E0FFD /* TestKSFileUtilities.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestKSFileUtilities.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE83867B13897644005E0FFD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		EE83867E13897644005E0FFD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		EE83867F13897644005E0FFD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -165,7 +165,7 @@
 		EE83867913897644005E0FFD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EE83867813897644005E0FFD /* TestKSFileUtilities.octest */,
+				EE83867813897644005E0FFD /* TestKSFileUtilities.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -232,7 +232,7 @@
 			);
 			name = TestKSFileUtilities;
 			productName = TestKSFileUtilities;
-			productReference = EE83867813897644005E0FFD /* TestKSFileUtilities.octest */;
+			productReference = EE83867813897644005E0FFD /* TestKSFileUtilities.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -371,6 +371,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
 		};
@@ -394,6 +395,7 @@
 				INFOPLIST_FILE = "TestKSFileUtilities/TestKSFileUtilities-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
