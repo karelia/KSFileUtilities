@@ -26,15 +26,4 @@
     [super tearDown];
 }
 
-- (void)testReadingWeblocFile {
-    
-    NSURL *url = [[NSBundle bundleForClass:self.class] URLForResource:@"Example" withExtension:@"webloc"];
-    XCTAssertNotNil(url);
-    
-    KSWebLocation *location = [[KSWebLocation alloc] initWithContentsOfWeblocFile:url];
-    XCTAssertNotNil(location);
-    XCTAssertEqualObjects(location.URL.absoluteString, @"http://example.com/");
-    XCTAssertEqualObjects(location.title, @"Example Domain");
-}
-
 @end
