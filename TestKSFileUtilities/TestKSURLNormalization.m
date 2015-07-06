@@ -1,9 +1,9 @@
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import "KSURLNormalization.m"
 
 
-@interface TestKSURLNormalization : SenTestCase
+@interface TestKSURLNormalization : XCTestCase
 @end
 
 
@@ -89,26 +89,26 @@
     NSURL *out19 = [in19 ks_normalizedURL];
     NSURL *out20 = [in20 ks_normalizedURL];
     
-    STAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
-    STAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
-    STAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
-    STAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
-    STAssertTrue([[out5 absoluteString] isEqualToString:[can5 absoluteString]], @"out5 failed");
-    STAssertTrue([[out6 absoluteString] isEqualToString:[can6 absoluteString]], @"out6 failed");
-    STAssertTrue([[out7 absoluteString] isEqualToString:[can7 absoluteString]], @"out7 failed");
-    STAssertTrue([[out8 absoluteString] isEqualToString:[can8 absoluteString]], @"out8 failed");
-    STAssertTrue([[out9 absoluteString] isEqualToString:[can9 absoluteString]], @"out9 failed");
-    STAssertTrue([[out10 absoluteString] isEqualToString:[can10 absoluteString]], @"out10 failed");
-    STAssertTrue([[out11 absoluteString] isEqualToString:[can11 absoluteString]], @"out11 failed");
-    STAssertTrue([[out12 absoluteString] isEqualToString:[can12 absoluteString]], @"out12 failed");
-    STAssertTrue([[out13 absoluteString] isEqualToString:[can13 absoluteString]], @"out13 failed");
-    STAssertTrue([[out14 absoluteString] isEqualToString:[can14 absoluteString]], @"out14 failed");
-    STAssertTrue([[out15 absoluteString] isEqualToString:[can15 absoluteString]], @"out15 failed");
-    STAssertTrue([[out16 absoluteString] isEqualToString:[can16 absoluteString]], @"out16 failed");
-    STAssertTrue([[out17 absoluteString] isEqualToString:[can17 absoluteString]], @"out17 failed");
-    STAssertTrue([[out18 absoluteString] isEqualToString:[can18 absoluteString]], @"out18 failed");
-    STAssertTrue([[out19 absoluteString] isEqualToString:[can19 absoluteString]], @"out19 failed");
-    STAssertTrue([[out20 absoluteString] isEqualToString:[can20 absoluteString]], @"out20 failed");
+    XCTAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
+    XCTAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
+    XCTAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
+    XCTAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
+    XCTAssertTrue([[out5 absoluteString] isEqualToString:[can5 absoluteString]], @"out5 failed");
+    XCTAssertTrue([[out6 absoluteString] isEqualToString:[can6 absoluteString]], @"out6 failed");
+    XCTAssertTrue([[out7 absoluteString] isEqualToString:[can7 absoluteString]], @"out7 failed");
+    XCTAssertTrue([[out8 absoluteString] isEqualToString:[can8 absoluteString]], @"out8 failed");
+    XCTAssertTrue([[out9 absoluteString] isEqualToString:[can9 absoluteString]], @"out9 failed");
+    XCTAssertTrue([[out10 absoluteString] isEqualToString:[can10 absoluteString]], @"out10 failed");
+    XCTAssertTrue([[out11 absoluteString] isEqualToString:[can11 absoluteString]], @"out11 failed");
+    XCTAssertTrue([[out12 absoluteString] isEqualToString:[can12 absoluteString]], @"out12 failed");
+    XCTAssertTrue([[out13 absoluteString] isEqualToString:[can13 absoluteString]], @"out13 failed");
+    XCTAssertTrue([[out14 absoluteString] isEqualToString:[can14 absoluteString]], @"out14 failed");
+    XCTAssertTrue([[out15 absoluteString] isEqualToString:[can15 absoluteString]], @"out15 failed");
+    XCTAssertTrue([[out16 absoluteString] isEqualToString:[can16 absoluteString]], @"out16 failed");
+    XCTAssertTrue([[out17 absoluteString] isEqualToString:[can17 absoluteString]], @"out17 failed");
+    XCTAssertTrue([[out18 absoluteString] isEqualToString:[can18 absoluteString]], @"out18 failed");
+    XCTAssertTrue([[out19 absoluteString] isEqualToString:[can19 absoluteString]], @"out19 failed");
+    XCTAssertTrue([[out20 absoluteString] isEqualToString:[can20 absoluteString]], @"out20 failed");
 }
 
 
@@ -137,14 +137,14 @@
     NSRange ckrQuery           = (NSRange){96,42};
     NSRange ckrFragment        = (NSRange){138,8};
 
-    STAssertTrue(rScheme.location == ckrScheme.location && rScheme.length == ckrScheme.length, @"rScheme failed.");
-    STAssertTrue(rUserAndPassword.location == ckrUserAndPassword.location && rUserAndPassword.length == ckrUserAndPassword.length, @"rUserAndPassword failed.");
-    STAssertTrue(rHost.location == ckrHost.location && rHost.length == ckrHost.length, @"rHost failed.");
-    STAssertTrue(rPort.location == ckrPort.location && rPort.length == ckrPort.length, @"rPort failed.");
-    STAssertTrue(rPath.location == ckrPath.location && rPath.length == ckrPath.length, @"rPath failed.");
-    STAssertTrue(rParameterString.location == ckrParameterString.location && rParameterString.length == ckrParameterString.length, @"rParameterString failed.");
-    STAssertTrue(rQuery.location == ckrQuery.location && rQuery.length == ckrQuery.length, @"rQuery failed.");
-    STAssertTrue(rFragment.location == ckrFragment.location && rFragment.length == ckrFragment.length, @"rFragment failed.");
+    XCTAssertTrue(rScheme.location == ckrScheme.location && rScheme.length == ckrScheme.length, @"rScheme failed.");
+    XCTAssertTrue(rUserAndPassword.location == ckrUserAndPassword.location && rUserAndPassword.length == ckrUserAndPassword.length, @"rUserAndPassword failed.");
+    XCTAssertTrue(rHost.location == ckrHost.location && rHost.length == ckrHost.length, @"rHost failed.");
+    XCTAssertTrue(rPort.location == ckrPort.location && rPort.length == ckrPort.length, @"rPort failed.");
+    XCTAssertTrue(rPath.location == ckrPath.location && rPath.length == ckrPath.length, @"rPath failed.");
+    XCTAssertTrue(rParameterString.location == ckrParameterString.location && rParameterString.length == ckrParameterString.length, @"rParameterString failed.");
+    XCTAssertTrue(rQuery.location == ckrQuery.location && rQuery.length == ckrQuery.length, @"rQuery failed.");
+    XCTAssertTrue(rFragment.location == ckrFragment.location && rFragment.length == ckrFragment.length, @"rFragment failed.");
     
     
     NSURL *empty = [NSURL URLWithString:@""];
@@ -166,14 +166,14 @@
     NSRange e_ckrQuery           = (NSRange){0,0};
     NSRange e_ckrFragment        = (NSRange){0,0};
     
-    STAssertTrue(e_rScheme.location == e_ckrScheme.location && e_rScheme.length == e_ckrScheme.length, @"e_rScheme failed.");
-    STAssertTrue(e_rUserAndPassword.location == e_ckrUserAndPassword.location && e_rUserAndPassword.length == e_ckrUserAndPassword.length, @"e_rUserAndPassword failed.");
-    STAssertTrue(e_rHost.location == e_ckrHost.location && e_rHost.length == e_ckrHost.length, @"e_rHost failed.");
-    STAssertTrue(e_rPort.location == e_ckrPort.location && e_rPort.length == e_ckrPort.length, @"e_rPort failed.");
-    STAssertTrue(e_rPath.location == e_ckrPath.location && e_rPath.length == e_ckrPath.length, @"e_rPath failed.");
-    STAssertTrue(e_rParameterString.location == e_ckrParameterString.location && e_rParameterString.length == e_ckrParameterString.length, @"e_rParameterString failed.");
-    STAssertTrue(e_rQuery.location == e_ckrQuery.location && e_rQuery.length == e_ckrQuery.length, @"e_rQuery failed.");
-    STAssertTrue(e_rFragment.location == e_ckrFragment.location && e_rFragment.length == e_ckrFragment.length, @"e_rFragment failed.");
+    XCTAssertTrue(e_rScheme.location == e_ckrScheme.location && e_rScheme.length == e_ckrScheme.length, @"e_rScheme failed.");
+    XCTAssertTrue(e_rUserAndPassword.location == e_ckrUserAndPassword.location && e_rUserAndPassword.length == e_ckrUserAndPassword.length, @"e_rUserAndPassword failed.");
+    XCTAssertTrue(e_rHost.location == e_ckrHost.location && e_rHost.length == e_ckrHost.length, @"e_rHost failed.");
+    XCTAssertTrue(e_rPort.location == e_ckrPort.location && e_rPort.length == e_ckrPort.length, @"e_rPort failed.");
+    XCTAssertTrue(e_rPath.location == e_ckrPath.location && e_rPath.length == e_ckrPath.length, @"e_rPath failed.");
+    XCTAssertTrue(e_rParameterString.location == e_ckrParameterString.location && e_rParameterString.length == e_ckrParameterString.length, @"e_rParameterString failed.");
+    XCTAssertTrue(e_rQuery.location == e_ckrQuery.location && e_rQuery.length == e_ckrQuery.length, @"e_rQuery failed.");
+    XCTAssertTrue(e_rFragment.location == e_ckrFragment.location && e_rFragment.length == e_ckrFragment.length, @"e_rFragment failed.");
 }
 
 
@@ -188,13 +188,13 @@
     
     NSURL *canonical = [NSURL URLWithString:@"http://www.karelia.com/index.html"];
 
-    STAssertTrue([[[in1 ks_URLByLowercasingSchemeAndHost] absoluteString] isEqualToString:[canonical absoluteString]], @"in1 failed");
-    STAssertTrue([[[in2 ks_URLByLowercasingSchemeAndHost] absoluteString] isEqualToString:[canonical absoluteString]], @"in2 failed");
-    STAssertTrue([[[in3 ks_URLByLowercasingSchemeAndHost] absoluteString] isEqualToString:[canonical absoluteString]], @"in3 failed");
-    STAssertTrue([[[in4 ks_URLByLowercasingSchemeAndHost] absoluteString] isEqualToString:[canonical absoluteString]], @"in4 failed");
-    STAssertTrue([[[in5 ks_URLByLowercasingSchemeAndHost] absoluteString] isEqualToString:[canonical absoluteString]], @"in5 failed");
+    XCTAssertTrue([[[in1 ks_URLByLowercasingSchemeAndHost] absoluteString] isEqualToString:[canonical absoluteString]], @"in1 failed");
+    XCTAssertTrue([[[in2 ks_URLByLowercasingSchemeAndHost] absoluteString] isEqualToString:[canonical absoluteString]], @"in2 failed");
+    XCTAssertTrue([[[in3 ks_URLByLowercasingSchemeAndHost] absoluteString] isEqualToString:[canonical absoluteString]], @"in3 failed");
+    XCTAssertTrue([[[in4 ks_URLByLowercasingSchemeAndHost] absoluteString] isEqualToString:[canonical absoluteString]], @"in4 failed");
+    XCTAssertTrue([[[in5 ks_URLByLowercasingSchemeAndHost] absoluteString] isEqualToString:[canonical absoluteString]], @"in5 failed");
 
-    STAssertTrue([[[in6 ks_URLByLowercasingSchemeAndHost] absoluteString] isEqualToString:@""], @"in6 failed");
+    XCTAssertTrue([[[in6 ks_URLByLowercasingSchemeAndHost] absoluteString] isEqualToString:@""], @"in6 failed");
 }
 
 
@@ -219,12 +219,12 @@
     NSURL *out4 = [in4 ks_URLByUppercasingEscapes];
     NSURL *out5 = [in5 ks_URLByUppercasingEscapes];
     NSURL *out6 = [in6 ks_URLByUppercasingEscapes];
-    STAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
-    STAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
-    STAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
-    STAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
-    STAssertTrue([[out5 absoluteString] isEqualToString:[can5 absoluteString]], @"out5 failed");
-    STAssertTrue([[out6 absoluteString] isEqualToString:[can6 absoluteString]], @"out6 failed");
+    XCTAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
+    XCTAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
+    XCTAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
+    XCTAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
+    XCTAssertTrue([[out5 absoluteString] isEqualToString:[can5 absoluteString]], @"out5 failed");
+    XCTAssertTrue([[out6 absoluteString] isEqualToString:[can6 absoluteString]], @"out6 failed");
 }
 
 
@@ -251,12 +251,12 @@
     NSURL *out5 = [in5 ks_URLByUnescapingUnreservedCharactersInPath];
     NSURL *out6 = [in6 ks_URLByUnescapingUnreservedCharactersInPath];
 
-    STAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
-    STAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
-    STAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
-    STAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
-    STAssertTrue([[out5 absoluteString] isEqualToString:[can5 absoluteString]], @"out5 failed");
-    STAssertTrue([[out6 absoluteString] isEqualToString:[can6 absoluteString]], @"out6 failed");
+    XCTAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
+    XCTAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
+    XCTAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
+    XCTAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
+    XCTAssertTrue([[out5 absoluteString] isEqualToString:[can5 absoluteString]], @"out5 failed");
+    XCTAssertTrue([[out6 absoluteString] isEqualToString:[can6 absoluteString]], @"out6 failed");
 }
 
 
@@ -278,11 +278,11 @@
     NSURL *out3 = [in3 ks_URLByAddingTrailingSlashToDirectory];
     NSURL *out4 = [in4 ks_URLByAddingTrailingSlashToDirectory];
     NSURL *out5 = [in5 ks_URLByAddingTrailingSlashToDirectory];
-    STAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
-    STAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
-    STAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
-    STAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
-    STAssertTrue([[out5 absoluteString] isEqualToString:[can5 absoluteString]], @"out5 failed");
+    XCTAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
+    XCTAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
+    XCTAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
+    XCTAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
+    XCTAssertTrue([[out5 absoluteString] isEqualToString:[can5 absoluteString]], @"out5 failed");
 }
 
 
@@ -304,11 +304,11 @@
     NSURL *out3 = [in3 ks_URLByRemovingDefaultPort];
     NSURL *out4 = [in4 ks_URLByRemovingDefaultPort];
     NSURL *out5 = [in5 ks_URLByRemovingDefaultPort];
-    STAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
-    STAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
-    STAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
-    STAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
-    STAssertTrue([[out5 absoluteString] isEqualToString:[can5 absoluteString]], @"out5 failed");
+    XCTAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
+    XCTAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
+    XCTAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
+    XCTAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
+    XCTAssertTrue([[out5 absoluteString] isEqualToString:[can5 absoluteString]], @"out5 failed");
 }
 
 
@@ -327,10 +327,10 @@
     NSURL *out2 = [in2 ks_URLByRemovingDotSegments];
     NSURL *out3 = [in3 ks_URLByRemovingDotSegments];
     NSURL *out4 = [in4 ks_URLByRemovingDotSegments];
-    STAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
-    STAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
-    STAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
-    STAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
+    XCTAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
+    XCTAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
+    XCTAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
+    XCTAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
 }
 
 
@@ -352,11 +352,11 @@
     NSURL *out3 = [in3 ks_URLByRemovingDirectoryIndex];
     NSURL *out4 = [in4 ks_URLByRemovingDirectoryIndex];
     NSURL *out5 = [in5 ks_URLByRemovingDirectoryIndex];
-    STAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
-    STAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
-    STAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
-    STAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
-    STAssertTrue([[out5 absoluteString] isEqualToString:[can5 absoluteString]], @"out5 failed");
+    XCTAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
+    XCTAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
+    XCTAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
+    XCTAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
+    XCTAssertTrue([[out5 absoluteString] isEqualToString:[can5 absoluteString]], @"out5 failed");
 }
 
 
@@ -381,12 +381,12 @@
     NSURL *out4 = [in4 ks_URLByRemovingFragment];
     NSURL *out5 = [in5 ks_URLByRemovingFragment];
     NSURL *out6 = [in6 ks_URLByRemovingFragment];
-    STAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
-    STAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
-    STAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
-    STAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
-    STAssertTrue([[out5 absoluteString] isEqualToString:[can5 absoluteString]], @"out5 failed");    
-    STAssertTrue([[out6 absoluteString] isEqualToString:[can6 absoluteString]], @"out6 failed");    
+    XCTAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
+    XCTAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
+    XCTAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
+    XCTAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
+    XCTAssertTrue([[out5 absoluteString] isEqualToString:[can5 absoluteString]], @"out5 failed");    
+    XCTAssertTrue([[out6 absoluteString] isEqualToString:[can6 absoluteString]], @"out6 failed");    
 }
 
 
@@ -405,10 +405,10 @@
     NSURL *out2 = [in2 ks_URLByRemovingDuplicateSlashes];
     NSURL *out3 = [in3 ks_URLByRemovingDuplicateSlashes];
     NSURL *out4 = [in4 ks_URLByRemovingDuplicateSlashes];
-    STAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
-    STAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
-    STAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
-    STAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
+    XCTAssertTrue([[out1 absoluteString] isEqualToString:[can1 absoluteString]], @"out1 failed");
+    XCTAssertTrue([[out2 absoluteString] isEqualToString:[can2 absoluteString]], @"out2 failed");
+    XCTAssertTrue([[out3 absoluteString] isEqualToString:[can3 absoluteString]], @"out3 failed");
+    XCTAssertTrue([[out4 absoluteString] isEqualToString:[can4 absoluteString]], @"out4 failed");
 }
 
 
