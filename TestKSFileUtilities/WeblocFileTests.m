@@ -28,7 +28,7 @@
 
 - (void)testReadingWeblocFile {
     
-    NSURL *url = [[NSBundle bundleForClass:self.class] URLForResource:@"Example Domain" withExtension:@"webloc"];
+    NSURL *url = [[NSBundle bundleForClass:self.class] URLForResource:@"Example" withExtension:@"webloc"];
     XCTAssertNotNil(url);
     
     KSWebLocation *location = [[KSWebLocation alloc] initWithContentsOfWeblocFile:url];
