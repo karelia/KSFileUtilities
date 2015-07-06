@@ -10,11 +10,11 @@
 #import "KSWebLocation.h"
 
 
-@interface WeblocFileTests : XCTestCase
+@interface KSWebLocationTests : XCTestCase
 
 @end
 
-@implementation WeblocFileTests
+@implementation KSWebLocationTests
 
 - (void)setUp {
     [super setUp];

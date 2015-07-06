@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2705A6941B4AC553004197AA /* WeblocFileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2705A6931B4AC553004197AA /* WeblocFileTests.m */; };
+		2705A6941B4AC553004197AA /* KSWebLocationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2705A6931B4AC553004197AA /* KSWebLocationTests.m */; };
 		27246F0F165BF184001B638E /* NSURL+IFUnicodeURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 27246F0E165BF184001B638E /* NSURL+IFUnicodeURL.m */; };
 		27422A79180D609B00136F43 /* KSMailtoURLs.m in Sources */ = {isa = PBXBuildFile; fileRef = 27422A78180D609B00136F43 /* KSMailtoURLs.m */; };
 		2757532C16AEA86500388503 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2757532B16AEA86500388503 /* WebKit.framework */; };
@@ -36,7 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2705A6931B4AC553004197AA /* WeblocFileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeblocFileTests.m; sourceTree = "<group>"; };
+		2705A6931B4AC553004197AA /* KSWebLocationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebLocationTests.m; sourceTree = "<group>"; };
 		27246F0D165BF184001B638E /* NSURL+IFUnicodeURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL+IFUnicodeURL.h"; path = "IFUnicodeURL/IFUnicodeURL/NSURL+IFUnicodeURL.h"; sourceTree = SOURCE_ROOT; };
 		27246F0E165BF184001B638E /* NSURL+IFUnicodeURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+IFUnicodeURL.m"; path = "IFUnicodeURL/IFUnicodeURL/NSURL+IFUnicodeURL.m"; sourceTree = SOURCE_ROOT; };
 		27422A77180D609B00136F43 /* KSMailtoURLs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMailtoURLs.h; sourceTree = SOURCE_ROOT; };
@@ -202,7 +202,7 @@
 				27A60C0C1536E7F500EEE538 /* TestKSURLFormatter.h */,
 				27A60C0D1536E7F500EEE538 /* TestKSURLFormatter.m */,
 				27F0501D1788399E0019FC07 /* TestKSURLComponents.m */,
-				2705A6931B4AC553004197AA /* WeblocFileTests.m */,
+				2705A6931B4AC553004197AA /* KSWebLocationTests.m */,
 			);
 			path = TestKSFileUtilities;
 			sourceTree = "<group>";
@@ -299,7 +299,7 @@
 				EE0F59A313897980006045D3 /* KSPathUtilities.m in Sources */,
 				EE20B4B613897F7400AE2AF9 /* TestKSPathUtilities.m in Sources */,
 				EE43C84F13898D7B008ABD16 /* KSFileWrapperExtensions.m in Sources */,
-				2705A6941B4AC553004197AA /* WeblocFileTests.m in Sources */,
+				2705A6941B4AC553004197AA /* KSWebLocationTests.m in Sources */,
 				EE43C85013898D7B008ABD16 /* KSURLFormatter.m in Sources */,
 				EE43C85113898D7B008ABD16 /* KSURLUtilities.m in Sources */,
 				EE43C85213898D7B008ABD16 /* KSWebLocation.m in Sources */,
