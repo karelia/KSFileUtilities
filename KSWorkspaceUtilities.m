@@ -41,36 +41,4 @@
 	return result;
 }
 
-#pragma mark 
-
-- (void)ks_setBundleBit:(BOOL)flag forFileAtURL:(NSURL *)url;
-{
-	FSRef fileRef;
-	OSErr error = FSPathMakeRef((UInt8 *)[[url path] fileSystemRepresentation], &fileRef, NULL);
-	
-	// Get the file's current info
-	FSCatalogInfo fileInfo;
-	if (!error)
-	{
-		error = FSGetCatalogInfo(&fileRef, kFSCatInfoFinderInfo, &fileInfo, NULL, NULL, NULL);
-	}
-	
-	if (!error)
-	{
-		// Adjust the bundle bit
-		FolderInfo *finderInfo = (FolderInfo *)fileInfo.finderInfo;
-		if (flag) {
-			finderInfo->finderFlags |= kHasBundle;
-		}
-		else {
-			finderInfo->finderFlags &= ~kHasBundle;
-		}
-		
-		// Set the altered flags of the file
-		error = FSSetCatalogInfo(&fileRef, kFSCatInfoFinderInfo, &fileInfo);
-	}
-	
-	if (error) NSLog(@"OSError %i in -[NSWorkspace setBundleBit:forFile:]", error);
-}
-
 @end
