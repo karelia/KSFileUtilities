@@ -63,12 +63,3 @@
 
 
 @end
-
-
-#pragma mark -
-
-
-@interface KSWebLocation (WeblocFiles)
-+ (instancetype)webLocationWithContentsOfWeblocFile:(NSURL *)weblocURL;
-- (id)initWithContentsOfWeblocFile:(NSURL *)weblocURL;
-@end
