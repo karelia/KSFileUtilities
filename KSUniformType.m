@@ -75,56 +75,32 @@
 
 + (NSString *)typeOfFileAtURL:(NSURL *)url;
 {
-	NSString *result = nil;
-    FSRef fileRef;
-    Boolean isDir;
+    NSString *result = nil;
+    NSError *error;
+    BOOL success = [url getResourceValue:&result forKey:NSURLTypeIdentifierKey error:&error];
     
-    if (FSPathMakeRef((const UInt8 *)[[url path] fileSystemRepresentation], &fileRef, &isDir) == noErr)
-    {
-        // get the content type (UTI) of this file
-		CFStringRef uti;
-		if (LSCopyItemAttribute(&fileRef, kLSRolesViewer, kLSItemContentType, (CFTypeRef*)&uti)==noErr)
-		{
-			result = [NSMakeCollectable(uti) autorelease];	// I want an autoreleased copy of this.
-		}
+    if (success) {
+        if (result) {
+            return result;
+        }
+        else {
+            // Hmm, life just got tricky. This means the file can be properly accessed, but is
+            // located somewhere which doesn't support knowing type. I don't know yet when this
+            // would ever happen, so let's wait and find out!
+            [NSException raise:NSInternalInconsistencyException format:@"URL claims not to support type identifiers: %@", url];
+        }
     }
-	
-	// check extension if we can't find the actual file
-	if (nil == result)
-	{
+    else {
+        // check extension if we can't find the actual file
 		NSString *extension = [url pathExtension];
-		if ( (nil != extension) && ![extension isEqualToString:@""] )
-		{
+		if (extension.length) {
 			result = [self typeForFilenameExtension:extension];
 		}
-	}
-	
-	// if no extension or no result, check file type
-	if ( nil == result || [result isEqualToString:(NSString *)kUTTypeData])
-	{
-		NSString *fileType = NSHFSTypeOfFile([url path]);
-		if (6 == [fileType length])
-		{
-			fileType = [fileType substringWithRange:NSMakeRange(1,4)];
-		}
-		result = [self typeForOSTypeString:fileType];
-		if ([result hasPrefix:@"dyn."])
-		{
-			result = nil;		// reject a dynamic type if it tries that.
-		}
-	}
+        else {
+            result = nil;
+        }
+    }
     
-	if (nil == result)	// not found, figure out if it's a directory or not
-	{
-        BOOL isDirectory;
-        if ( [[NSFileManager defaultManager] fileExistsAtPath:[url path] isDirectory:&isDirectory] )
-		{
-			result = isDirectory ? (NSString *)kUTTypeDirectory : (NSString *)kUTTypeData;
-		}
-	}
-	
-	// Will return nil if file doesn't exist.
-	
 	return result;
 }
 
