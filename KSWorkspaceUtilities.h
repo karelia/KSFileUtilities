@@ -36,8 +36,4 @@
 - (NSImage *)ks_iconForType:(NSString *)aUTI;
 
 
-#pragma mark Bundle Bit
-- (void)ks_setBundleBit:(BOOL)flag forFileAtURL:(NSURL *)url;
-
-
 @end
