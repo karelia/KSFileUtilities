@@ -43,7 +43,7 @@
         NSFileWrapper *aWrapper = [[parentWrapper fileWrappers] objectForKey:aComponent];
         if (!aWrapper)
         {
-            aWrapper = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:nil];
+            aWrapper = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
             [aWrapper setPreferredFilename:aComponent];
             [parentWrapper addFileWrapper:aWrapper];
             
