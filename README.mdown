@@ -198,7 +198,7 @@ And IFUnicodeURL in turn relies upon VeriSign's IDN SDK:
 
 /*************************************************************************/
 /*                                                                       */
-/* VeriSign XCode (encode/decode) IDN Library                            */
+/* VeriSign Xcode (encode/decode) IDN Library                            */
 /*                                                                       */
 /* A library for encoding / decoding of domain strings.                  */
 /*                                                                       */
