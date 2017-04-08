@@ -108,7 +108,7 @@ Mac OS X 10.6 gave us a bunch of new URL methods like `-URLByDeletingLastPathCom
 Incrementing a Path
 ===================
 
-On occasion there is a need to try to find the best available filename/path for a task. e.g. Choosing a filename that won't conflict with ay existing file. To simplify this, `-[NSString ks_stringByIncrementingPath:]` is offered. Given the path `example.png`, it will cycle through like so:
+On occasion there is a need to try to find the best available filename/path for a task. e.g. Choosing a filename that won't conflict with any existing file. To simplify this, `-[NSString ks_stringByIncrementingPath:]` is offered. Given the path `example.png`, it will cycle through like so:
 
 	example.png
 	example-2.png
