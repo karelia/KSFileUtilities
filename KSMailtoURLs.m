@@ -26,7 +26,7 @@
 
 #import "KSMailtoURLs.h"
 
-#import "KSURLQueryUtilities.h"
+#import "KSURLQuery.h"
 
 
 NSString *KSURLMailtoScheme = @"mailto";
@@ -52,7 +52,7 @@ NSString *KSURLMailtoHeaderBody = @"body";
     
     if (headers)
     {
-        NSString *query = [self ks_queryWithParameters:headers];
+        NSString *query = [KSURLQuery encodeParameters:headers];
         if ([query length])
         {
             string = [string stringByAppendingFormat:@"?%@", query];
@@ -72,7 +72,7 @@ NSString *KSURLMailtoHeaderBody = @"body";
     if (queryIndicatorRange.location != NSNotFound)
     {
         NSString *query = [urlString substringFromIndex:NSMaxRange(queryIndicatorRange)];
-        return [NSURL ks_parametersOfQuery:query];
+        return [KSURLQuery decodeString:query options:0];
     }
     
     return nil;

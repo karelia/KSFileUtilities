@@ -26,6 +26,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface KSURLComponents : NSObject <NSCopying>
 {
   @private
@@ -117,13 +118,12 @@
 @property (nonatomic, copy) NSString *query;
 @property (nonatomic, copy) NSString *fragment;
 
-// Getting these properties retains any percent encoding these components may have. Setting these properties is currently not supported as I am lazy and doing so is rarely useful. If you do have a use case, please send me a pull request or file an issue on GitHub.
+// Getting these properties retains any percent encoding these components may have. Setting most of these properties is currently not supported as I am lazy and doing so is rarely useful. If you do have a use case, please send me a pull request or file an issue on GitHub.
 @property (nonatomic, copy, readonly) NSString *percentEncodedUser;
 @property (nonatomic, copy, readonly) NSString *percentEncodedPassword;
 @property (nonatomic, copy, readonly) NSString *percentEncodedHost;
 @property (nonatomic, copy, readonly) NSString *percentEncodedPath;
-@property (nonatomic, copy, readonly) NSString *percentEncodedQuery;
+@property (nonatomic, copy) NSString *percentEncodedQuery;
 @property (nonatomic, copy, readonly) NSString *percentEncodedFragment;
-
 
 @end
